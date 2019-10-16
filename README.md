@@ -33,7 +33,7 @@ rails 5.2.3
 [TONEADE-テーブル定義.pdf](https://github.com/roadfox303/toneade/files/3732932/TONEADE-.pdf)
 
 ## ER図
-![TONEADE_ER](https://user-images.githubusercontent.com/52414882/66896916-e2762200-f030-11e9-958a-9756163048df.png)
+![TONEADE_ER](https://user-images.githubusercontent.com/52414882/66912828-4e1ab800-f04e-11e9-8453-44cbdf34360d.png)
 
 ## 画面遷移図
 ![TONEADE_画面遷移](https://user-images.githubusercontent.com/52414882/66896977-fcb00000-f030-11e9-817a-46ba31e3ce0e.png)
