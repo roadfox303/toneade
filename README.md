@@ -22,4 +22,32 @@ rails 5.2.3
 
 
 ## カタログ設計
-![カタログ](https://github.com/roadfox303/toneade/blob/master/TONEADE-%E3%82%AB%E3%82%BF%E3%83%AD%E3%82%B0%E8%A8%AD%E8%A8%88.pdf)
+[TONEADE-カタログ設計.pdf](https://github.com/roadfox303/toneade/files/3732917/TONEADE-.pdf)
+
+## 機能一覧
+[TONEADE-基本機能.pdf](https://github.com/roadfox303/toneade/files/3733014/TONEADE-.pdf)  
+[TONEADE-フレーズ機能.pdf](https://github.com/roadfox303/toneade/files/3733015/TONEADE-.pdf)
+
+
+## テーブル定義書
+[TONEADE-テーブル定義.pdf](https://github.com/roadfox303/toneade/files/3732932/TONEADE-.pdf)
+
+## ER図
+![TONEADE_ER](https://user-images.githubusercontent.com/52414882/66896916-e2762200-f030-11e9-958a-9756163048df.png)
+
+## 画面遷移図
+![TONEADE_画面遷移](https://user-images.githubusercontent.com/52414882/66896977-fcb00000-f030-11e9-817a-46ba31e3ce0e.png)
+
+## ワイヤーフレーム
+[コード進行アプリ.pdf](https://github.com/roadfox303/toneade/files/3732947/default.pdf)
+
+## 使用予定 gem
+devise  
+carrierwave  
+mini_magick
+
+## 使用予定 js
+Tone.js  
+VueDraggable　又は　SortableJS  
+VueAwesomeSwiper　又は　Swiper  
+midifile (midiパーサ)
