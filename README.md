@@ -22,4 +22,4 @@ rails 5.2.3
 
 
 ## カタログ設計
-![カタログ]("TONEADE - カタログ.pdf")
+![カタログ](https://github.com/roadfox303/toneade/blob/master/TONEADE-%E3%82%AB%E3%82%BF%E3%83%AD%E3%82%B0%E8%A8%AD%E8%A8%88.pdf)
