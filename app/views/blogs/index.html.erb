@@ -1,0 +1,18 @@
+<h1>blogs index</h1>
+<%= flash[:notice] %>
+<%= link_to "ブログ作成", new_blog_path %>
+
+<% unless @blogs.empty?%>
+  <div id="others_all">
+  <h2>新着フレーズ一覧</h2>
+    <ul>
+    <% @blogs.each do |blog| %>
+      <li>
+        <span><%= blog.title %></span>
+        <%= link_to "ブログ編集", edit_blog_path(blog.id) %>
+        <%= link_to "ブログ削除", blog_path(blog.id), method: :delete %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
