@@ -2,10 +2,12 @@ class BlogsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_id, only: [:edit,  :destroy, :update, :show]
   def index
+    @page_name = "blog index"
     @blogs = Blog.all.reverse
   end
 
   def new
+    @page_name = "new blog"
     @blog = Blog.new
   end
 
@@ -21,6 +23,7 @@ class BlogsController < ApplicationController
   end
 
   def edit
+    @page_name = "edit blog"
   end
 
   def update

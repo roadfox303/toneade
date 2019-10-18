@@ -16,18 +16,6 @@
  *= require_tree .
  *= require_self
  */
-.swiper-container {
-  width: 600px;
-  height: 300px;
-}
-h1 {
-}
-#blog_content {
-  width: 100%;
-  margin: 0;
-}
-.modal_close{
-  width:8rem;
-  padding: 1rem;
-  margin: 0 auto;
+#container{
+  padding: 0.5rem;
 }

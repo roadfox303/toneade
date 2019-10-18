@@ -6,19 +6,3 @@ $thema-color: #f00;
 .modal_close {
   background: $thema-color;
 }
-.cssgrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-auto-rows: 1fr;
-  grid-gap: 0.8em;
-  border: 1px solid #ddd;
-  padding: 0.8em;
-  margin: 0 0 2em;
-}
-
-.cssgrid > div {
-  background: #ddd;
-  overflow: auto;
-  min-width: 0;
-  padding: 1em;
-}
