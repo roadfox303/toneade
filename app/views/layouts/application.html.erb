@@ -4,14 +4,27 @@
     <title>Toneade</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag('https://unpkg.com/swiper/js/swiper.min.js') %>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <body class="drawer drawer--top">
+    <header role="banner">
+      <button type="button" class="drawer-toggle drawer-hamburger">
+        <span class="sr-only">toggle navigation</span>
+        <span class="drawer-hamburger-icon"></span>
+      </button>
+      <nav class="drawer-nav" role="navigation">
+        <ul class="drawer-menu">
+          <li><a class="drawer-brand" href="#">Brand</a></li>
+          <li><a class="drawer-menu-item" href="#">Nav1</a></li>
+          <li><a class="drawer-menu-item" href="#">Nav2</a></li>
+        </ul>
+      </nav>
+    </header>
+
     <% if user_signed_in? %>
       <%= link_to "ブログ投稿", blogs_path %>
       <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
@@ -20,5 +33,7 @@
       <%= link_to "ログイン", new_user_session_path %>
     <% end %>
     <%= yield %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
   </body>
 </html>

@@ -12,5 +12,12 @@
 //
 //= require rails-ujs
 //= require activestorage
+//= require jquery/dist/jquery.js
+//= require iscroll.js
+//= require drawer.js
+//= require jquery.turbolinks
 //= require turbolinks
 //= require_tree .
+$(document).on('turbolinks:load', function() {
+  $('.drawer').drawer();
+});
