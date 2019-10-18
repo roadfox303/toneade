@@ -10,9 +10,14 @@
     </div>
   <% end %>
   <div id="blog_inputs">
-    <%= form.text_field :title, {id: "form_title"} %>
-
+    <%= form.text_field :title, placeholder:"title", id: "blog_title"%>
+    <a href="#modal" class="modal">コメント</a>
+    <div id="modal" style="display:none;">
+      <%= form.text_area :content, placeholder:"comment", id: "blog_content" %>
+      <div class="modal_close">決定</div>
+    </div>
   </div>
-  <%= form.text_area :content, {id: "form_content"} %>
+
+
   <%= form.submit "送信" %>
 <% end %>
