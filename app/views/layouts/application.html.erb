@@ -18,21 +18,22 @@
       </button>
       <nav class="drawer-nav" role="navigation">
         <ul class="drawer-menu">
-          <li><a class="drawer-brand" href="#">Brand</a></li>
-          <li><a class="drawer-menu-item" href="#">Nav1</a></li>
-          <li><a class="drawer-menu-item" href="#">Nav2</a></li>
+          <li><%= link_to "TONEADE", blogs_path, class:"drawer-brand" %></li>
+          <% if user_signed_in? %>
+          <li><%= link_to "ブログ一覧", blogs_path, class:"drawer-menu-item" %></li>
+          <li><%= link_to "ブログ作成", new_blog_path, class:"drawer-menu-item" %></li>
+          <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"drawer-menu-item" %></li>
+          <% else %>
+          <li><%= link_to "新規登録", new_user_registration_path, class:"drawer-menu-item" %></li>
+          <li><%= link_to "ログイン", new_user_session_path, class:"drawer-menu-item" %></li>
+          <% end %>
         </ul>
       </nav>
     </header>
-
-    <% if user_signed_in? %>
-      <%= link_to "ブログ投稿", blogs_path %>
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "新規登録", new_user_registration_path %>
-      <%= link_to "ログイン", new_user_session_path %>
-    <% end %>
-    <%= yield %>
+    <div id="container">
+    <div id="page_locate"><a href="#" id="logo">TONEADE</a><h1><%= @page_name %></h1></div>
+      <%= yield %>
+    </div>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
   </body>
