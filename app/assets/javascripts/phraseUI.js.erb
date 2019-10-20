@@ -1,0 +1,78 @@
+$(document).on('turbolinks:load', function() {
+  $('.modal').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal'
+  });
+  autosize($('textarea'));
+  $('.modal_close').on('click',function(){
+    $('.modal').modaal('close');
+  });
+  let swiper = new Swiper('.tracks', {
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'progressbar'
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      640: {
+        slidesPerView: 2
+      },
+      960: {
+        slidesPerView: 3
+      },
+      1280: {
+        slidesPerView: 4
+      },
+    }
+  });
+  $(function(){
+    let track_num = 1;
+    $('.add_track').on('click',function(){
+      last_pos = $('.tr_guide li').height();
+      track_num += 1;
+       // alert(gon.chords);
+      $('.track_header:last').after('<div class="track_header h_' + track_num + '"><h3>TR:'+ track_num + '</h3><a class=" btn_monitor btn_active">S</a></div>');
+      $('.tracks .swiper-slide li').append('<div class="track_block tr_' + track_num + '"></div>');
+      $('.h_'+ track_num ).css('top',(last_pos + 4));
+    });
+    $(document).on('click', '.btn_monitor', function (){
+      if($(this).hasClass('btn_all')){
+        $('.btn_monitor').addClass('btn_active');
+      }else{
+        $('.btn_monitor').removeClass('btn_active');
+        $(this).addClass('btn_active');
+      }
+    });
+    /* トラックブロックセレクト
+    $(document).on('click', '.track_block', function (){
+      if($(this).hasClass('select_track')){
+        $('.track_block').removeClass('select_track');
+      }else{
+        $('.track_block').removeClass('select_track');
+        $(this).addClass('select_track');
+      }
+    });
+    */
+  });
+
+    // $('.tracks .swiper-slide').each(function(index, element){
+    //   $('.tr_guide li',element).each(function(index, element){
+    //     $(element).append('<div class="track_block chord"></div>');
+    //   })
+    // })
+    // $('.tracks .swiper-wrapper　.swiper-slide').append('<div>...</div>');
+})

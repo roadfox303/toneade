@@ -2,7 +2,236 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $base-color: #ff0;
+$UI1-color: #cccccc;
 $thema-color: #f00;
-.modal_close {
-  background: $thema-color;
+$TR_border-color: #000;
+$guide_odd-color: #888888;
+$guide_even-color: #666666;
+$sel_track-color: rgba(0,100,255,0.3);
+$btn_active-color: #f00;
+$btn_negative-color: #333333;
+#blog_content {
+  width: 100%;
+  margin: 0;
+}
+#blog_inputs, #phrase_inputs,.btn_set, #add_btns {
+  list-style: none;
+  display: table;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 5px;
+}
+#blog_inputs li, #phrase_inputs li,.btn_set li, #add_btns li{
+  display: table-cell;
+  box-sizing: border-box;
+  position: relative;
+  height: 38px;
+}
+#blog_inputs li:first-child{
+  width: 75%;
+}
+#blog_inputs li:last-child{
+  padding-left: 5px;
+  width: 25%;
+}
+#phrase_inputs li:first-child{
+  width: 18%;
+  padding-left: 0;
+}
+#phrase_inputs li:nth-child(2){
+  width: 18%;
+  padding-left: 5px;
+}
+#phrase_inputs li:nth-child(3){
+  width: 18%;
+  padding-left: 5px;
+}
+#phrase_inputs li:nth-child(4){
+  width: 46%;
+  padding-left: 5px;
+}
+#blog_inputs input, #phrase_inputs input,#phrase_inputs select{
+  width:100%;
+  margin: 0;
+  padding: 6px;
+  font-size: 1.6rem;
+  text-align: center;
+}
+#blog_inputs li a, .modal_close, .btn{
+  display: inline-block;
+  height: 38px;
+  width: 100%;
+  min-width: 6rem;
+  padding: 0 10px;
+  text-align: center;
+  margin: 0;
+  line-height: 39px;
+  border-radius: 4px;
+  background-color: #ccc;
+  color: #000;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.btn_set{
+  margin-bottom: 0;
+}
+.btn_set li:first-child, #add_btns li:first-child{
+  width: 50%;
+  padding-right: 2.5px;
+}
+.btn_set li:last-child, #add_btns li:last-child{
+  width: 50%;
+  padding-left: 2.5px;
+}
+.modal_close{
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 37px;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+}
+.submit{
+  width: 100%;
+  padding: 0!important;
+  margin-bottom: 0;
+}
+#blog_title {
+  text-align: left!important;
+}
+.modaal-inner-wrapper{
+  padding: 80px 5%!important;
+}
+.modaal-content-container{
+  padding: 5%!important;
+}
+
+.swiper-container {
+  width: 100%!important;
+  height: auto!important;
+  padding-top:4px!important;
+  margin-bottom: 5px;
+}
+.swiper-pagination-progressbar{
+  background: #000!important;
+}
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #ccc;
+  // padding-top: 4px!important;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.swiper-button-prev, .swiper-button-next{
+  top: auto!important;
+  bottom: 10px;
+  width: 30px!important;
+  height: 30px!important;
+  font-size: 3rem!important;
+}
+
+.track {
+  width: 100%;
+}
+.track_header, .track_header h3,.track_header .btn_all{
+  height: 30px;
+  box-sizing: border-box;
+  line-height: 30px;
+}
+.track_header{
+  background: $UI1-color;
+  border-top: solid 1px $TR_border-color;
+  display: block;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+}
+.track_header h3{
+  display: block;
+  float: left;
+  width:auto;
+  padding: 0 0.5rem;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: normal;
+}
+.btn_monitor{
+  float: right;
+  background:$btn_negative-color;
+  color:#fff;
+  border: 1px solid #000;
+  border-top: 0px;
+  padding: 0 0.8rem;
+  box-sizing: border-box;
+}
+.btn_active{
+  background:$btn_active-color;
+}
+.tr_guide {
+  display: table;
+  list-style: none;
+  width: 100%;
+  height: 100%;
+}
+.tr_guide li {
+  display: table-cell;
+  height: 100%;
+  background-color: $guide_odd-color;
+}
+.tr_guide li:nth-child(odd){
+  background-color: $guide_even-color;
+}
+/* トラックブロック */
+.track_block{
+  height: 120px;
+  margin-top: 30px;
+  background: rgba(0,0,0,0.4);
+}
+.track_block.master{
+  height: 40px;
+}
+.select_track{
+  background: $sel_track-color;
+}
+/* 小節ガイド */
+.measure{
+  font-size: 1.4rem;
+  height: 20px;
+  line-height: 20px;
+}
+/* マスタートラック */
+.master_track li{
+  height: 80px;
+  margin: 0;
+}
+.fix_test{
+  position: absolute;
+  top: 40px;
+  z-index: 9999;
+}
+.h_master{
+  top: 24px!important;
+}
+.master_block{
+  height: 40px;
+}
+/* トラック 1 */
+.h_1{
+  top: 94px!important;
 }

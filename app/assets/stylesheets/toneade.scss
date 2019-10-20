@@ -6,6 +6,11 @@ $line-color: #cccccc;
 #page_locate{
   width: 100%;
   overflow: hidden;
+  position: fixed;
+  padding-top: 5px;
+  margin-top: -5px;
+  z-index: 50;
+  background: #fff;
 }
 #page_locate a{
   display: block;
@@ -14,6 +19,7 @@ $line-color: #cccccc;
   display: block;
   float: left;
   margin: 0;
+  letter-spacing: 0.05rem;
 }
 #logo{
   text-decoration: none;
@@ -30,7 +36,7 @@ $line-color: #cccccc;
     font-size: 1.4rem;
   }
   #page_locate{
-    height: 48px;
+    height: 43px;
   }
   #page_locate h1{
     font-size: 1.8rem;
@@ -47,10 +53,6 @@ $line-color: #cccccc;
     font-size: 6rem;
   }
 }
-.swiper-container {
-  width: 600px;
-  height: 300px;
-}
 
 .drawer-hamburger {
   padding: 0 9px;
@@ -59,13 +61,4 @@ $line-color: #cccccc;
   border-bottom: 1px solid $line-color;
   margin: 0;
   padding: 0.5rem;
-}
-#blog_content {
-  width: 100%;
-  margin: 0;
-}
-.modal_close{
-  width:8rem;
-  padding: 1rem;
-  margin: 0 auto;
 }

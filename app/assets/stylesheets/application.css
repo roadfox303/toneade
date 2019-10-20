@@ -12,10 +12,19 @@
  *
  *= normalize.css
  *= skeleton.css
+ *= swiper.css
  *= toneade.scss
  *= require_tree .
  *= require_self
  */
+ul {
+  margin: 0;
+}
 #container{
   padding: 0.5rem;
+}
+.content_wrapper{
+  margin-top: 43px;
+  position: relative;
+  overflow: hidden;
 }

@@ -1,3 +1,4 @@
+
 <%= form_with(model: @blog, local: true ) do |form| %>
   <% if @blog.errors.any? %>
     <div id="error_explanation">
@@ -9,15 +10,85 @@
       </ul>
     </div>
   <% end %>
-  <div id="blog_inputs">
-    <%= form.text_field :title, placeholder:"title", id: "blog_title"%>
-    <a href="#modal" class="modal">コメント</a>
-    <div id="modal" style="display:none;">
-      <%= form.text_area :content, placeholder:"comment", id: "blog_content" %>
-      <div class="modal_close">決定</div>
+
+  <ul id="blog_inputs">
+    <li><%= form.text_field :title, placeholder:"title", id: "blog_title" %></li>
+    <li><a href="#modal" class="modal">upload</a></li>
+  </ul>
+  <ul id="phrase_inputs">
+    <li><%= form.select :bpm, [["120", 1],["121", 2]], id: "phrase_beat" %></li>
+    <li><%= form.select :beat, [["4/4", 1],["3/4", 2]], id: "phrase_beat" %></li>
+    <li><%= form.select :key, [["C", 1],["C#", 2]], id: "phrase_key" %></li>
+    <li><%= form.select :scale, [["major", 1],["natural miner", 2]], id: "phrase_scale" %></li>
+  </ul>
+
+  <div class="swiper-container tracks">
+    <div class="track_header h_master">
+      <h3>MASTER</h3>
+      <a class="btn_all btn_monitor btn_active">ALL</a>
     </div>
+    <div class="track_header h_1">
+      <h3>TR:1</h3>
+      <%= %>
+      <a class="btn_monitor btn_active">S</a>
+    </div>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <ul class="tr_guide">
+          <li>
+            <div class="measure">1</div>
+            <div class="track_block master"></div>
+            <div class="track_block tr_1 chord"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="swiper-slide">
+        <ul class="tr_guide">
+          <li>
+            <div class="measure">1</div>
+            <div class="track_block master"></div>
+            <div class="track_block tr_1 chord"></div>
+          </li>
+          <li>
+            <div class="measure">2</div>
+            <div class="track_block master"></div>
+            <div class="track_block tr_1 chord"></div>
+          </li>
+          <li>
+            <div class="measure">3</div>
+            <div class="track_block master"></div>
+            <div class="track_block tr_1 chord"></div>
+          </li>
+          <li>
+            <div class="measure">4</div>
+            <div class="track_block master"></div>
+            <div class="track_block tr_1 chord"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  <ul id="add_btns">
+    <li><a class="btn add_track">add track</a></li>
+    <li><a class="btn add_track">add measure</a></li>
+  </ul>
+
+  <div id="modal" style="display:none;">
+    <%= form.text_area :content, placeholder:"comment", id: "blog_content" %>
+    <ul class="btn_set">
+      <li>
+        <div class="modal_close">入力に戻る</div>
+      </li>
+      <li>
+        <%= form.submit "フレーズ送信", class:"submit" %>
+      </li>
+    </ul>
   </div>
 
-
-  <%= form.submit "送信" %>
 <% end %>

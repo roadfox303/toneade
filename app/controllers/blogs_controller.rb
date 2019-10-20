@@ -1,13 +1,16 @@
 class BlogsController < ApplicationController
+  # require '../../toneade.rb'
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_id, only: [:edit,  :destroy, :update, :show]
+  before_action :set_id, only: [:edit, :destroy, :update, :show]
+  before_action :toneade_const, only: [:new, :edit, :show]
+
   def index
-    @page_name = "blog index"
+    @page_name = "Phrase Index"
     @blogs = Blog.all.reverse
   end
 
   def new
-    @page_name = "new blog"
+    @page_name = "New Phrase"
     @blog = Blog.new
   end
 
@@ -23,7 +26,10 @@ class BlogsController < ApplicationController
   end
 
   def edit
-    @page_name = "edit blog"
+    @page_name = "Edit Phrase"
+    if user_signed_in?
+      gon.current_user_id = current_user.id
+    end
   end
 
   def update
@@ -50,5 +56,16 @@ class BlogsController < ApplicationController
 
   def set_id
     @blog = Blog.find(params[:id])
+  end
+
+  def toneade_const
+    @scales = SCALE
+    # @test = @scales.find{ |item| item[:name] == "N miner scale" }
+    # @test2 = @chords.find_all{ |item| item[:notes].include?("9") }
+    gon.scales = @scales.to_json
+    @notes = NOTE
+    gon.notes = @notes.to_json
+    @chords = CHORD
+    gon.chords = @chords.to_json
   end
 end

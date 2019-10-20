@@ -15,6 +15,7 @@
 //= require jquery/dist/jquery.js
 //= require iscroll.js
 //= require drawer.js
+//= require swiper.js
 //= require jquery.turbolinks
 //= require turbolinks
 //= require_tree .

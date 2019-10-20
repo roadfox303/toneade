@@ -45,9 +45,10 @@ rails 5.2.3
 devise  
 carrierwave  
 mini_magick
+gon
 
 ## 使用予定 js
 Tone.js  
 VueDraggable　又は　SortableJS  
-VueAwesomeSwiper　又は　Swiper  
+Swiper  
 midifile (midiパーサ)

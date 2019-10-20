@@ -1,17 +1,10 @@
-class ApplicationController < ActionController::Base
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-  end
-
-  SCALE = [
-    { id: 1, name:"Major scale" },
-    { id: 2, name:"N miner scale" },
-    { id: 3, name:"H miner scale" },
-  ]
+class Toneade
+  attr_accessor :scales, :notes, :chords
+  SCALE = {
+    major: { id: 1, name:"Major scale" },
+    nminer: { id: 2, name:"N miner scale" },
+    hminer: { id: 3, name:"H miner scale" },
+  }
 
   NOTE = [
     { degree: "I", function: "T", interval: 0, scale_id: 1, tensions:[] },
@@ -39,4 +32,22 @@ class ApplicationController < ActionController::Base
     { type: "sus4", notes: ["0","5","7"], category: "sus" },
     { type: "7sus4", notes: ["0","5","7","A"], category: "sus" }
   ]
+  def initialize
+    @scales = SCALE
+    @notes = NOTE
+    @chords = CHORD
+  end
+  def chords(key,value)
+    @chords.find_all { |item| item[key.to_sym] == value }
+  end
+  def notes(key,value)
+    @notes.find_all { |item| item[key.to_sym] == value }
+  end
+  def serach(instance)
+    puts instance
+    # instance.find_all { |item| item[key.to_sym] == value }
+  end
+
 end
+# @scale_notes = ade.notes("scale_id",2)
+# @scale_notes.find{ |item| item[:degree] == "II" }[:interval]
