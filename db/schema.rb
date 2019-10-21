@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_014421) do
 
   create_table "tracks", force: :cascade do |t|
     t.string "name"
-    t.integer "type", default: 0, null: false
+    t.integer "tr_type", default: 0, null: false
     t.jsonb "instrument", null: false
     t.jsonb "data", null: false
     t.bigint "phrase_id"

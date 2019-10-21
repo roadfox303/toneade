@@ -16,10 +16,10 @@
     <li><a href="#modal" class="modal">upload</a></li>
   </ul>
   <ul id="phrase_inputs">
-    <li><%= form.select :bpm, [["120", 1],["121", 2]], id: "phrase_beat" %></li>
-    <li><%= form.select :beat, [["4/4", 1],["3/4", 2]], id: "phrase_beat" %></li>
-    <li><%= form.select :key, [["C", 1],["C#", 2]], id: "phrase_key" %></li>
-    <li><%= form.select :scale, [["major", 1],["natural miner", 2]], id: "phrase_scale" %></li>
+    <li><%= form.select :bpm, @bpm_list, :selected => @bpm_selected, id: "phrase_beat" %></li>
+    <li><%= form.select :beat, @beats_list, :selected => @beat_selected, id: "phrase_beat" %></li>
+    <li><%= form.select :key, @keys_list, :selected => @key_selected, id: "phrase_key" %></li>
+    <li><%= form.select :scale, @scales_list, :selected => @scale_selected, id: "phrase_scale" %></li>
   </ul>
 
   <div class="swiper-container tracks">

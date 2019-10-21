@@ -35,19 +35,22 @@ $btn_negative-color: #333333;
   width: 25%;
 }
 #phrase_inputs li:first-child{
-  width: 18%;
+  width: 20%;
   padding-left: 0;
+}
+#phrase_inputs li:first-child select{
+  text-indent: -0.5rem;
 }
 #phrase_inputs li:nth-child(2){
   width: 18%;
   padding-left: 5px;
 }
 #phrase_inputs li:nth-child(3){
-  width: 18%;
+  width: 16%;
   padding-left: 5px;
 }
 #phrase_inputs li:nth-child(4){
-  width: 46%;
+  width: 44%;
   padding-left: 5px;
 }
 #blog_inputs input, #phrase_inputs input,#phrase_inputs select{

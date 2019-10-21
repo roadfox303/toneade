@@ -12,6 +12,13 @@ class BlogsController < ApplicationController
   def new
     @page_name = "New Phrase"
     @blog = Blog.new
+    @phrase = @blog.build_phrase
+    @track = @phrase.tracks.build
+
+    @bpm_selected = "♩120"
+    @beat_selected = "4/4"
+    @key_selected = "C"
+    @key_selected = "Major"
   end
 
   def create
@@ -50,9 +57,35 @@ class BlogsController < ApplicationController
   end
 
   private
+  # def blog_params
+  #   params.require(:blog).permit(:id, :title, :content)
+  # end
   def blog_params
-    params.require(:blog).permit(:id, :title, :content)
+    params.require(:blog).permit(
+      :id,
+      :title,
+      :content,
+      phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :_destroy,
+        [tracks_attributes: [:id, :name, :type, :instrument, :data, :phrase_id, :_destroy]]
+      ]
+    )
   end
+  # def project_params
+  #   params.require(:project).permit(:name, :description, tasks_attributes: [:id, :description, :done, :_destroy,
+  #                                                        items_attributes: [:id, :description, :_destroy]])
+  #   end
+  # def order_params
+  # 　params.require(:order).permit(:date,
+  # 　　　　　　　　　　　　　　:time,
+  # 　　　　　　　　　　　　　　:receiving_method,
+  # 　　　　　　　　　　　　　　:receiving_store,
+  # 　　　　　　　　　　　　　　:delivery_address,
+  # 　　　　　　　　　　　　　　:payment,
+  # 　　　　　　　　　　　　　　:voucher,
+  # 　　　　　　　　　　　　　　:message,
+  # 　　　　　　　　　　　　　　[ordered_products_attributes: [:order_id, :product_id, :count]]
+  # 　　　　　　　　　　　　　　).merge(user_id: current_user.id)
+  # end
 
   def set_id
     @blog = Blog.find(params[:id])
@@ -60,12 +93,26 @@ class BlogsController < ApplicationController
 
   def toneade_const
     @scales = SCALE
-    # @test = @scales.find{ |item| item[:name] == "N miner scale" }
-    # @test2 = @chords.find_all{ |item| item[:notes].include?("9") }
+    @scales_list = generate_form_select(SCALE,:name)
     gon.scales = @scales.to_json
+
+    @keys = KEY
+    @keys_list = generate_form_select(KEY,:name)
+
+    @bpm_list = [*"♩1".."♩300"]
+
+    @beats = BEAT
+    @beats_list = generate_form_select(BEAT,:name)
+
     @notes = NOTE
     gon.notes = @notes.to_json
+
     @chords = CHORD
     gon.chords = @chords.to_json
+    # @test = @scales.find{ |item| item[:name] == "N miner scale" }
+    # @test2 = @chords.find_all{ |item| item[:notes].include?("9") }
+  end
+  def generate_form_select(hash,key)
+    hash.map {|item| [item[key],(item[:id] - 1)] }
   end
 end
