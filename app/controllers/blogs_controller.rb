@@ -2,7 +2,7 @@ class BlogsController < ApplicationController
   # require '../../toneade.rb'
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_id, only: [:edit, :destroy, :update, :show]
-  before_action :toneade_const, only: [:new, :edit, :show]
+  before_action :toneade_const
 
   def index
     @page_name = "Phrase Index"
@@ -15,10 +15,10 @@ class BlogsController < ApplicationController
     @phrase = @blog.build_phrase
     @track = @phrase.tracks.build
 
-    @bpm_selected = "♩120"
-    @beat_selected = "4/4"
-    @key_selected = "C"
-    @key_selected = "Major"
+    @phrase[:bpm] = 120
+    @phrase[:beat] = "4/4"
+    @phrase[:key] = "C"
+    @phrase[:scale] = "Major"
   end
 
   def create
@@ -33,6 +33,11 @@ class BlogsController < ApplicationController
   end
 
   def edit
+    @phrase = Phrase.find_by(blog_id: @blog.id)
+    @bpm_selected = @phrase[:bpm]
+    @beat_selected = @phrase[:beat]
+    @key_selected = @phrase[:key]
+    @scale_selected = @phrase[:scale]
     @page_name = "Edit Phrase"
     if user_signed_in?
       gon.current_user_id = current_user.id
@@ -61,15 +66,27 @@ class BlogsController < ApplicationController
   #   params.require(:blog).permit(:id, :title, :content)
   # end
   def blog_params
+
     params.require(:blog).permit(
       :id,
       :title,
       :content,
-      phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :_destroy,
-        [tracks_attributes: [:id, :name, :type, :instrument, :data, :phrase_id, :_destroy]]
+      :user_id,
+      phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :user_id, :_destroy
       ]
     )
   end
+  # def blog_params
+  #   binding.pry
+  #   params.require(:blog).permit(
+  #     :id,
+  #     :title,
+  #     :content,
+  #     phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :_destroy,
+  #       [tracks_attributes: [:id, :name, :type, :instrument, :data, :phrase_id, :_destroy]]
+  #     ]
+  #   )
+  # end
   # def project_params
   #   params.require(:project).permit(:name, :description, tasks_attributes: [:id, :description, :done, :_destroy,
   #                                                        items_attributes: [:id, :description, :_destroy]])
@@ -99,7 +116,10 @@ class BlogsController < ApplicationController
     @keys = KEY
     @keys_list = generate_form_select(KEY,:name)
 
-    @bpm_list = [*"♩1".."♩300"]
+    @bpm_list = []
+    [*1..300].map{ |bpm|
+      @bpm_list << ["♩#{bpm}",bpm]
+    }
 
     @beats = BEAT
     @beats_list = generate_form_select(BEAT,:name)

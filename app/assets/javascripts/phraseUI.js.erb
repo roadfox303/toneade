@@ -5,11 +5,15 @@ $(document).on('turbolinks:load', function() {
     hide_close: 'true',
     close_text: '決定',
     animation: 'none',
-    content_source: '#modal'
+    content_source: '#modal',
+    inject_position: '#blog_form'
   });
   autosize($('textarea'));
   $('.modal_close').on('click',function(){
     $('.modal').modaal('close');
+  });
+  $('.submit').on('click',function(){
+    $('#blog_form').submit();
   });
   let swiper = new Swiper('.tracks', {
     pagination: {
@@ -57,6 +61,7 @@ $(document).on('turbolinks:load', function() {
         $(this).addClass('btn_active');
       }
     });
+
     /* トラックブロックセレクト
     $(document).on('click', '.track_block', function (){
       if($(this).hasClass('select_track')){

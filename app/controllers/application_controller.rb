@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
     { id: 1, name:"Major" },
     { id: 2, name:"Natural Minor" },
     { id: 3, name:"Harmonic Minor" },
+    { id: 4, name:"Merodic Minor" },
   ]
   KEY = [
     { id: 1, name:"C", octave:[0,12,24,36,48,60,72,84,96,108,120] },

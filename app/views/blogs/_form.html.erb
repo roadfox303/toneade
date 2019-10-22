@@ -1,5 +1,5 @@
 
-<%= form_with(model: @blog, local: true ) do |form| %>
+<%= form_with(model: @blog, local: true, id:"blog_form" ) do |form| %>
   <% if @blog.errors.any? %>
     <div id="error_explanation">
       <h2><%= @blog.errors.count %>件のエラーがあります。</h2>
@@ -10,17 +10,21 @@
       </ul>
     </div>
   <% end %>
-
+  <%= form.hidden_field :user_id, :value => current_user.id %>
   <ul id="blog_inputs">
     <li><%= form.text_field :title, placeholder:"title", id: "blog_title" %></li>
     <li><a href="#modal" class="modal">upload</a></li>
   </ul>
+  <%= form.fields_for :phrase do |f| %>
   <ul id="phrase_inputs">
-    <li><%= form.select :bpm, @bpm_list, :selected => @bpm_selected, id: "phrase_beat" %></li>
-    <li><%= form.select :beat, @beats_list, :selected => @beat_selected, id: "phrase_beat" %></li>
-    <li><%= form.select :key, @keys_list, :selected => @key_selected, id: "phrase_key" %></li>
-    <li><%= form.select :scale, @scales_list, :selected => @scale_selected, id: "phrase_scale" %></li>
+    <li><%= f.select :bpm, @bpm_list, :selected => @phrase[:bpm], id: "phrase_beat" %></li>
+    <li><%= f.select :beat, @beats_list, :selected => @phrase[:beat], id: "phrase_beat" %></li>
+    <li><%= f.select :key, @keys_list, :selected => @phrase[:key], id: "phrase_key" %></li>
+    <li><%= f.select :scale, @scales_list, :selected => @phrase[:scale], id: "phrase_scale" %></li>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :master_data, :value => [1] %>
   </ul>
+  <% end %>
 
   <div class="swiper-container tracks">
     <div class="track_header h_master">
@@ -29,7 +33,6 @@
     </div>
     <div class="track_header h_1">
       <h3>TR:1</h3>
-      <%= %>
       <a class="btn_monitor btn_active">S</a>
     </div>
     <div class="swiper-wrapper">
@@ -90,5 +93,6 @@
       </li>
     </ul>
   </div>
+  <%= form.submit "フレーズ送信", class:"submit" %>
 
 <% end %>
