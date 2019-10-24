@@ -44,40 +44,27 @@ $(document).on('turbolinks:load', function() {
     }
   });
   $(function(){
-
     // alert(gon.tracks[0]["name"]);
     if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
-      $.when(
-
-      ).done(function() {
-
-      });
       let track_num = 1;
-      /* ロード時のトラック生成 */
-      if ( gon.tracks.length >= 2 ){
-        track_num = gon.tracks.length;
-        for (let i = 1 ; i < track_num ; i++){
-          console.log(gon.tracks[i]);
-          addTrack(i);
-        }
-      }
-
-      $('.add_track').on('click',function(){
-        addTrack(track_num);
-        track_num += 1;
-      });
 
       /* Editロード時、UIにトラック情報反映 */
       if( gon.page_name == "Edit Phrase"){
+        /* トラック生成 */
+        if ( gon.tracks.length >= 2 ){
+          track_num = gon.tracks.length;
+          for (let i = 1 ; i < track_num ; i++){
+            addTrack(i);
+          }
+        }
+        /* トラックにデータ反映 */
         gon.tracks.forEach(function(val,index,ar){
           $('.tr_name').eq(index).val(val["name"]);
         });
       }
 
       /* select optionにトラックタイプを挿入 */
-
       selectGenerate($('.tr_type'),gon.tr_types);
-
 
       /* UIのinput情報をformに反映 */
       $(document).on('change', 'input.UI,select.UI', function(){
@@ -118,6 +105,13 @@ $(document).on('turbolinks:load', function() {
       //   //選択したvalue値をp要素に出力
       //   $('p').text(val);
       // });
+
+      /* トラック追加 */
+      $('.add_track').on('click',function(){
+        addTrack(track_num);
+        track_num += 1;
+        selectGenerate($('.tr_type:last-child'),gon.tr_types);
+      });
       /* 視聴トラック　ソロ or オール */
       $(document).on('click', '.btn_monitor', function (){
         _this = $(this);
@@ -170,7 +164,8 @@ $(document).on('turbolinks:load', function() {
         last_pos = $('.tr_guide li').height();
         tr += 1;
         $('.track_header:last').after('<div class="track_header h_' + tr + '" id="h_' + tr + '"><h3>TR : '+ tr + '</h3><div class="track_type"></div><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
-        $('.tracks .swiper-slide li').append('<div class="track_block tr_' + tr + '"><select class="tr_type UI"></select></div>');
+        $('.tracks .swiper-slide li').append('<div class="track_block tr_' + tr + '"></div>');
+        $('.tracks .swiper-slide:first-child li .track_block:last-child').append('<select class="tr_type UI"></select>');
         $('#h_'+ tr ).css('top',(last_pos + 4));
         $('#add_tr_form a').click();
       }
