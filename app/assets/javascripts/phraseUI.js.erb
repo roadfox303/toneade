@@ -44,13 +44,28 @@ $(document).on('turbolinks:load', function() {
     }
   });
   $(function(){
+
     // alert(gon.tracks[0]["name"]);
     if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
-      /* select optionにトラックタイプを挿入 */
+      $.when(
 
-      selectGenerate($('.tr_type'),gon.tr_types);
-      tr_number($('.tr_type').parent());
+      ).done(function() {
 
+      });
+      let track_num = 1;
+      /* ロード時のトラック生成 */
+      if ( gon.tracks.length >= 2 ){
+        track_num = gon.tracks.length;
+        for (let i = 1 ; i < track_num ; i++){
+          console.log(gon.tracks[i]);
+          addTrack(i);
+        }
+      }
+
+      $('.add_track').on('click',function(){
+        addTrack(track_num);
+        track_num += 1;
+      });
 
       /* Editロード時、UIにトラック情報反映 */
       if( gon.page_name == "Edit Phrase"){
@@ -58,6 +73,12 @@ $(document).on('turbolinks:load', function() {
           $('.tr_name').eq(index).val(val["name"]);
         });
       }
+
+      /* select optionにトラックタイプを挿入 */
+
+      selectGenerate($('.tr_type'),gon.tr_types);
+
+
       /* UIのinput情報をformに反映 */
       $(document).on('change', 'input.UI,select.UI', function(){
         let _this = $(this);
@@ -71,6 +92,7 @@ $(document).on('turbolinks:load', function() {
           case _this.hasClass('tr_type') == true :
             parent = $('.track_form').eq(num);
             eq = 2 ;
+            $('.track_type').eq(num).text($('option:selected',this).text());
             break;
           case _this.hasClass('tr_instrument') == true :
             parent = $('.track_form').eq(num);
@@ -84,22 +106,9 @@ $(document).on('turbolinks:load', function() {
         $('input:nth-child(' + eq +')',parent).val(_this.val());
       });
 
-      function uiInput(target,value) {
-        // tr_number(element.parent())
-        // alert(tr_number(element.parent()));
-        target.val(value);
-      };
       // alert(gon.phrase.scale);
       /* トラック追加 */
-      let track_num = 1;
-      $('.add_track').on('click',function(){
-        last_pos = $('.tr_guide li').height();
-        track_num += 1;
-        $('.track_header:last').after('<div class="track_header h_' + track_num + '" id="h_' + track_num + '"><h3>TR : '+ track_num + '</h3><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
-        $('.tracks .swiper-slide li').append('<div class="track_block tr_' + track_num + '"></div>');
-        $('#h_'+ track_num ).css('top',(last_pos + 4));
-        $('#add_tr_form a').click();
-      });
+
       /* トラック名のフォーム反映 */
       // $('input[type="text"]').keyup(function() {
       //
@@ -157,6 +166,14 @@ $(document).on('turbolinks:load', function() {
         }
       });
       */
+      function addTrack(tr){
+        last_pos = $('.tr_guide li').height();
+        tr += 1;
+        $('.track_header:last').after('<div class="track_header h_' + tr + '" id="h_' + tr + '"><h3>TR : '+ tr + '</h3><div class="track_type"></div><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
+        $('.tracks .swiper-slide li').append('<div class="track_block tr_' + tr + '"><select class="tr_type UI"></select></div>');
+        $('#h_'+ tr ).css('top',(last_pos + 4));
+        $('#add_tr_form a').click();
+      }
       function tr_number(element){
         result = element.attr('class').replace(/[^0-9]/g, "");
         return result
@@ -165,7 +182,7 @@ $(document).on('turbolinks:load', function() {
         array.forEach(function(val,index,ar){
           element.append('<option value="' + val[1] + '">' + val[0] + '</option>');
         });
-      };
+      }
     }
   });
 })

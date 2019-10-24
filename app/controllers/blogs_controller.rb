@@ -15,6 +15,7 @@ class BlogsController < ApplicationController
     @blog = Blog.new
     @phrase = @blog.build_phrase
     @track = @phrase.tracks.build
+    gon.tracks = @track
     @phrase[:bpm] = 120
     @phrase[:beat] = "4/4"
     @phrase[:key] = "C"
