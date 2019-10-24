@@ -11,7 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= normalize.css
- *= skeleton.css
+ *= _skeleton.css
  *= swiper.css
  *= toneade.scss
  *= require_tree .

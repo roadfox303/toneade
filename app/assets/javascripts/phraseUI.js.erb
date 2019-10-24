@@ -44,40 +44,128 @@ $(document).on('turbolinks:load', function() {
     }
   });
   $(function(){
-    let track_num = 1;
-    $('.add_track').on('click',function(){
-      last_pos = $('.tr_guide li').height();
-      track_num += 1;
-       // alert(gon.chords);
-      $('.track_header:last').after('<div class="track_header h_' + track_num + '"><h3>TR:'+ track_num + '</h3><a class=" btn_monitor btn_active">S</a></div>');
-      $('.tracks .swiper-slide li').append('<div class="track_block tr_' + track_num + '"></div>');
-      $('.h_'+ track_num ).css('top',(last_pos + 4));
-    });
-    $(document).on('click', '.btn_monitor', function (){
-      if($(this).hasClass('btn_all')){
-        $('.btn_monitor').addClass('btn_active');
-      }else{
-        $('.btn_monitor').removeClass('btn_active');
-        $(this).addClass('btn_active');
-      }
-    });
+    // alert(gon.tracks[0]["name"]);
+    if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
+      /* select optionにトラックタイプを挿入 */
 
-    /* トラックブロックセレクト
-    $(document).on('click', '.track_block', function (){
-      if($(this).hasClass('select_track')){
-        $('.track_block').removeClass('select_track');
-      }else{
-        $('.track_block').removeClass('select_track');
-        $(this).addClass('select_track');
+      selectGenerate($('.tr_type'),gon.tr_types);
+      tr_number($('.tr_type').parent());
+
+
+      /* Editロード時、UIにトラック情報反映 */
+      if( gon.page_name == "Edit Phrase"){
+        gon.tracks.forEach(function(val,index,ar){
+          $('.tr_name').eq(index).val(val["name"]);
+        });
       }
-    });
-    */
+      /* UIのinput情報をformに反映 */
+      $(document).on('change', 'input.UI,select.UI', function(){
+        let _this = $(this);
+        let num = (tr_number(_this.parent()) - 1);
+        let eq, parent;
+        switch (true){
+          case _this.hasClass('tr_name') == true :
+            parent = $('.track_form').eq(num);
+            eq = 1 ;
+            break;
+          case _this.hasClass('tr_type') == true :
+            parent = $('.track_form').eq(num);
+            eq = 2 ;
+            break;
+          case _this.hasClass('tr_instrument') == true :
+            parent = $('.track_form').eq(num);
+            eq = 3 ;
+            break;
+          case _this.hasClass('tr_data') == true :
+            parent = $('.track_form').eq(num);
+            eq = 4 ;
+            break;
+        }
+        $('input:nth-child(' + eq +')',parent).val(_this.val());
+      });
+
+      function uiInput(target,value) {
+        // tr_number(element.parent())
+        // alert(tr_number(element.parent()));
+        target.val(value);
+      };
+      // alert(gon.phrase.scale);
+      /* トラック追加 */
+      let track_num = 1;
+      $('.add_track').on('click',function(){
+        last_pos = $('.tr_guide li').height();
+        track_num += 1;
+        $('.track_header:last').after('<div class="track_header h_' + track_num + '" id="h_' + track_num + '"><h3>TR : '+ track_num + '</h3><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
+        $('.tracks .swiper-slide li').append('<div class="track_block tr_' + track_num + '"></div>');
+        $('#h_'+ track_num ).css('top',(last_pos + 4));
+        $('#add_tr_form a').click();
+      });
+      /* トラック名のフォーム反映 */
+      // $('input[type="text"]').keyup(function() {
+      //
+      //   //入力したvalue値を変数に格納
+      //   var val = $(this).val();
+      //
+      //   //選択したvalue値をp要素に出力
+      //   $('p').text(val);
+      // });
+      /* 視聴トラック　ソロ or オール */
+      $(document).on('click', '.btn_monitor', function (){
+        _this = $(this);
+        if (_this.parent().attr("class") == "track_edit_header"){
+          edit_track = _this.parent().attr("id");
+          if(_this.text() == "S" ){
+            $('.btn_monitor').addClass('btn_active');
+            _this.text('ALL');
+          }else{
+            $('.btn_monitor').removeClass('btn_active');
+            _this.addClass('btn_active');
+            $('.track_header.h_' + edit_track + ' .btn_monitor' ).addClass('btn_active');
+            _this.text('S');
+          }
+        }
+        else{
+          if(_this.hasClass('btn_all')){
+            $('.btn_monitor').addClass('btn_active');
+          }else{
+            $('.btn_monitor').removeClass('btn_active');
+            _this.addClass('btn_active');
+          }
+        }
+      });
+      /* トラックエディット遷移 */
+      $(document).on('click', '.track_block.chord', function (){
+        if ($(this).siblings('.measure').text() != 'Track Setting'){
+          $('#view_blog').removeClass('view_on');
+          $('#view_track').addClass('view_on');
+          tr = $(this).attr('class').replace(/[^0-9]/g, "");
+          $('.track_edit_header').attr('id','tr_' + tr);
+          $('.track_edit_header h3').text('TR:' + tr);
+        }
+      });
+      $(document).on('click', '.view_close', function (){
+        $('#view_track').removeClass('view_on');
+        $('#view_blog').addClass('view_on');
+      });
+      /* トラックブロックセレクト
+      $(document).on('click', '.track_block', function (){
+        if($(this).hasClass('select_track')){
+          $('.track_block').removeClass('select_track');
+        }else{
+          $('.track_block').removeClass('select_track');
+          $(this).addClass('select_track');
+        }
+      });
+      */
+      function tr_number(element){
+        result = element.attr('class').replace(/[^0-9]/g, "");
+        return result
+      }
+      function selectGenerate(element,array) {
+        array.forEach(function(val,index,ar){
+          element.append('<option value="' + val[1] + '">' + val[0] + '</option>');
+        });
+      };
+    }
   });
-
-    // $('.tracks .swiper-slide').each(function(index, element){
-    //   $('.tr_guide li',element).each(function(index, element){
-    //     $(element).append('<div class="track_block chord"></div>');
-    //   })
-    // })
-    // $('.tracks .swiper-wrapper　.swiper-slide').append('<div>...</div>');
 })

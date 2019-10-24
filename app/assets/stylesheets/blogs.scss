@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $base-color: #ff0;
 $UI1-color: #cccccc;
+$UI2-color: #999999;
 $thema-color: #f00;
 $TR_border-color: #000;
 $guide_odd-color: #888888;
@@ -10,6 +11,19 @@ $guide_even-color: #666666;
 $sel_track-color: rgba(0,100,255,0.3);
 $btn_active-color: #f00;
 $btn_negative-color: #333333;
+.swiper-button-next, .swiper-button-prev{
+  display: none;
+}
+select{
+  cursor: pointer!important;
+}
+#view_blog{
+  display: none;
+  z-index: 1;
+}
+#view_blog.view_on{
+  display: block;
+}
 #blog_content {
   width: 100%;
   margin: 0;
@@ -124,6 +138,7 @@ $btn_negative-color: #333333;
   text-align: center;
   font-size: 18px;
   background: #ccc;
+  cursor: ew-resize;
   // padding-top: 4px!important;
   /* Center slide text vertically */
   display: -webkit-box;
@@ -150,10 +165,11 @@ $btn_negative-color: #333333;
 .track {
   width: 100%;
 }
-.track_header, .track_header h3,.track_header .btn_all{
-  height: 30px;
+.track_header, .track_header h3,.track_header input,.track_header .btn_all{
+  height: 30px!important;
   box-sizing: border-box;
   line-height: 30px;
+  cursor: default;
 }
 .track_header{
   background: $UI1-color;
@@ -182,6 +198,10 @@ $btn_negative-color: #333333;
   border-top: 0px;
   padding: 0 0.8rem;
   box-sizing: border-box;
+  cursor: pointer!important;
+}
+.btn_monitor:hover{
+  color:#fff;
 }
 .btn_active{
   background:$btn_active-color;
@@ -205,6 +225,12 @@ $btn_negative-color: #333333;
   height: 120px;
   margin-top: 30px;
   background: rgba(0,0,0,0.4);
+  cursor: grab;
+}
+.track_block:active {
+  cursor: -webkit-grabbing;
+  cursor:    -moz-grabbing;
+  cursor:         grabbing;
 }
 .track_block.master{
   height: 40px;
@@ -218,23 +244,86 @@ $btn_negative-color: #333333;
   height: 20px;
   line-height: 20px;
 }
+.swiper-slide:first-child .measure{
+  background: $UI2-color!important;
+}
 /* マスタートラック */
 .master_track li{
   height: 80px;
   margin: 0;
 }
-.fix_test{
-  position: absolute;
-  top: 40px;
-  z-index: 9999;
-}
-.h_master{
+
+#h_master{
   top: 24px!important;
 }
 .master_block{
   height: 40px;
 }
 /* トラック 1 */
-.h_1{
+#h_1{
   top: 94px!important;
+}
+.track_type{
+  float: left;
+  cursor: default;
+}
+.tr_name{
+  background: $UI1-color!important;
+  border: 0px!important;
+  min-width: 160px;
+  padding-right: 0!important;
+  width:50%;
+  border-radius: 0px;
+  cursor: text!important;
+}
+.tr_name:hover{
+  // background: $sel_track-color!important;
+}
+
+/* トラック編集画面 */
+#view_track{
+  width: 100%;
+  display: none;
+  z-index: 10;
+  background: #ffffff;
+}
+#view_track.view_on{
+  display: block;
+}
+#view_track .track_edit_header, #view_track .track_edit_header h3, #view_track .track_edit_header .btn_all{
+  height: 30px;
+  box-sizing: border-box;
+  line-height: 30px;
+}
+#view_track .track_edit_header{
+  background: $UI1-color;
+  border-top: solid 1px $TR_border-color;
+  width: 100%;
+  position: relative!important;
+
+}
+#view_track .view_close{
+  float: left;
+}
+#view_track .track_edit_header h3{
+  display: block;
+  float: left;
+}
+#view_track span{
+  overflow: hidden;
+  float: left;
+}
+#view_track .btn_monitor{
+  text-align: center;
+  width:4rem;
+}
+#add_tr_form{
+  display: none;
+}
+.track_form{
+  position: relative;
+  float: left;
+}
+.track_form input{
+  // display: none;
 }

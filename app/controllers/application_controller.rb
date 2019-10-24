@@ -58,4 +58,15 @@ class ApplicationController < ActionController::Base
     { id: 11, type: "sus4", notes: ["0","5","7"], category: "sus" },
     { id: 12, type: "7sus4", notes: ["0","5","7","A"], category: "sus" }
   ]
+
+  TR_TYPE = [
+    { id: 1, name:"Chord" },
+    { id: 2, name:"Melody" },
+    { id: 3, name:"Rythm" }
+  ]
+  DEVICE_TYPE = [
+    { id: 1, name:"Chord" },
+    { id: 2, name:"Melody" },
+    { id: 3, name:"Rythm" }
+  ]
 end

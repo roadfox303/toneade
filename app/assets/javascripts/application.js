@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require jquery/dist/jquery.js
+//= require cocoon
 //= require iscroll.js
 //= require drawer.js
 //= require swiper.js

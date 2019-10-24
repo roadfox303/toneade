@@ -11,14 +11,16 @@ class BlogsController < ApplicationController
 
   def new
     @page_name = "New Phrase"
+    gon.page_name = @page_name
     @blog = Blog.new
     @phrase = @blog.build_phrase
     @track = @phrase.tracks.build
-
     @phrase[:bpm] = 120
     @phrase[:beat] = "4/4"
     @phrase[:key] = "C"
     @phrase[:scale] = "Major"
+    @track[:instrument] = []
+    @track[:data] = []
   end
 
   def create
@@ -34,11 +36,16 @@ class BlogsController < ApplicationController
 
   def edit
     @phrase = Phrase.find_by(blog_id: @blog.id)
+    gon.phrase = @phrase
     @bpm_selected = @phrase[:bpm]
     @beat_selected = @phrase[:beat]
     @key_selected = @phrase[:key]
     @scale_selected = @phrase[:scale]
+    @tracks = @phrase.tracks.all
+    gon.tracks = @tracks
+
     @page_name = "Edit Phrase"
+    gon.page_name = @page_name
     if user_signed_in?
       gon.current_user_id = current_user.id
     end
@@ -72,7 +79,8 @@ class BlogsController < ApplicationController
       :title,
       :content,
       :user_id,
-      phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :user_id, :_destroy
+      phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :user_id, :_destroy,
+            [tracks_attributes: [:id, :name, :tr_type, :instrument, :data, :_destroy]]
       ]
     )
   end
@@ -117,7 +125,7 @@ class BlogsController < ApplicationController
     @keys_list = generate_form_select(KEY,:name)
 
     @bpm_list = []
-    [*1..300].map{ |bpm|
+    [*20..240].map{ |bpm|
       @bpm_list << ["♩#{bpm}",bpm]
     }
 
@@ -131,8 +139,11 @@ class BlogsController < ApplicationController
     gon.chords = @chords.to_json
     # @test = @scales.find{ |item| item[:name] == "N miner scale" }
     # @test2 = @chords.find_all{ |item| item[:notes].include?("9") }
+    @tr_types = TR_TYPE
+    @tr_type_list = generate_form_select(TR_TYPE,:name)
+    gon.tr_types = @tr_type_list
   end
   def generate_form_select(hash,key)
-    hash.map {|item| [item[key],(item[:id] - 1)] }
+    hash.map {|item| [item[key],(item[:id])] }
   end
 end
