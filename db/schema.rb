@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_052327) do
+ActiveRecord::Schema.define(version: 2019_10_24_085412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_052327) do
 
   create_table "tracks", force: :cascade do |t|
     t.string "name"
-    t.integer "tr_type", default: 0, null: false
+    t.integer "tr_type", default: 1, null: false
     t.jsonb "instrument", null: false
     t.jsonb "data", null: false
     t.bigint "phrase_id"

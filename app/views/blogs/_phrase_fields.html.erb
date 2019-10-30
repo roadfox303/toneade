@@ -30,8 +30,15 @@
           <div class="measure">Track Setting</div>
           <div class="track_block master"></div>
           <div class="track_block tr_1 chord">
-            <select class="tr_type UI"></select>
-            <div contentEditable="true" class="UI_input">ここは編集できる</div>
+            <div class="track_block_row">
+              <span>track type</span><select class="tr_type UI"></select><p><a class="tr_del del_1">×</a></p>
+            </div>
+            <div class="track_block_row">
+              <span>patch category</span><select class="inst_type search"></select>
+            </div>
+            <div class="track_block_row">
+              <span>patch</span><select class="preset search"></select>
+            </div>
           </div>
         </li>
       </ul>
@@ -67,5 +74,5 @@
 
 <ul id="add_btns">
   <li><a class="btn add_track">add track</a></li>
-  <li><a class="btn add_track">add measure</a></li>
+  <li><a class="btn add_measure">add measure</a></li>
 </ul>

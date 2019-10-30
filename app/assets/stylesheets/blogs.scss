@@ -1,16 +1,35 @@
 // Place all the styles related to the blogs controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-$base-color: #ff0;
 $UI1-color: #cccccc;
 $UI2-color: #999999;
 $thema-color: #f00;
 $TR_border-color: #000;
-$guide_odd-color: #888888;
-$guide_even-color: #666666;
-$sel_track-color: rgba(0,100,255,0.3);
-$btn_active-color: #f00;
+$guide_odd-color: rgba(55, 60, 64, 1);
+$guide_even-color: rgba(35, 41, 45, 1);
+$sel_track-color: rgba(255,255,255,0.3);
+$btn_active-color: rgba(168, 35, 66, 1);
 $btn_negative-color: #333333;
+
+$base-color: rgba(197, 203, 207, 1);
+$thema-color: rgba(67, 182, 211, 1);
+$sub-color: rgba(97, 112, 125, 1);
+$dark-color: rgba(35, 41, 45, 1);
+$point-color: rgba(168, 35, 66, 1);
+
+$T_full: rgba(123, 230, 255, 1);
+$SD_full: rgba(209, 255, 123, 1);
+$D_full: rgba(255, 159, 196, 1);
+$Second_full: rgba(255, 204, 123, 1);
+$Sub_full: rgba(189, 123, 255, 1);
+$Back_full: rgba(123, 148, 255, 1);
+$Ext_full: rgba(255, 255, 255, 1);
+$T_alpha: rgba(123, 230, 255, 0.2);
+$SD_alpha: rgba(209, 255, 123, 0.2);
+$D_alpha: rgba(255, 159, 196, 0.2);
+.swiper-container{
+  background: #000;
+}
 .swiper-button-next, .swiper-button-prev{
   display: none;
 }
@@ -74,7 +93,7 @@ select{
   font-size: 1.6rem;
   text-align: center;
 }
-#blog_inputs li a, .modal_close, .btn{
+#blog_inputs li a, .modal_close, .btn, .del_accept{
   display: inline-block;
   height: 38px;
   width: 100%;
@@ -125,7 +144,7 @@ select{
   padding: 5%!important;
 }
 
-.swiper-container {
+.tracks {
   width: 100%!important;
   height: auto!important;
   padding-top:4px!important;
@@ -172,8 +191,9 @@ select{
   cursor: default;
 }
 .track_header{
-  background: $UI1-color;
+  background: $sub-color;
   border-top: solid 1px $TR_border-color;
+  color: #000;
   display: block;
   float: left;
   overflow: hidden;
@@ -181,7 +201,7 @@ select{
   position: absolute;
   z-index: 2;
 }
-.track_header h3{
+.track_header h3, .track_edit_header h3{
   display: block;
   float: left;
   width:auto;
@@ -194,7 +214,7 @@ select{
   float: right;
   background:$btn_negative-color;
   color:#fff;
-  border: 1px solid #000;
+  // border: 1px solid #000;
   border-top: 0px;
   padding: 0 0.8rem;
   box-sizing: border-box;
@@ -215,6 +235,7 @@ select{
 .tr_guide li {
   display: table-cell;
   height: 100%;
+  width:25%;
   background-color: $guide_odd-color;
 }
 .tr_guide li:nth-child(odd){
@@ -224,7 +245,7 @@ select{
 .track_block{
   height: 120px;
   margin-top: 30px;
-  background: rgba(0,0,0,0.4);
+  color: #dddddd;
   cursor: grab;
 }
 .track_block:active {
@@ -238,14 +259,89 @@ select{
 .select_track{
   background: $sel_track-color;
 }
+.track_form{
+  position: relative;
+  float: left;
+}
+.track_form input{
+  display: none;
+}
+select.UI,.track_block_row select{
+  background: transparent;
+  border: none;
+}
+.track_block_row{
+  padding: 0.5rem 0;
+  margin: 0 0.5rem;
+  font-size: 1.6rem;
+}
+.track_block_row:first-child{
+  border-bottom: 1px solid #000000;
+}
+.track_block_row span{
+  display: inline-block;
+  text-indent: 1rem;
+  text-align: left;
+}
+.track_block_row select{
+  background:#000;
+  height: 30px;
+  border-radius: 0px!important;
+  border: none;
+}
+
+.tr_guide:first-child .track_block .track_block_row:nth-child(1) .tr_del{
+  height: 24px!important;
+  width: 24px!important;
+  padding: 2px 8px 6px;
+  background-color: #dddddd;
+  color: #f00;
+  line-height: 30px;
+  border: none;
+  border-radius: 50%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(1) span{
+  width: 40%;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(1) select{
+  width: 50%;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(1) p{
+  height: 30px;
+  display: inline-block;
+  padding-left: 5px;
+  margin: 0;
+  box-sizing: border-box;
+  width: 10%;
+  text-align: center;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(3){
+  padding-top: 0rem;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(2) span{
+  width: 55%;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(2) select{
+  width: 45%;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(3) span{
+  width: 30%;
+}
+.tr_guide:first-child .track_block .track_block_row:nth-child(3) select{
+  width: 70%;
+}
 /* 小節ガイド */
-.measure{
+.measure,.edit_m{
   font-size: 1.4rem;
   height: 20px;
   line-height: 20px;
+  color:#8C97A0;
 }
 .swiper-slide:first-child .measure{
-  background: $UI2-color!important;
+  background: $base-color!important;
+  color:#000;
 }
 /* マスタートラック */
 .master_track li{
@@ -268,7 +364,7 @@ select{
   cursor: default;
 }
 .tr_name{
-  background: $UI1-color!important;
+  background: $sub-color!important;
   border: 0px!important;
   min-width: 160px;
   padding-right: 0!important;
@@ -279,24 +375,33 @@ select{
 .tr_name:hover{
   // background: $sel_track-color!important;
 }
+.tr_name::placeholder {
+  color: #494D51;
+}
 
 /* トラック編集画面 */
 #view_track{
   width: 100%;
-  display: none;
+  // display: none;
   z-index: 10;
-  background: #ffffff;
+  background: $dark-color;
 }
 #view_track.view_on{
-  display: block;
-}
-#view_track .track_edit_header, #view_track .track_edit_header h3, #view_track .track_edit_header .btn_all{
-  height: 30px;
-  box-sizing: border-box;
-  line-height: 30px;
+  display: block!important;
 }
 #view_track .track_edit_header{
-  background: $UI1-color;
+  height: 31px;
+  line-height: 31px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+#view_track .track_edit_header h3, #view_track .track_edit_header .btn_monitor{
+  height: 30px;
+  line-height: 30px;
+  box-sizing: border-box;
+}
+#view_track .track_edit_header{
+  background: $sub-color;
   border-top: solid 1px $TR_border-color;
   width: 100%;
   position: relative!important;
@@ -304,14 +409,17 @@ select{
 }
 #view_track .view_close{
   float: left;
-}
-#view_track .track_edit_header h3{
   display: block;
-  float: left;
+  background: #f00;
+  margin: 3px;
+  padding: 0 0.5rem;
+  height: 24px;
+  line-height: 24px;
 }
+
 #view_track span{
-  overflow: hidden;
-  float: left;
+  // overflow: hidden;
+  // float: left;
 }
 #view_track .btn_monitor{
   text-align: center;
@@ -320,10 +428,245 @@ select{
 #add_tr_form{
   display: none;
 }
-.track_form{
+
+#edit_track_chord {
+  width: 100%!important;
+  height: auto!important;
+  padding-top:0!important;
+  margin-bottom: 5px;
   position: relative;
-  float: left;
 }
-.track_form input{
-  // display: none;
+.edit_chord{
+  padding-left: 32px!important;
+  z-index: 10;
+}
+#edit_track_chord .swiper-wrapper{
+  padding-top: 4px;
+}
+#edit_btn_left a,#edit_btn_bottom a{
+  color: #ffffff;
+  text-decoration: none;
+}
+#edit_btn_left{
+  width: 32px;
+  padding-top: 0px;
+  margin-top: 4px;
+  position: absolute;
+  top:0;
+  z-index: 11;
+  background: #000;
+  color: #fff;
+}
+#edit_btn_left ul{
+  list-style: none;
+}
+#edit_btn_left li,.edit_b{
+  height: 32px;
+  margin: 0;
+  line-height: 32px;
+  text-align: center;
+}
+#edit_btn_left li{
+  height: 32px;
+  line-height: 32px;
+}
+#edit_btn_left li:first-child{
+  height: 52px;
+  font-size: 1.4rem;
+}
+#edit_btn_left li:first-child span{
+  display: block;
+  width: 100%;
+  height: 20px;
+}
+#edit_btn_left li:first-child .oct{
+  font-size: 2rem;
+  height: 32px;
+}
+.btn_octave{
+  display: block;
+  width:32px;
+  height: 52px;
+  text-align: center;
+}
+.edit_m,.edit_b{
+  // background: rgba(0,0,0,0.4);
+  border-bottom: solid 1px #000;
+  box-sizing: border-box;
+}
+#edit_btn_bottom{
+  position: relative;
+  color: #fff;
+  background: #000;
+}
+#edit_btn_bottom ul{
+  width: 100%;
+  padding: 0 0 0 32px;
+  margin: 0;
+  list-style: none;
+  display: table;
+  box-sizing: border-box;
+}
+#edit_btn_bottom li{
+  display: table-cell;
+  width: 33.3%;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+}
+
+#chord_category{
+}
+#chord_category ul{
+  width: 100%;
+  list-style: none;
+  display: table;
+}
+#chord_category li{
+  display: table-cell;
+  text-align: center;
+  padding: 1px;
+}
+#btn_chord_function li:first-child{
+  width:20%;
+}
+#btn_chord_function li{
+  width:26.7%;
+}
+#btn_chord_function li:last-child{
+  width:26.6%;
+}
+
+#btn_chord_type li{
+  width:20%;
+}
+.func_T,.func_t{
+  color:$T_full;
+  border: solid 1px $T_full;
+}
+.func_T{
+  background: $T_alpha;
+}
+.func_SD,.func_sd{
+  color:$SD_full;
+  border: solid 1px $SD_full;
+}
+.func_SD{
+  background: $SD_alpha;
+}
+.func_D,.func_d{
+  color:$D_full;
+  border: solid 1px $D_full;
+}
+.func_D{
+  background: $D_alpha;
+}
+.func_Ext{
+  color: #ffffff;
+}
+#chord_category li a{
+  // background: rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.3);
+  height: 30px;
+  line-height: 30px;
+  border: solid 1px #000;
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#chord_category .func_T{
+  color:$T_full;
+  background: rgba(0,0,0,0.3);
+}
+#chord_category .func_SD{
+  color:$SD_full;
+  background: rgba(0,0,0,0.3);
+}
+#chord_category .func_D{
+  color:$D_full;
+  background: rgba(0,0,0,0.3);
+}
+#chord_category .func_Sub{
+  color:$Sub_full;
+  background: rgba(0,0,0,0.3);
+}
+#chord_category .func_Ext{
+  color:$Ext_full;
+  background: rgba(0,0,0,0.3);
+}
+#list_diatonic,#list_candidate,#list_future{
+  font-size: 1rem;
+}
+#list_diatonic ul,#list_candidate ul,#list_future ul{
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-wrap:wrap;
+  margin: 5px 0;
+  padding-bottom: 5px;
+  border-bottom: solid 1px #000;
+}
+#list_diatonic li,#list_candidate li,#list_future li{
+  display: table;
+  height: 30px;
+  line-height: 1rem;
+  margin: 1px 0;
+  padding: 0 1px;
+  min-width:14.28%;
+  flex-basis:14.28%;
+  text-align: center;
+  box-sizing: border-box;
+}
+#list_diatonic li a,#list_candidate li a,#list_future li a{
+  display: table-cell;
+  width: 100%;
+  height: 30px;
+  vertical-align: middle;
+  border-radius: 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition:0.3s all ease 0s;
+}
+#list_diatonic li a:hover,#list_candidate li a:hover,#list_future li a:hover{
+  background: rgba(255,255,255,0.4);
+  color: #000000;
+}
+#list_future{
+  display: none;
+}
+#test{
+	// background: #ff9627;
+  width: 100%;
+	height: 0;
+  top: 15px;
+	position: relative;
+}
+#test:before,#test:after{
+	width: calc(100% - 10px);
+	height: 0;
+	display: block;
+	position: absolute;
+  color:$T_full;
+	left: 0;
+	content: "";
+  z-index: 2;
+}
+#test:before{
+	border-bottom: solid 15px #fff;
+	border-right: solid 10px transparent;
+	bottom: 100%;
+  z-index: 2;
+}
+#test:after{
+	border-top: solid 15px #fff;
+	border-right: solid 10px transparent;
+	top: 100%;
+  z-index: 2;
+}
+#test a{
+  display: block;
+  position: absolute;
+  height: 30px;
+  top: -15px;
+  z-index: 3;
 }

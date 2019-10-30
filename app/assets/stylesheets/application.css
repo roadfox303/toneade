@@ -20,11 +20,15 @@
 ul {
   margin: 0;
 }
+form{
+  margin-bottom: 0;
+}
 #container{
-  padding: 0.5rem;
+  padding: 0;
 }
 .content_wrapper{
-  margin-top: 43px;
+  margin-top: 48px;
   position: relative;
   overflow: hidden;
+  padding: 0.5rem;
 }

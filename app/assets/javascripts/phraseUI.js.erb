@@ -1,20 +1,39 @@
 $(document).on('turbolinks:load', function() {
-  $('.modal').modaal({
+  $('.modal_upload').modaal({
     overlay_opacity: 0.3,
     overlay_close: 'false',
     hide_close: 'true',
     close_text: '決定',
     animation: 'none',
-    content_source: '#modal',
+    content_source: '#modal_upload',
+    inject_position: '#blog_form'
+  });
+  $('.btn_duration').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_duration',
+    inject_position: '#blog_form'
+  });
+  $('.btn_octave').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_octave',
     inject_position: '#blog_form'
   });
   autosize($('textarea'));
   $('.modal_close').on('click',function(){
-    $('.modal').modaal('close');
+    $('.modal_upload').modaal('close');
   });
   $('.submit').on('click',function(){
     $('#blog_form').submit();
   });
+  addModal();
   let swiper = new Swiper('.tracks', {
     pagination: {
       el: '.swiper-pagination',
@@ -43,10 +62,225 @@ $(document).on('turbolinks:load', function() {
       },
     }
   });
+  let edit = new Swiper('.edit_chord', {
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'progressbar'
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      640: {
+        slidesPerView: 2
+      },
+      960: {
+        slidesPerView: 3
+      },
+      1280: {
+        slidesPerView: 4
+      },
+    }
+  });
+  $('#view_track').css('display','none');
+  function addModal(){
+    $('.tracks .swiper-slide:first-child li .track_block:last-child .tr_del').modaal({
+      overlay_opacity: 0.3,
+      overlay_close: 'false',
+      hide_close: 'true',
+      close_text: '決定',
+      animation: 'none',
+      content_source: '#modal_track_del',
+      inject_position: '#blog_form'
+    });
+  }
+  /* Tone.js */
+  let chord = ["E4","G4","B4"]
+  let c_maj = ["E4","G4","C5"]
+  // let toneData = [
+  //   { note: chord, dur: "8n" },
+  //   { note: "F4", dur: "4n" },
+  //   [{ note: "G4", dur: "8n" }, { note: "G4", dur: "8n" }],
+  //   { note: "G4", dur: "4n" },
+  //
+  //   { note: "E4", dur: "8n" },
+  //   [{ note: "G4", dur: "8n" }, { note: "C5", dur: "8n" }],
+  //   { note: "C5", dur: "8n" },
+  //   [{ note: "C5", dur: "8n" }, { note: "D5", dur: "2n" }],
+  //
+  //   null,
+  //   { note: "E5", dur: "8n" },
+  //   { note: "E5", dur: "8n" },
+  //   { note: "D5", dur: "2n" },
+  //
+  //   null,
+  //   [{ note: "C5", dur: "8n" },{ note: "A4", dur: "8n" }],
+  //   [{ note: "C5", dur: "2n" },{ note: "C5", dur: "2n" }],
+  // ];
+  let toneData = [
+    {'time': '0:0:0', 'note': c_maj, 'dur': ' 16n',root:'C△'},
+    {'time': '0:3:0', "note": 'G4', 'dur': '16n',root:'C△'},
+    {'time': '1:2:0', "note": 'E4', 'dur': '16n',root:'C△'},
+    {'time': '2:0:0', "note": 'A4', 'dur': '4n',root:'C△'},
+    {'time': '2:1.5:0', "note": 'B4', 'dur': '4n'},
+    {'time': '2:2.8:0', "note": 'A4', 'dur': '4n'},
+    {'time': '3:0.2:0', "note": 'G#4', 'dur': '4n'},
+    {'time': '3:1.6:0', "note": 'A#4', 'dur': '4n'},
+    {'time': '3:2.8:0', "note": 'G#4', 'dur': '4n'},
+    {'time': '4:0:0', "note": 'G4', 'dur': '16n'},
+    {'time': '4:0.75:0', "note": 'F4', 'dur': '16n'},
+    {'time': '4:1.25:0', "note": 'G4', 'dur': '1n'},
+  ];
+  /* 音名をノートナンバーに変換 */
+  function convert_note_to_number(note){
+    let key = pickKey(note);
+    let oct = pickOct(note);
+    if (oct == ""){
+      oct = -1;
+    }
+    let index = gon.keys.findIndex(({name}) => name === key);
+    return gon.keys[index]['octave'][oct + 1]
+    // let result = x.toString(12);
+  }
+  /* ノートナンバーを音名に変換 */
+  function convert_number_to_note(num){
+    let oct;
+    let index = gon.keys.findIndex(childSearch);
+    function childSearch(element) {
+      if (element['octave'].includes(num) == true){
+        oct = element['octave'].findIndex(item => item === num) - 1;
+        return true;
+      }
+    }
+    return gon.keys[index]['name'] + oct;
+  }
+  /* ノート名から */
+
+  /* コードを探索(chord:array, answer:'type'または'name') */
+  function search_chord(chord,answer){
+    let bufferA = chord,bufferB,result;
+    for (let i = 1 ; i < bufferA.length ; i++){
+      bufferB = bufferA;
+      let root = convert_note_to_number(bufferB[0]);
+      bufferB = bufferB.map(function(note) {
+        return convert_note_to_number(note) - root
+      });
+      let index = gon.chords.findIndex(function(element){
+        if (element['notes'].join() == bufferB.join()){
+          return true;
+        }
+      });
+      if (index != -1){
+        switch (answer){
+          case 'type' :
+          result =  gon.chords[index]['type']
+          break;
+          case 'name' :
+          result =  pickKey(bufferA[0]) + gon.chords[index]['type']
+          break;
+        }
+        break;
+      }
+      else{
+        bufferA = rotate_chord(bufferA,'down');
+      }
+    }
+    return result
+  }
+  // chord_search(["E4","G4","C5"],"C");
+  // search_chord(["F#4","A4","D5","E5"],"D4");
+  // rotate_chord(["F#4","A4","D5","E5"],"down");
+  console.log(search_chord(["G4","A#4","C5","E5"],"name"));
+
+  /* コードを転回(chord:array) */
+  function rotate_chord(chord,direction){
+    let result;
+    switch (direction){
+      case 'up' :
+      chord.push(octaveUp(chord[0]));
+      chord.shift();
+      break;
+      case 'down' :
+      chord.unshift(octaveDown(chord.slice(-1)[0]));
+      chord.pop();
+      break;
+    }
+    return chord
+  }
+  /* ノートをオクターブアップ(note:string) */
+  function octaveUp(note){
+    return pickKey(note) + (pickOct(note) + 1);
+  }
+  /* ノートをオクターブダウン(note:string) */
+  function octaveDown(note){
+    return pickKey(note) + (pickOct(note) - 1);
+  }
+  /* 音階名をピックアップ (note:string)*/
+  function pickKey(note){
+    return note.replace(/[0-9,-]/g, "")
+  }
+  /* オクターブをピックアップ(note:string) */
+  function pickOct(note){
+    let oct = note.replace(/[^0-9,-]/g, "")
+    return parseInt(oct, 10)
+  }
+
+  // const synth = new Tone.MembraneSynth().toMaster();
+  const synth = new Tone.PolySynth(6, Tone.Synth, {
+    oscillator : {
+  		type : "square"
+  	}
+  }).toMaster();
+  // const seq = new Tone.Sequence((time, { note, dur }) => {
+  //   synth.triggerAttackRelease(note, dur, time);
+  // }, toneData, "4n").start(0);
+  function addMelody(time, { note, dur }) {
+    synth.triggerAttackRelease(note, dur, time);
+  }
+  var sequence
+  let playing = false;
+  Tone.Transport.bpm.value = 120;
+
+  $(document).on('click', '.play', function (){
+    if (!playing) {
+      Tone.Transport.cancel();
+      sequence = new Tone.Part(addMelody, toneData).start(0);
+      Tone.Transport.start();
+      playing = true;
+    } else {
+      Tone.Transport.stop();
+      playing = false;
+    }
+  });
+  /* UI */
   $(function(){
+    $(document).on('click', '.test_edit', function (){
+      let GM=["G3","B3","D4"];
+      let Em=["E3","G3","B3"];
+      toneData = [
+        {'time': '0:0:0', 'note': ["C4","E4","G4"], 'dur': '4n'},
+        {'time': '0:1:0', 'note': ["G3","B3","D4"], 'dur': '4n'},
+        {'time': '0:2:0', 'note': ["A3","C4","E4"], 'dur': '4n'},
+        {'time': '0:3:0', 'note': Em, 'dur': '4n'},
+        {'time': '1:0:0', 'note': ["F3","A3","C3"], 'dur': '4n'},
+        {'time': '1:1:0', 'note': ["C3","E3","G3"], 'dur': '4n'},
+        {'time': '1:2:0', 'note': ["F3","A3","C3"], 'dur': '4n'},
+        {'time': '1:3:0', 'note': GM, 'dur': '4n'},
+      ];
+    });
+    console.log(toneData);
     // alert(gon.tracks[0]["name"]);
     if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
       let track_num = 1;
+      let last_measure = 4;
 
       /* Editロード時、UIにトラック情報反映 */
       if( gon.page_name == "Edit Phrase"){
@@ -55,37 +289,54 @@ $(document).on('turbolinks:load', function() {
           track_num = gon.tracks.length;
           for (let i = 1 ; i < track_num ; i++){
             addTrack(i);
+            addModal();
           }
         }
         /* トラックにデータ反映 */
         gon.tracks.forEach(function(val,index,ar){
           $('.tr_name').eq(index).val(val["name"]);
+          selectGenerate($('.tr_type').eq(index), gon.tr_types, gon.tracks[index]["tr_type"]);
+          selectGenerate($('.inst_type').eq(index), gon.inst_categorys);
+          // $("select option").attr("selected", true);
         });
+      }else{
+        selectGenerate($('.tr_type'),gon.tr_types,1);
+        selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .inst_type'),gon.inst_categorys);
       }
 
       /* select optionにトラックタイプを挿入 */
-      selectGenerate($('.tr_type'),gon.tr_types);
+      // selectGenerate($('.tr_type'),gon.tr_types);
+
+      /* UIのbpmをTone.jsに反映 */
+      $(document).on('change', '#blog_phrase_attributes_bpm', function(){
+        Tone.Transport.bpm.value = $(this).val();
+      });
 
       /* UIのinput情報をformに反映 */
       $(document).on('change', 'input.UI,select.UI', function(){
         let _this = $(this);
-        let num = (tr_number(_this.parent()) - 1);
-        let eq, parent;
+        let num,eq, parent;
         switch (true){
           case _this.hasClass('tr_name') == true :
+            num = (tr_number(_this.parent()) - 1);
             parent = $('.track_form').eq(num);
             eq = 1 ;
             break;
           case _this.hasClass('tr_type') == true :
+            num = (tr_number(_this.parent().parent()) - 1);
             parent = $('.track_form').eq(num);
             eq = 2 ;
             $('.track_type').eq(num).text($('option:selected',this).text());
+            test = $('.track_block').eq(num + 1).attr('class');
+            alert(test);
             break;
           case _this.hasClass('tr_instrument') == true :
+            num = (tr_number(_this.parent()) - 1);
             parent = $('.track_form').eq(num);
             eq = 3 ;
             break;
           case _this.hasClass('tr_data') == true :
+            num = (tr_number(_this.parent()) - 1);
             parent = $('.track_form').eq(num);
             eq = 4 ;
             break;
@@ -110,8 +361,39 @@ $(document).on('turbolinks:load', function() {
       $('.add_track').on('click',function(){
         addTrack(track_num);
         track_num += 1;
-        selectGenerate($('.tr_type:last-child'),gon.tr_types);
+        selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .tr_type'),gon.tr_types);
+        selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .inst_type'),gon.inst_categorys);
+        addModal();
       });
+      /* 小節追加 */
+      $('.add_measure').on('click',function(){
+        // copy = $('.swiper-slide:last-child');
+        // $('.swiper-slide:last-child').clone(true).appendTo('.tracks');
+        let last = last_measure;
+        swiper.appendSlide($('.tracks .swiper-slide:last-child').clone(true));
+        $('.tracks .swiper-slide:last-child .measure').each(function(index, element){
+          $(element).text(last += 1);
+        });
+        last = last_measure;
+        $('.tracks .swiper-slide:last-child .track_block').empty();
+        edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
+        $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
+          $(element).text(last += 1);
+        });
+        last_measure = last;
+      });
+      /* トラック削除確認 */
+      $(document).on('click', '.tr_del', function (){
+        let tr = tr_number($(this));
+        $('.track_del p').text('Track ' + tr + ' を削除しますか？');
+        $('.del_accept:last-child').addClass('delete_' + tr);
+      });
+      $(document).on('click', '.del_accept', function (){
+        let tr = tr_number($(this));
+        $(".h_" + tr).remove();
+        $(".tracks .swiper-slide li .track_block.tr_" + tr).remove();
+      });
+
       /* 視聴トラック　ソロ or オール */
       $(document).on('click', '.btn_monitor', function (){
         _this = $(this);
@@ -144,28 +426,30 @@ $(document).on('turbolinks:load', function() {
           tr = $(this).attr('class').replace(/[^0-9]/g, "");
           $('.track_edit_header').attr('id','tr_' + tr);
           $('.track_edit_header h3').text('TR:' + tr);
+          $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
         }
       });
       $(document).on('click', '.view_close', function (){
         $('#view_track').removeClass('view_on');
         $('#view_blog').addClass('view_on');
+        $('.content_wrapper').css('background','#ffffff');
       });
-      /* トラックブロックセレクト
-      $(document).on('click', '.track_block', function (){
+      /* 入力ブロックセレクト */
+      $(document).on('click', '.edit_b', function (){
         if($(this).hasClass('select_track')){
-          $('.track_block').removeClass('select_track');
+          $('.edit_b').removeClass('select_track');
         }else{
-          $('.track_block').removeClass('select_track');
+          $('.edit_b').removeClass('select_track');
           $(this).addClass('select_track');
         }
       });
-      */
+
       function addTrack(tr){
         last_pos = $('.tr_guide li').height();
         tr += 1;
         $('.track_header:last').after('<div class="track_header h_' + tr + '" id="h_' + tr + '"><h3>TR : '+ tr + '</h3><div class="track_type"></div><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
         $('.tracks .swiper-slide li').append('<div class="track_block tr_' + tr + '"></div>');
-        $('.tracks .swiper-slide:first-child li .track_block:last-child').append('<select class="tr_type UI"></select>');
+        $('.tracks .swiper-slide:first-child li .track_block:last-child').append('<div class="track_block_row"><span>track type</span><select class="tr_type UI"></select><p><a class="tr_del del_' + tr + '">×</a></p></div><div class="track_block_row"><span>patch category</span><select class="inst_type search"></select></div><div class="track_block_row"><span>patch</span><select class="preset search"></select></div>');
         $('#h_'+ tr ).css('top',(last_pos + 4));
         $('#add_tr_form a').click();
       }
@@ -173,11 +457,30 @@ $(document).on('turbolinks:load', function() {
         result = element.attr('class').replace(/[^0-9]/g, "");
         return result
       }
-      function selectGenerate(element,array) {
+      function selectGenerate(element,array,selected) {
         array.forEach(function(val,index,ar){
-          element.append('<option value="' + val[1] + '">' + val[0] + '</option>');
+          if (index == (selected - 1)){
+            element.append('<option value="' + val[1] + '" selected="selected">' + val[0] + '</option>');
+          }else{
+
+            element.append('<option value="' + val[1] + '">' + val[0] + '</option>');
+          }
         });
       }
     }
+    /*コードエディット*/
+    function editAddMeasure(){
+      let edit = '<div class="swiper-slide"><ul class="tr_guide"><li><div class="edit_m">1</div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div></li><li><div class="edit_m">2</div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div></li><li><div class="edit_m">3</div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div></li><li><div class="edit_m">4</div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div><div class="edit_b"></div></li></ul></div>';
+
+    }
+    function generateChordBtn(key,array,selected) {
+
+    }
+    $(document).on('click', '.btn_duration', function (){
+      addModal();
+    });
+    $(document).on('click', '.btn_octave', function (){
+      addModal();
+    });
   });
 })
