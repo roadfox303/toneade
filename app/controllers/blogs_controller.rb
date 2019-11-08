@@ -17,9 +17,9 @@ class BlogsController < ApplicationController
     @track = @phrase.tracks.build
     gon.tracks = @track
     @phrase[:bpm] = 120
-    @phrase[:beat] = "4/4"
-    @phrase[:key] = "C"
-    @phrase[:scale] = "Major"
+    @phrase[:beat] = 1
+    @phrase[:key] = 1
+    @phrase[:scale] = 1
     @track[:instrument] = []
     @track[:data] = []
   end
@@ -120,7 +120,7 @@ class BlogsController < ApplicationController
   def toneade_const
     @scales = SCALE
     @scales_list = generate_form_select(SCALE,:name)
-    gon.scales = @scales.to_json
+    gon.scales = SCALE
 
     @keys = KEY
     @keys_list = generate_form_select(KEY,:name)
@@ -132,10 +132,11 @@ class BlogsController < ApplicationController
     }
 
     @beats = BEAT
+    gon.beats = BEAT
     @beats_list = generate_form_select(BEAT,:name)
 
     @notes = NOTE
-    gon.notes = @notes.to_json
+    gon.notes = NOTE
 
     @chords = CHORD
     gon.chords = CHORD

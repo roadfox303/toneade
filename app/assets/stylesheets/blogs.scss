@@ -18,14 +18,14 @@ $dark-color: rgba(35, 41, 45, 1);
 $point-color: rgba(168, 35, 66, 1);
 
 $T_full: rgba(123, 230, 255, 1);
-$SD_full: rgba(209, 255, 123, 1);
+$S_full: rgba(209, 255, 123, 1);
 $D_full: rgba(255, 159, 196, 1);
 $Second_full: rgba(255, 204, 123, 1);
 $Sub_full: rgba(189, 123, 255, 1);
 $Back_full: rgba(123, 148, 255, 1);
 $Ext_full: rgba(255, 255, 255, 1);
 $T_alpha: rgba(123, 230, 255, 0.2);
-$SD_alpha: rgba(209, 255, 123, 0.2);
+$S_alpha: rgba(209, 255, 123, 0.2);
 $D_alpha: rgba(255, 159, 196, 0.2);
 .swiper-container{
   background: #000;
@@ -540,25 +540,25 @@ select.UI,.track_block_row select{
 #btn_chord_type li{
   width:20%;
 }
-.func_T,.func_t{
+.func_T,.func_t,.func_Tm,.func_tm{
   color:$T_full;
   border: solid 1px $T_full;
 }
-.func_T{
+.func_T,.func_Tm{
   background: $T_alpha;
 }
-.func_SD,.func_sd{
-  color:$SD_full;
-  border: solid 1px $SD_full;
+.func_S,.func_s,.func_Sm,.func_sm{
+  color:$S_full;
+  border: solid 1px $S_full;
 }
-.func_SD{
-  background: $SD_alpha;
+.func_S,.func_Sm{
+  background: $S_alpha;
 }
-.func_D,.func_d{
+.func_D,.func_d,.func_Dm,.func_dm{
   color:$D_full;
   border: solid 1px $D_full;
 }
-.func_D{
+.func_D,.func_Dm{
   background: $D_alpha;
 }
 .func_Ext{
@@ -579,7 +579,7 @@ select.UI,.track_block_row select{
   background: rgba(0,0,0,0.3);
 }
 #chord_category .func_SD{
-  color:$SD_full;
+  color:$S_full;
   background: rgba(0,0,0,0.3);
 }
 #chord_category .func_D{

@@ -26,7 +26,7 @@ rails 5.2.3
 
 ## 機能一覧
 [TONEADE-基本機能.pdf](https://github.com/roadfox303/toneade/files/3733608/TONEADE-.pdf)  
-[TONEADE-フレーズ機能.pdf](https://github.com/roadfox303/toneade/files/3733644/TONEADE-.pdf)
+[TONEADE-フレーズ機能.pdf](https://github.com/roadfox303/toneade/files/3823482/TONEADE-.pdf)
 
 
 ## テーブル定義書
