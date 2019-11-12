@@ -80,7 +80,7 @@ class BlogsController < ApplicationController
       :title,
       :content,
       :user_id,
-      phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :user_id, :_destroy,
+      phrase_attributes: [:id, :key, :scale, :bpm, :beat, :master_data, :user_id, :_destroy,
             [tracks_attributes: [:id, :name, :tr_type, :instrument, :data, :_destroy]]
       ]
     )

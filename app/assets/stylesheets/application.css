@@ -23,11 +23,15 @@ ul {
 form{
   margin-bottom: 0;
 }
+p{
+  margin: 0;
+}
 #container{
   padding: 0;
 }
 .content_wrapper{
   margin-top: 48px;
+  min-height: calc( 100vh - 58px );
   position: relative;
   overflow: hidden;
   padding: 0.5rem;
