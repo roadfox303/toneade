@@ -264,7 +264,7 @@ select{
   float: left;
 }
 .track_form input{
-  display: none;
+  // display: none;
 }
 select.UI,.track_block_row select{
   background: transparent;
@@ -377,6 +377,9 @@ select.UI,.track_block_row select{
 }
 .tr_name::placeholder {
   color: #494D51;
+}
+.track_sequence{
+  display: none;
 }
 
 /* トラック編集画面 */

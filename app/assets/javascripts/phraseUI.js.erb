@@ -562,6 +562,8 @@ $(document).on('turbolinks:load', function() {
           $('.tr_name').eq(index).val(val["name"]);
           selectGenerate($('.tr_type').eq(index), gon.tr_types, gon.tracks[index]["tr_type"]);
           selectGenerate($('.inst_type').eq(index), gon.inst_categorys);
+          toneData = val["data"];
+          console.log(toneData);
           // $("select option").attr("selected", true);
         });
       }else{
@@ -631,6 +633,16 @@ $(document).on('turbolinks:load', function() {
         }
         $('input:nth-child(' + eq +')',parent).val(_this.val());
       });
+
+      /* トラックのシーケンスデータ(toneData)を送信フォームにセット */
+      function setForm_toneData(data){
+        let track = $('.track_edit_header h3').text().replace(/[^0-9]/g, "");
+        let parent = $('.track_form:nth-child(' + track + ')');
+        $('input:nth-child(4)',parent).val(data);
+      }
+
+      /**/
+
 
       // alert(gon.phrase.scale);
       /* トラック追加 */
@@ -812,6 +824,8 @@ $(document).on('turbolinks:load', function() {
         }
         console.log(chords);
       }
+
+
       function generateChordBtn(key,array,selected) {
 
       }
@@ -896,6 +910,7 @@ $(document).on('turbolinks:load', function() {
             }
             toneData.sort(sort_by(order));
           }
+          setForm_toneData(toneData);
           console.log(toneData);
         });
       });
