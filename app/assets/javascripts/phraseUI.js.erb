@@ -237,7 +237,7 @@ $(document).on('turbolinks:load', function() {
   }
   /* コード機能を判定() */
   function analyze_chordFunction(toneData){
-    console.log(toneData);
+    // console.log(toneData);
   }
   /* コードを探索 (toneData:hash)*/
   function search_chord(toneData){
@@ -529,7 +529,7 @@ $(document).on('turbolinks:load', function() {
       let inputM,inputB,inputChordType;
       let inputDur = '4n'
       // phrase_length = toneData[toneData.length -1]['time'].split(':')[0];
-      console.log(toneData.length);
+      // console.log(toneData.length);
       editTrackSet(beat,toneData);
 
       function project_profile(key,sc,octave){
@@ -562,8 +562,11 @@ $(document).on('turbolinks:load', function() {
           $('.tr_name').eq(index).val(val["name"]);
           selectGenerate($('.tr_type').eq(index), gon.tr_types, gon.tracks[index]["tr_type"]);
           selectGenerate($('.inst_type').eq(index), gon.inst_categorys);
-          toneData = val["data"];
+          // toneData = val["data"];
+          toneData = JSON.parse(val["data"]);
+
           console.log(toneData);
+          // console.log(toneData);
           // $("select option").attr("selected", true);
         });
       }else{
@@ -638,7 +641,10 @@ $(document).on('turbolinks:load', function() {
       function setForm_toneData(data){
         let track = $('.track_edit_header h3').text().replace(/[^0-9]/g, "");
         let parent = $('.track_form:nth-child(' + track + ')');
-        $('input:nth-child(4)',parent).val(data);
+
+        $('input:nth-child(4)',parent).val(JSON.stringify(data));
+        // $('input:nth-child(4)',parent).val(JSON.stringify(data));
+        // console.log($('input:nth-child(4)',parent).val());
       }
 
       /**/
@@ -822,7 +828,7 @@ $(document).on('turbolinks:load', function() {
             chords.push({'id':chords.length + 1, 'root':array['number'], 'notes':chord['notes']});
           });
         }
-        console.log(chords);
+        // console.log(chords);
       }
 
 
@@ -911,7 +917,7 @@ $(document).on('turbolinks:load', function() {
             toneData.sort(sort_by(order));
           }
           setForm_toneData(toneData);
-          console.log(toneData);
+          // console.log(toneData);
         });
       });
       /* セレクトした入力データを削除 */

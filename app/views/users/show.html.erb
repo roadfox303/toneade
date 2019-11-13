@@ -1,0 +1,31 @@
+<div id="profile">
+  <div class="prof_icon_M"></div>
+  <div class="prof_name"><span><%= @user.name %></span></div>
+  <ul class="prof_follows">
+    <li><span class="data">134</span><span class="title">Followers</span></li>
+    <li><span class="data">222,476</span><span class="title">Follows</span></li>
+  </ul>
+  <ul class="prof_status">
+    <li>create <span>246</span> Phrases</li>
+    <li>Nice's total <span>46</span><span class="icon icon-heart-on"></span></li>
+  </ul>
+</div>
+<div id="prof_comment">
+  <h2>user comment</h2>
+  <p>コメントああああああああああああああああああああああああ</p>
+</div>
+<% if @user.id == current_user.id %>
+<%= link_to "Follow", blogs_path, class:'btn_follow' %>
+<% end %>
+<% if @user.id == current_user.id %>
+  <div id="user_menu">
+    <ul>
+      <li><a>User Profile</a></li>
+      <li><a>Preset Patch</a></li>
+      <li><a>Followed List</a></li>
+      <li><a>Follower List</a></li>
+      <li><a>Create Phrase</a></li>
+    </ul>
+  </div>
+<%= link_to "編集", edit_user_registration_path %>
+<% end %>

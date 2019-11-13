@@ -21,6 +21,7 @@
           <% if user_signed_in? %>
           <li><%= link_to "ブログ一覧", blogs_path, class:"drawer-menu-item" %></li>
           <li><%= link_to "ブログ作成", new_blog_path, class:"drawer-menu-item" %></li>
+          <li><%= link_to "マイページ", user_path(id: current_user.id), class:"drawer-menu-item" %></li>
           <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"drawer-menu-item" %></li>
           <% else %>
           <li><%= link_to "新規登録", new_user_registration_path, class:"drawer-menu-item" %></li>

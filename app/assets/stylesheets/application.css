@@ -26,6 +26,9 @@ form{
 p{
   margin: 0;
 }
+h1,h2,h3{
+  letter-spacing: 0.05rem;
+}
 #container{
   padding: 0;
 }
