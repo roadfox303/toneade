@@ -8,7 +8,7 @@
     <% @blogs.each do |blog| %>
       <li>
         <span><%= blog.title %></span>
-        <%= link_to "ブログ編集", edit_blog_path(blog.id) %>
+        <%= link_to "ブログ編集", edit_blog_path(blog.id), data: { "turbolinks"=> false } %>
         <%= link_to "ブログ削除", blog_path(blog.id), method: :delete %>
       </li>
     <% end %>

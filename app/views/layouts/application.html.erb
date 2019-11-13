@@ -4,10 +4,9 @@
     <title>Toneade</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= include_gon %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag('https://unpkg.com/swiper/js/swiper.min.js') %>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'load' %>
   </head>
 
   <body class="drawer drawer--top">
@@ -31,8 +30,10 @@
       </nav>
     </header>
     <div id="container">
-    <div id="page_locate"><a href="#" id="logo">TONEADE</a><h1><%= @page_name %></h1></div>
-      <%= yield %>
+      <div id="page_locate"><a href="<%= blogs_path %>" id="logo">TONEADE</a><h1><%= @page_name %></h1></div>
+      <div class="content_wrapper">
+        <%= yield %>
+      </div>
     </div>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

@@ -1,4 +1,5 @@
-<%= form_with(model: @blog, local: true ) do |form| %>
+
+<%= form_with(model: @blog, local: true, id:"blog_form" ) do |f| %>
   <% if @blog.errors.any? %>
     <div id="error_explanation">
       <h2><%= @blog.errors.count %>件のエラーがあります。</h2>
@@ -9,15 +10,68 @@
       </ul>
     </div>
   <% end %>
-  <div id="blog_inputs">
-    <%= form.text_field :title, placeholder:"title", id: "blog_title"%>
-    <a href="#modal" class="modal">コメント</a>
-    <div id="modal" style="display:none;">
-      <%= form.text_area :content, placeholder:"comment", id: "blog_content" %>
-      <div class="modal_close">決定</div>
-    </div>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <div id="view_blog" class="view_on">
+    <ul id="blog_inputs">
+      <li><%= f.text_field :title, placeholder:"title", id: "blog_title" %></li>
+      <li><a href="#modal" class="modal_upload">upload</a></li>
+    </ul>
+    <%= f.fields_for :phrase do |phrase| %>
+    <%= render 'phrase_fields', f: phrase %>
+    <% end %>
+  </div>
+  <%= render 'track' %>
+  <div class="play">再生</div>
+  <div class="test_edit">再生データ変更テスト</div>
+
+  <div id="modal_upload" style="display:none;">
+    <%= f.text_area :content, placeholder:"comment", id: "blog_content" %>
+    <ul class="btn_set">
+      <li>
+        <div class="modal_close">入力に戻る</div>
+      </li>
+      <li>
+        <%= f.submit "フレーズ送信", class:"submit" %>
+      </li>
+    </ul>
   </div>
 
+  <div id="modal_track_del" style="display:none;">
+    <div class="track_del">
+      <p>トラックを削除しますか？</p>
+      <ul class="btn_set">
+        <li>
+          <div class="modal_close">cancel</div>
+        </li>
+        <li>
+          <div class="del_accept">delete</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="modal_duration" style="display:none;">
+    <ul id="select_duration">
+      <li class="icon icon-beat-4">1/4</li>
+      <li class="icon icon-beat-2">1/2</li>
+      <li class="icon icon-measure-1">1</li>
+      <li class="icon icon-measure-2">2</li>
+      <li class="icon icon-measure-4">4</li>
+    </ul>
+  </div>
+  <div id="modal_octave" style="display:none;">
+    <ul id="select_octave">
+      <li>octave -1</li>
+      <li>octave 0</li>
+      <li>octave 1</li>
+      <li>octave 2</li>
+      <li>octave 3</li>
+      <li>octave 4</li>
+      <li>octave 5</li>
+      <li>octave 6</li>
+      <li>octave 7</li>
+      <li>octave 8</li>
+      <li>octave 9</li>
+    </ul>
+  </div>
 
-  <%= form.submit "送信" %>
 <% end %>

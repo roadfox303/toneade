@@ -1,0 +1,78 @@
+<ul id="phrase_inputs">
+  <li><%= f.select :bpm, @bpm_list, :selected => @phrase[:bpm], id: "phrase_beat" %></li>
+  <li><%= f.select :beat, @beats_list, :selected => @phrase[:beat], id: "phrase_beat" %></li>
+  <li><%= f.select :key, @keys_list, :selected => @phrase[:key], id: "phrase_key" %></li>
+  <li><%= f.select :scale, @scales_list, :selected => @phrase[:scale], id: "phrase_scale" %></li>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :master_data, :value => [1] %>
+</ul>
+<div class="swiper-container tracks">
+  <div class="track_header" id="h_master">
+    <%= f.fields_for :tracks do |track| %>
+      <%= render 'track_fields', f: track %>
+    <% end %>
+    <div id="add_tr_form">
+      <%= link_to_add_association 'add track',f, :tracks %>
+    </div>
+    <h3>MASTER</h3>
+    <a class="btn_all btn_monitor btn_active">ALL</a>
+  </div>
+  <div class="track_header h_1" id="h_1">
+    <h3>TR : 1</h3>
+    <div class="track_type">Chord</div>
+    <input type="text" placeholder="track name" class="tr_name UI" maxlength="24">
+    <a class="btn_monitor btn_active">S</a>
+  </div>
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <ul class="tr_guide">
+        <li>
+          <div class="measure">Track Setting</div>
+          <div class="track_block master"></div>
+          <div class="track_block tr_1 chord">
+            <div class="track_block_row">
+              <span>track type</span><select class="tr_type UI"></select><p><a class="tr_del del_1">×</a></p>
+            </div>
+            <div class="track_block_row">
+              <span>patch category</span><select class="inst_type search"></select>
+            </div>
+            <div class="track_block_row">
+              <span>patch</span><select class="preset search"></select>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="swiper-slide">
+      <ul class="tr_guide">
+        <li>
+          <div class="measure">1</div>
+          <div class="track_block master"></div>
+          <div class="track_block tr_1 chord"></div>
+        </li>
+        <li>
+          <div class="measure">2</div>
+          <div class="track_block master"></div>
+          <div class="track_block tr_1 chord"></div>
+        </li>
+        <li>
+          <div class="measure">3</div>
+          <div class="track_block master"></div>
+          <div class="track_block tr_1 chord"></div>
+        </li>
+        <li>
+          <div class="measure">4</div>
+          <div class="track_block master"></div>
+          <div class="track_block tr_1 chord"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+
+<ul id="add_btns">
+  <li><a class="btn add_track">add track</a></li>
+  <li><a class="btn add_measure">add measure</a></li>
+</ul>

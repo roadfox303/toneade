@@ -11,11 +11,28 @@
  * It is generally better to create a new file per style scope.
  *
  *= normalize.css
- *= skeleton.css
+ *= _skeleton.css
+ *= swiper.css
  *= toneade.scss
  *= require_tree .
  *= require_self
  */
+ul {
+  margin: 0;
+}
+form{
+  margin-bottom: 0;
+}
+p{
+  margin: 0;
+}
 #container{
+  padding: 0;
+}
+.content_wrapper{
+  margin-top: 48px;
+  min-height: calc( 100vh - 58px );
+  position: relative;
+  overflow: hidden;
   padding: 0.5rem;
 }

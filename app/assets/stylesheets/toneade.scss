@@ -1,11 +1,21 @@
-$base-color: #ff0;
-$thema-color: #000000;
-$sub-color: #ff0;
-$point-color: #ff0;
+$base-color: rgba(245, 251, 239, 1);
+$thema-color: rgba(67, 182, 211, 1);
+$sub-color: rgba(97, 112, 125, 1);
+$dark-color: rgba(35, 41, 45, 1);
+$point-color: rgba(168, 35, 66, 1);
 $line-color: #cccccc;
 #page_locate{
   width: 100%;
   overflow: hidden;
+  position: fixed;
+  // padding-top: 5px;
+  // padding-left: 10px;
+  // margin-top: -5px;
+  // margin-left: -5px;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  background: #fff;
 }
 #page_locate a{
   display: block;
@@ -14,13 +24,17 @@ $line-color: #cccccc;
   display: block;
   float: left;
   margin: 0;
+  letter-spacing: 0.05rem;
+  line-height: 33px;
 }
 #logo{
   text-decoration: none;
   font-size: 2.4rem;
-  color: $thema-color;
+  color: #000;
   margin-right: 2rem;
   float: left;
+  line-height: 48px;
+  margin-left: 10px;
 }
 @media screen and ( min-width:320px) {
   h1{
@@ -47,10 +61,6 @@ $line-color: #cccccc;
     font-size: 6rem;
   }
 }
-.swiper-container {
-  width: 600px;
-  height: 300px;
-}
 
 .drawer-hamburger {
   padding: 0 9px;
@@ -59,13 +69,4 @@ $line-color: #cccccc;
   border-bottom: 1px solid $line-color;
   margin: 0;
   padding: 0.5rem;
-}
-#blog_content {
-  width: 100%;
-  margin: 0;
-}
-.modal_close{
-  width:8rem;
-  padding: 1rem;
-  margin: 0 auto;
 }
