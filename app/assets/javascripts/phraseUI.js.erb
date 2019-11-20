@@ -26,6 +26,17 @@ $(document).on('turbolinks:load', function() {
     content_source: '#modal_octave',
     inject_position: '#blog_form'
   });
+  $('.btn_notice').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'true',
+    start_open: true,
+    hide_close: 'true',
+    close_text: '×',
+    animation: 'none',
+    content_source: '#modal_notice',
+    inject_position: 'body'
+  });
+  $('.my-link').modaal({ start_open: true });
   autosize($('textarea'));
   $('.modal_close').on('click',function(){
     $('.modal_upload').modaal('close');
@@ -933,6 +944,8 @@ $(document).on('turbolinks:load', function() {
       }
 
       /* コードボタン入力処理 */
+      let viewDegree;
+      let contain_height = $('#view_track').height();
       $(document).on('mousedown', '.chord_btns li', function (){
         _this = $(this);
         let chord_id = $('.chord_data',this).text().split('/')[0];
@@ -949,7 +962,11 @@ $(document).on('turbolinks:load', function() {
         let origin_pos_left = _this.position().left;
         let funcClass = _this.children().attr('class');
         let viewFunc = funcClass.slice(-1).toUpperCase();
-        let viewDegree = $('.degree',this).text();
+        if ($('.degree',this).text() != ""){
+          viewDegree = $('.degree',this).text();
+        }
+
+        let custom_height = contain_height;
 
         $('#screen').addClass('active');
         if(_this.hasClass('clone') == false ){
@@ -976,6 +993,8 @@ $(document).on('turbolinks:load', function() {
             $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + bufferB + '/-' + num + '</span>');
             u_chord = bufferA;
             d_chord = bufferB;
+            custom_height += 32;
+            $('#view_track').css('height', custom_height + 'px');
           });
         }
         // let notes = $('span',this).text().split('/')[1];
@@ -983,6 +1002,7 @@ $(document).on('turbolinks:load', function() {
         // synth.triggerAttackRelease(tone, '4n');
         $(".chord_btns li").setTouchEnd(function(event){
           // console.log($(this).attr('class'));
+          $('#view_track').css('height', contain_height + 'px');
           let notes = $('.chord_data',this).text().split('/')[1];
           let inputRotate = $('.chord_data',this).text().split('/')[2];
           let tone = notes.split(',');

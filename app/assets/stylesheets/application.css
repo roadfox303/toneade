@@ -17,6 +17,10 @@
  *= require_tree .
  *= require_self
  */
+a {
+  color: #000;
+}
+
 ul {
   margin: 0;
 }

@@ -205,12 +205,15 @@ $point-color: rgba(168, 35, 66, 1);
   width:25%;
   text-align: center;
 }
-.blog_nices .icon-heart-on{
+.blog_nices a{
+  color:$dark-color!important;
+}
+.blog_nices .icon{
   position: absolute;
   right: 1.5rem;
   top:0.5rem;
 }
-.blog_nices .icon-heart-on:before{
+.blog_nices .icon:before{
   font-size: 2rem;
 }
 
@@ -301,7 +304,6 @@ $point-color: rgba(168, 35, 66, 1);
   top: -1px;
   left: 0;
   font-size: 2rem;
-  cursor: pointer;
 }
 .blog_status .bars{
   width: 40%;

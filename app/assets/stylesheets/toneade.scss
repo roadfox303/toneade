@@ -36,6 +36,10 @@ $line-color: #cccccc;
   line-height: 48px;
   margin-left: 10px;
 }
+.notice{
+  text-align: center;
+  padding: 2rem 0;
+}
 @media screen and ( min-width:320px) {
   h1{
     font-size: 2.4rem;
