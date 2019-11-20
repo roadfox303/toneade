@@ -12,6 +12,56 @@ class ApplicationController < ActionController::Base
     user_path(id: current_user.id)
   end
 
+  def toneade_const
+    @scales = SCALE
+    @scales_list = generate_form_select(SCALE,:name)
+    gon.scales = SCALE
+
+    @keys = KEY
+    @keys_list = generate_form_select(KEY,:name)
+    gon.keys = KEY
+
+    @bpm_list = []
+    [*20..240].map{ |bpm|
+      @bpm_list << ["♩#{bpm}",bpm]
+    }
+
+    @beats = BEAT
+    gon.beats = BEAT
+    @beats_list = generate_form_select(BEAT,:name)
+
+    @notes = NOTE
+    gon.notes = NOTE
+
+    @chords = CHORD
+    gon.chords = CHORD
+    # @test = @scales.find{ |item| item[:name] == "N miner scale" }
+    # @test2 = @chords.find_all{ |item| item[:notes].include?("9") }
+    @tr_types = TR_TYPE
+    @tr_type_list = generate_form_select(TR_TYPE,:name)
+    gon.tr_types = @tr_type_list
+
+    # @dv_types = DV_TYPE
+    # @dv_type_list = generate_form_select(DV_TYPE,:name)
+    # gon.dv_types = @dv_type_list
+    @instrument_categorys = CATEGORY
+    @inst_category_list = generate_form_select(CATEGORY,:name)
+    gon.inst_categorys = @inst_category_list
+
+    @instrument_categorys = CATEGORY
+    @inst_category_list = generate_form_select(CATEGORY,:name)
+    gon.inst_categorys = @inst_category_list
+
+    @presets = PRESET
+    @preset_list = generate_form_select(PRESET,:name)
+    gon.presets = @preset_list
+
+  end
+
+  def generate_form_select(hash,key)
+    hash.map {|item| [item[key],(item[:id])] }
+  end
+
   SCALE = [
     { id: 1, name:"Major" },
     { id: 2, name:"Natural Minor" },
@@ -34,8 +84,7 @@ class ApplicationController < ActionController::Base
   ]
 
   BEAT = [
-    { id: 1, name:"4/4" },
-    { id: 2, name:"3/4" }
+    { id: 1, name:"4/4" }
   ]
 
   NOTE = [

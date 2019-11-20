@@ -257,14 +257,14 @@ select{
   height: 40px;
 }
 .select_track{
-  background: $sel_track-color;
+  background: $sel_track-color!important;
 }
 .track_form{
   position: relative;
   float: left;
 }
 .track_form input{
-  // display: none;
+  display: none;
 }
 select.UI,.track_block_row select{
   background: transparent;
@@ -446,6 +446,7 @@ select.UI,.track_block_row select{
 #edit_track_chord .swiper-wrapper{
   padding-top: 4px;
 }
+
 #edit_btn_left a,#edit_btn_bottom a{
   color: #ffffff;
   text-decoration: none;
@@ -761,4 +762,17 @@ select.UI,.track_block_row select{
   display: block!important;
   animation: show 1s linear 0s;
 
+}
+.tone{
+  display: none;
+}
+#transport{
+  position: fixed;
+  box-sizing: border-box;
+  bottom: 1rem;
+  left: 0;
+  padding: 5px;
+  width: 100%;
+  height:auto;
+  z-index: 999;
 }

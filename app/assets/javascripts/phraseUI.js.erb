@@ -236,8 +236,12 @@ $(document).on('turbolinks:load', function() {
     return result
   }
   /* コード機能を判定() */
-  function analyze_chordFunction(toneData){
-    // console.log(toneData);
+  function analyze_chordFunction(toneData,key,scale){
+    let set_key = gon.keys.find(item => item['id'] == key);
+    let set_scale_data = gon.scales.find(item => item['id'] == scale);
+    let tonal_
+
+    console.log(set_key,set_scale);
   }
   /* コードを探索 (toneData:hash)*/
   function search_chord(toneData){
@@ -404,6 +408,14 @@ $(document).on('turbolinks:load', function() {
   function omitNote(chord){
 
   }
+  /* フレーズの小節数をカウント(data:toneData) */
+  function phrase_bars(data){
+    if(data.length != 0){
+      return Number(data[data.length - 1]['time'].split(':')[0]) + 1;
+    }else{
+      return 0;
+    }
+  }
   // console.log(generate_substituteDominant(["C3","E3","G3","A#3"]));
   // console.log(search_secondaryDominant(["C4","E4","G4"]));
 
@@ -477,7 +489,8 @@ $(document).on('turbolinks:load', function() {
   const synth = new Tone.PolySynth(6, Tone.Synth, {
     oscillator : {
   		type : "square"
-  	}
+  	},
+    volume: -10,
   }).toMaster();
   // const seq = new Tone.Sequence((time, { note, dur }) => {
   //   synth.triggerAttackRelease(note, dur, time);
@@ -494,12 +507,21 @@ $(document).on('turbolinks:load', function() {
       Tone.Transport.cancel();
       sequence = new Tone.Part(addMelody, toneData).start(0);
       Tone.Transport.start();
+      Tone.Transport.loop = 2
+      Tone.Transport.loopEnd = (phrase_bars(toneData) + "m");
       playing = true;
+      $('span',this).removeClass().addClass('icon icon-playback-stop');
     } else {
       Tone.Transport.stop();
       playing = false;
+      $('span',this).removeClass().addClass('icon icon-playback-play');
     }
   });
+  $(document).on('click','.phrase_chord', function (){
+    let tone = $('.tone',this).text().split(',');
+    synth.triggerAttackRelease(tone, '4n');
+  });
+
   /* UI */
   $(function(){
     // $(document).on('click', '.test_edit', function (){
@@ -518,6 +540,30 @@ $(document).on('turbolinks:load', function() {
     // });
     // console.log(toneData);
     // alert(gon.tracks[0]["name"]);
+    /* キー、ノート、オクターブ情報を含めた、スケールデータを構築 */
+    function set_scaleData(key,scale){
+      let set_key = gon.keys.find(item => item['id'] == key);
+      let tonal_number = set_key['octave'][4];
+      let set_scale = gon.notes.filter(note => note['scale_id'] == scale);
+      set_scale.map(function(array) {
+        array['note_name'] = pickKey(convert_number_to_note(tonal_number + array['interval']));
+        array['number'] = gon.keys.find(item => item['name'] == array['note_name'])['octave']
+      });
+      return set_scale
+    }
+    if( gon.page_name == "Phrase"){
+      toneData = JSON.parse(gon.blog_progression);
+      if(gon.blog_sequense != false){
+        let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
+        toneData.map(function(tone,i) {
+          let chord_tone = search_chord(tone);
+          let chord_degree = set_scale.find(item => item['note_name'] == chord_tone[1]);
+          let time = tone['time'].split(':');
+          let locate = (Number(time[0]) + 1) + ":" + (Number(time[1]) + 1) + ":" + (time[2]);
+          $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_' + chord_degree['function'] + '"><span>' + chord_degree['degree'] + chord_tone[2] + '</span><span class="tone">' + tone['note'] + '</span></div></li>');
+        });
+      }
+    }
     if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
       let phrase_key, key, phrase_scale, scale, diatonicMap, beat, chords, octave;
       beat = $('#blog_phrase_attributes_beat option:selected').text();
@@ -530,7 +576,7 @@ $(document).on('turbolinks:load', function() {
       let inputDur = '4n'
       // phrase_length = toneData[toneData.length -1]['time'].split(':')[0];
       // console.log(toneData.length);
-      editTrackSet(beat,toneData);
+
 
       function project_profile(key,sc,octave){
         tonalData = gon.keys.find(function(element) {
@@ -549,11 +595,21 @@ $(document).on('turbolinks:load', function() {
 
       /* Editロード時、UIにトラック情報反映 */
       if( gon.page_name == "Edit Phrase"){
+        let bars = 0;
+        if(gon.tracks[0]["data"] != []){
+          toneData = JSON.parse(gon.tracks[0]["data"]);
+          let bars = phrase_bars(toneData);
+          let loop = bars / 4;
+          let count = 0;
+          for(let i = 1; i < loop; i++ ){
+            addMeasure();
+          }
+        }
         /* トラック生成 */
         if ( gon.tracks.length >= 2 ){
           track_num = gon.tracks.length;
           for (let i = 1 ; i < track_num ; i++){
-            addTrack(i);
+            addTrack(i,"load");
             addModal();
           }
         }
@@ -562,10 +618,7 @@ $(document).on('turbolinks:load', function() {
           $('.tr_name').eq(index).val(val["name"]);
           selectGenerate($('.tr_type').eq(index), gon.tr_types, gon.tracks[index]["tr_type"]);
           selectGenerate($('.inst_type').eq(index), gon.inst_categorys);
-          // toneData = val["data"];
-          toneData = JSON.parse(val["data"]);
 
-          console.log(toneData);
           // console.log(toneData);
           // $("select option").attr("selected", true);
         });
@@ -573,6 +626,7 @@ $(document).on('turbolinks:load', function() {
         selectGenerate($('.tr_type'),gon.tr_types,1);
         selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .inst_type'),gon.inst_categorys);
       }
+      editTrackSet(beat,toneData);
 
       /* select optionにトラックタイプを挿入 */
       // selectGenerate($('.tr_type'),gon.tr_types);
@@ -665,7 +719,7 @@ $(document).on('turbolinks:load', function() {
 
       /* トラック追加 */
       $('.add_track').on('click',function(){
-        addTrack(track_num);
+        addTrack(track_num,"new");
         track_num += 1;
         selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .tr_type'),gon.tr_types);
         selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .inst_type'),gon.inst_categorys);
@@ -675,6 +729,9 @@ $(document).on('turbolinks:load', function() {
       $('.add_measure').on('click',function(){
         // copy = $('.swiper-slide:last-child');
         // $('.swiper-slide:last-child').clone(true).appendTo('.tracks');
+        addMeasure();
+      });
+      function  addMeasure(){
         let last = last_measure;
         swiper.appendSlide($('.tracks .swiper-slide:last-child').clone(true));
         $('.tracks .swiper-slide:last-child .measure').each(function(index, element){
@@ -689,7 +746,7 @@ $(document).on('turbolinks:load', function() {
           $(element).text(last += 1);
         });
         last_measure = last;
-      });
+      }
       /* トラック削除確認 */
       $(document).on('click', '.tr_del', function (){
         let tr = tr_number($(this));
@@ -760,14 +817,16 @@ $(document).on('turbolinks:load', function() {
         }
       });
 
-      function addTrack(tr){
+      function addTrack(tr,mode){
         last_pos = $('.tr_guide li').height();
         tr += 1;
         $('.track_header:last').after('<div class="track_header h_' + tr + '" id="h_' + tr + '"><h3>TR : '+ tr + '</h3><div class="track_type"></div><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
         $('.tracks .swiper-slide li').append('<div class="track_block tr_' + tr + '"></div>');
         $('.tracks .swiper-slide:first-child li .track_block:last-child').append('<div class="track_block_row"><span>track type</span><select class="tr_type UI"></select><p><a class="tr_del del_' + tr + '">×</a></p></div><div class="track_block_row"><span>patch category</span><select class="inst_type search"></select></div><div class="track_block_row"><span>patch</span><select class="preset search"></select></div>');
         $('#h_'+ tr ).css('top',(last_pos + 4));
-        $('#add_tr_form a').click();
+        if(mode == "new"){
+          $('#add_tr_form a').click();
+        }
       }
       function tr_number(element){
         result = element.attr('class').replace(/[^0-9]/g, "");
@@ -787,14 +846,56 @@ $(document).on('turbolinks:load', function() {
       function editTrackSet(beat,data){
         let addition = '';
         if(data.length == 0){
-          for (let i = 0 ; i < 4 ; i++){
-            let add = '<li><div class="edit_m">' + (i + 1) + '</div>'
-            for (let i = 0 ; i < beat.split('/')[0] ; i++){
+          for (let m = 0 ; m < 4 ; m++){
+            let add = '<li><div class="edit_m">' + (m + 1) + '</div>'
+            for (let b = 0 ; b < beat.split('/')[0] ; b++){
               add += '<div class="edit_b"><span class="chord_function"></span><span class="chord_degree active"></span><span class="chord_name"></span></div>'
             }
             addition += (add + '</li>');
           }
-          $('#edit_track_chord .swiper-slide').html('<ul class="tr_guide">' + addition + '</ul>');
+          // $('#edit_track_chord .swiper-slide').html('<ul class="tr_guide">' + addition + '</ul>');
+          // edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
+          edit.appendSlide(['<div class="swiper-slide"><ul class="tr_guide">' + addition + '</ul></div>']);
+        }
+        else{
+          let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
+          // console.log("aaaaa",data);
+          let bars = phrase_bars(toneData);
+          let loop = bars / 4;
+          let count = 0;
+          for(let l = 0; l < loop; l++ ){
+            addition = '';
+            for(let m = 0; m < 4; m++ ){
+              bar = (m + (l * 4 ));
+              let add = '<li><div class="edit_m">' + (bar + 1) + '</div>'
+              for (let b = 0 ; b < beat.split('/')[0] ; b++){
+                let tone = data.find(item => item['time'] == (bar + ":" + b + ":" + 0));
+                if( tone != null){
+                  let scale_item = set_scale.find(item => item['note_name'] == pickKey(tone['root']));
+                  add += '<div class="edit_b phrase_chord func_' + scale_item['function'] + '"><span class="chord_function">' + scale_item['function'].toUpperCase() + '</span><span class="chord_degree active">' + scale_item['degree'] + '</span><span class="chord_name">' + search_chord(tone)[0] + '</span><span class="tone">' + tone['note'] + '</span></div>'
+                }else{
+                  add += '<div class="edit_b"><span class="chord_function"></span><span class="chord_degree active"></span><span class="chord_name"></span><span class="tone"></span></div>'
+                }
+              }
+              addition += (add + '</li>');
+            }
+            edit.appendSlide(['<div class="swiper-slide"><ul class="tr_guide">' + addition + '</ul></div>']);
+          }
+
+          // $('#edit_track_chord .swiper-slide:last-child .edit_b span').empty();
+          // $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
+          //   $(element).text(last += 1);
+          // });
+
+          // console.log(data);
+          // data.map(function(tone,i) {
+          //   let chord_tone = search_chord(tone);
+          //   let chord_degree = set_scale.find(item => item['note_name'] == chord_tone[1]);
+          //   let time = tone['time'].split(':');
+          //   let locate = (Number(time[0]) + 1) + ":" + (Number(time[1]) + 1) + ":" + (time[2]);
+          //   $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_' + chord_degree['function'] + '"><span>' + chord_degree['degree'] + chord_tone[2] + '</span></div></li>');
+          // });
+        }
         if ($('#edit_track_chord .swiper-slide li:first-child .edit_b').length == 3){
           $('.edit_b').css({
             'height': '42.6px',
@@ -805,11 +906,6 @@ $(document).on('turbolinks:load', function() {
             'height': '32px',
             'line-height':'32px'
           });
-        }
-          // edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
-        }
-        else{
-          alert("momomomo");
         }
       }
       /* ダイアトニックコードボタンを生成 */
@@ -905,15 +1001,16 @@ $(document).on('turbolinks:load', function() {
             let viewType = $('.active').attr('class').split(' ')[0];
             switch (viewType){
               case 'chord_function':
-              $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span>');
+              $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
               break;
               case 'chord_degree':
-              $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span>');
+              $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
               break;
               case 'chord_name':
-              $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span>');
+              $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
               break;
             }
+            $('.select_track').removeClass().addClass('edit_b ' + $('a',this).attr('class') + ' phrase_chord select_track')
             toneData.sort(sort_by(order));
           }
           setForm_toneData(toneData);

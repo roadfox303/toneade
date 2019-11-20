@@ -1,0 +1,42 @@
+<div id="blog_profile">
+  <ul>
+    <li><div class="prof_icon_M"></div></li>
+    <li><p class="prof_name"><%= @user.name %></p><p class="prof_follower"><span>1234</span><span>Followers</span></p></li>
+    <% if @user.id != current_user.id %>
+    <li><%= link_to "Follow", blogs_path, class:'btn_follow' %></li>
+    <% end %>
+  </ul>
+</div>
+<div id="blog_content">
+  <div id="blog_title"><span>Title</span><h2><%= @blog.title %></h2></div>
+  <ul class="blog_status">
+    <li class="bars">
+      <span>Length</span><%= phrase_length @blog %>
+    </li>
+    <li class="nices">
+      <span>Nice!</span><span>234</span><span class="icon icon-heart-on"></span>
+    </li>
+  </ul>
+  <a id="play_phrase" class="play"><span class="icon icon-playback-play"></span></a>
+  <div id="blog_comment">
+    <h2>Comment</h2>
+    <p><%= @blog.content %></p>
+  </div>
+  <div id="blog_phrase">
+    <ul class="blog_status">
+      <li class="phrase_scale">
+        <%= @keys.find{ |item| item[:id] == @blog.phrase.key }[:name] %>
+        <%= @scales.find{ |item| item[:id] == @blog.phrase.scale }[:name] %> Scale
+      </li>
+      <li class="phrase_time">
+        <span>♩=<%= @blog.phrase.bpm %></span>
+      </li>
+    </ul>
+    <% if @track %>
+    <ul id="phrase_progression"></ul>
+    <% end %>
+  </div>
+
+  <%= link_to "ブログ編集", edit_blog_path(@blog.id), data: { "turbolinks"=> false } %>
+  <%= link_to "ブログ削除", blog_path(@blog.id), method: :delete %>
+</div>
