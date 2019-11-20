@@ -1,0 +1,52 @@
+<div id="profile">
+  <div class="prof_icon_M"></div>
+  <div class="prof_name"><span><%= @user.name %></span></div>
+  <ul class="prof_follows">
+    <li><span class="data">134</span><span class="title">Followers</span></li>
+    <li><span class="data">222,476</span><span class="title">Follows</span></li>
+  </ul>
+  <ul class="prof_status">
+    <li>create <span><%= @blogs_num %></span> Phrases</li>
+    <li>Nice's total <span>46</span><span class="icon icon-heart-on"></span></li>
+  </ul>
+</div>
+<div id="prof_comment">
+  <h2>user comment</h2>
+  <p>コメントああああああああああああああああああああああああ</p>
+</div>
+<% if @user.id != current_user.id %>
+<%= link_to "Follow", blogs_path, class:'btn_follow' %>
+<% end %>
+<% if @user.id == current_user.id %>
+  <div id="user_menu">
+    <ul>
+      <li><%= link_to "User Profile", edit_user_registration_path %></li>
+      <li><a>Preset Patch</a></li>
+      <li><a>Followed List</a></li>
+      <li><a>Follower List</a></li>
+      <li><a>Create Phrase</a></li>
+    </ul>
+  </div>
+<% end %>
+<div id="latest_blog">
+  <h2>最近のフレーズ</h2>
+  <ul>
+  <% @blogs10.each do |blog| %>
+  <li>
+    <a href="<%= blog_path(blog.id) %>">
+      <span class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></span>
+      <span class="blog_nices">1234<span class="icon icon-heart-on"></span></span>
+      <span class="blog_title">Title : <%= blog.title %></span>
+      <span class="blog_bpm">♩=<%= blog.phrase.bpm %></span>
+      <span class="blog_bar"><%= phrase_length blog %></span>
+      <span class="blog_scale">
+        <%= @keys.find{ |item| item[:id] == blog.phrase.key }[:name] %>
+        <%= @scales.find{ |item| item[:id] == blog.phrase.scale }[:name] %>
+      </span>
+
+    </a>
+  </li>
+  <% end %>
+  </ul>
+  <%= link_to "Phrase全件", phrases_user_path %>
+</div>

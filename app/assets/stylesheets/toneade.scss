@@ -40,6 +40,14 @@ $line-color: #cccccc;
   h1{
     font-size: 2.4rem;
   }
+  h2{
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  #phrase_progression li{
+    min-width:50%;
+    flex-basis:50%;
+  }
   .drawer-menu-item{
     font-size: 1.4rem;
   }
@@ -55,10 +63,26 @@ $line-color: #cccccc;
   h1{
     font-size: 4rem;
   }
+  h2{
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  #phrase_progression li{
+    min-width:25%;
+    flex-basis:25%;
+  }
 }
 @media screen and (min-width:960px) {
   h1{
     font-size: 6rem;
+  }
+  h2{
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  #phrase_progression li{
+    min-width:12.5%;
+    flex-basis:12.5%;
   }
 }
 

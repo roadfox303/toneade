@@ -21,8 +21,6 @@
     <% end %>
   </div>
   <%= render 'track' %>
-  <div class="play">再生</div>
-  <div class="test_edit">再生データ変更テスト</div>
 
   <div id="modal_upload" style="display:none;">
     <%= f.text_area :content, placeholder:"comment", id: "blog_content" %>
@@ -73,5 +71,7 @@
       <li>octave 9</li>
     </ul>
   </div>
-
+  <div id="transport">
+    <a id="play_phrase" class="play"><span class="icon icon-playback-play"></span></a>
+  </div>
 <% end %>

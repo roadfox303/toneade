@@ -6,6 +6,7 @@ class BlogsController < ApplicationController
 
   def index
     @page_name = "Phrase Index"
+    gon.page_name = @page_name
     @blogs = Blog.all.reverse
   end
 
@@ -44,6 +45,16 @@ class BlogsController < ApplicationController
     @scale_selected = @phrase[:scale]
     @tracks = @phrase.tracks.all
     gon.tracks = @tracks
+    unless @blog.phrase.tracks[0]['data'].empty?
+      @track = @blog.phrase.tracks[0]
+      gon.blog_key = @blog.phrase.key
+      gon.blog_scale = @blog.phrase.scale
+      gon.blog_progression = @blog.phrase.tracks[0]['data']
+      gon.blog_sequense = @blog.phrase.tracks
+    else
+      gon.blog_sequense = false
+      @track = false
+    end
 
     @page_name = "Edit Phrase"
     gon.page_name = @page_name
@@ -69,6 +80,24 @@ class BlogsController < ApplicationController
     redirect_to blogs_path
   end
 
+  def show
+    @page_name = "Phrase"
+    gon.page_name = @page_name
+    @blog = Blog.find(params[:id])
+    @user = User.find(@blog.user_id)
+    unless @blog.phrase.tracks[0]['data'].empty?
+      @track = @blog.phrase.tracks[0]
+      gon.blog_key = @blog.phrase.key
+      gon.blog_scale = @blog.phrase.scale
+      gon.blog_progression = @blog.phrase.tracks[0]['data']
+      gon.blog_sequense = @blog.phrase.tracks
+    else
+      gon.blog_sequense = false
+      @track = false
+    end
+
+  end
+
   private
   # def blog_params
   #   params.require(:blog).permit(:id, :title, :content)
@@ -85,84 +114,10 @@ class BlogsController < ApplicationController
       ]
     )
   end
-  # def blog_params
-  #   binding.pry
-  #   params.require(:blog).permit(
-  #     :id,
-  #     :title,
-  #     :content,
-  #     phrase_attributes: [:id, :key, :scale, :bpm, :master_data, :_destroy,
-  #       [tracks_attributes: [:id, :name, :type, :instrument, :data, :phrase_id, :_destroy]]
-  #     ]
-  #   )
-  # end
-  # def project_params
-  #   params.require(:project).permit(:name, :description, tasks_attributes: [:id, :description, :done, :_destroy,
-  #                                                        items_attributes: [:id, :description, :_destroy]])
-  #   end
-  # def order_params
-  # 　params.require(:order).permit(:date,
-  # 　　　　　　　　　　　　　　:time,
-  # 　　　　　　　　　　　　　　:receiving_method,
-  # 　　　　　　　　　　　　　　:receiving_store,
-  # 　　　　　　　　　　　　　　:delivery_address,
-  # 　　　　　　　　　　　　　　:payment,
-  # 　　　　　　　　　　　　　　:voucher,
-  # 　　　　　　　　　　　　　　:message,
-  # 　　　　　　　　　　　　　　[ordered_products_attributes: [:order_id, :product_id, :count]]
-  # 　　　　　　　　　　　　　　).merge(user_id: current_user.id)
-  # end
+
 
   def set_id
     @blog = Blog.find(params[:id])
   end
 
-  def toneade_const
-    @scales = SCALE
-    @scales_list = generate_form_select(SCALE,:name)
-    gon.scales = SCALE
-
-    @keys = KEY
-    @keys_list = generate_form_select(KEY,:name)
-    gon.keys = KEY
-
-    @bpm_list = []
-    [*20..240].map{ |bpm|
-      @bpm_list << ["♩#{bpm}",bpm]
-    }
-
-    @beats = BEAT
-    gon.beats = BEAT
-    @beats_list = generate_form_select(BEAT,:name)
-
-    @notes = NOTE
-    gon.notes = NOTE
-
-    @chords = CHORD
-    gon.chords = CHORD
-    # @test = @scales.find{ |item| item[:name] == "N miner scale" }
-    # @test2 = @chords.find_all{ |item| item[:notes].include?("9") }
-    @tr_types = TR_TYPE
-    @tr_type_list = generate_form_select(TR_TYPE,:name)
-    gon.tr_types = @tr_type_list
-
-    # @dv_types = DV_TYPE
-    # @dv_type_list = generate_form_select(DV_TYPE,:name)
-    # gon.dv_types = @dv_type_list
-    @instrument_categorys = CATEGORY
-    @inst_category_list = generate_form_select(CATEGORY,:name)
-    gon.inst_categorys = @inst_category_list
-
-    @instrument_categorys = CATEGORY
-    @inst_category_list = generate_form_select(CATEGORY,:name)
-    gon.inst_categorys = @inst_category_list
-
-    @presets = PRESET
-    @preset_list = generate_form_select(PRESET,:name)
-    gon.presets = @preset_list
-
-  end
-  def generate_form_select(hash,key)
-    hash.map {|item| [item[key],(item[:id])] }
-  end
 end
