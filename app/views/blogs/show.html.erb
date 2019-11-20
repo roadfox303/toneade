@@ -22,6 +22,12 @@
     <h2>Comment</h2>
     <p><%= @blog.content %></p>
   </div>
+  <% if @user.id == current_user.id %>
+  <div id="owner_menu">
+    <%= link_to "Edit", edit_blog_path(@blog.id), data: { "turbolinks"=> false },class:'blog_edit' %>
+    <%= link_to "Delete", blog_path(@blog.id), method: :delete, class:'blog_delete' %>
+  </div>
+  <% end %>
   <div id="blog_phrase">
     <ul class="blog_status">
       <li class="phrase_scale">
@@ -37,6 +43,5 @@
     <% end %>
   </div>
 
-  <%= link_to "ブログ編集", edit_blog_path(@blog.id), data: { "turbolinks"=> false } %>
-  <%= link_to "ブログ削除", blog_path(@blog.id), method: :delete %>
+
 </div>
