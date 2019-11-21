@@ -95,7 +95,8 @@ class BlogsController < ApplicationController
       gon.blog_sequense = false
       @track = false
     end
-
+    @nice = current_user.nices.find_by(blog_id: @blog.id)
+    @nice_number =  @blog.nices.all.size
   end
 
   private

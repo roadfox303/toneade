@@ -7,7 +7,7 @@
   </ul>
   <ul class="prof_status">
     <li>create <span><%= @blogs_num %></span> Phrases</li>
-    <li>Nice's total <span>46</span><span class="icon icon-heart-on"></span></li>
+    <li>Nice's total <span><%= @nice_total %></span><span class="icon icon-heart-on"></span></li>
   </ul>
 </div>
 <div id="prof_comment">
@@ -24,7 +24,9 @@
       <li><a>Preset Patch</a></li>
       <li><a>Followed List</a></li>
       <li><a>Follower List</a></li>
-      <li><a>Create Phrase</a></li>
+      <li><%= link_to "User Phrase", phrases_user_path %></li>
+      <li><%= link_to "User Nices", nices_user_path %></li>
+      <li><%= link_to "Create Phrase", new_blog_path %></li>
     </ul>
   </div>
 <% end %>
@@ -34,15 +36,16 @@
   <% @blogs10.each do |blog| %>
   <li>
     <a href="<%= blog_path(blog.id) %>">
-      <span class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></span>
-      <span class="blog_nices">1234<span class="icon icon-heart-on"></span></span>
-      <span class="blog_title">Title : <%= blog.title %></span>
-      <span class="blog_bpm">♩=<%= blog.phrase.bpm %></span>
-      <span class="blog_bar"><%= phrase_length blog %></span>
-      <span class="blog_scale">
+      <div class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></div>
+
+      <div class="blog_nices"><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></div>
+      <div class="blog_title">Title : <%= blog.title %></div>
+      <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
+      <div class="blog_bar"><%= phrase_length blog %></div>
+      <div class="blog_scale">
         <%= @keys.find{ |item| item[:id] == blog.phrase.key }[:name] %>
         <%= @scales.find{ |item| item[:id] == blog.phrase.scale }[:name] %>
-      </span>
+      </div>
 
     </a>
   </li>

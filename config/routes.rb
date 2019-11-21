@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'users/show'
+  root 'blogs#index'
 
 
   # ログイン、アカウント編集後、任意のページに推移させるための記述
@@ -17,8 +18,8 @@ Rails.application.routes.draw do
       get :follower
     end
   end
-  root 'blogs#index'
   resources :blogs
+  resources :nices, only: [:create, :destroy]
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end

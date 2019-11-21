@@ -2,7 +2,7 @@
   <ul>
     <li><div class="prof_icon_M"></div></li>
     <li><p class="prof_name"><%= @user.name %></p><p class="prof_follower"><span>1234</span><span>Followers</span></p></li>
-    <% if @user.id != current_user.id %>
+    <% unless @user.id == current_user.id %>
     <li><%= link_to "Follow", blogs_path, class:'btn_follow' %></li>
     <% end %>
   </ul>
@@ -14,7 +14,21 @@
       <span>Length</span><%= phrase_length @blog %>
     </li>
     <li class="nices">
-      <span>Nice!</span><span>234</span><span class="icon icon-heart-on"></span>
+      <% unless @blog.user_id == current_user.id %>
+        <% if @nice.present? %>
+            <span>Nice!</span><span><%= @nice_number %></span>
+            <a href="<%= nice_path(id: @nice.id) %>" data-method="delete">
+              <span class="icon icon-heart-on"></span>
+            </a>
+        <% else %>
+          <span>Nice!</span><span><%= @nice_number %></span>
+          <a href="<%= nices_path(blog_id: @blog.id) %>" data-method="post">
+            <span class="icon icon-heart-off"></span>
+          </a>
+        <% end %>
+      <% else %>
+      <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
+      <% end %>
     </li>
   </ul>
   <a id="play_phrase" class="play"><span class="icon icon-playback-play"></span></a>

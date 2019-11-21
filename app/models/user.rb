@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
   has_many :blogs
   has_many :phrases
+  has_many :nices, dependent: :destroy
+  has_many :nice_blogs, through: :nices, source: :blog
 end
