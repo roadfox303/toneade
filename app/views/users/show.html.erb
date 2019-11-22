@@ -14,10 +14,10 @@
   <h2>user comment</h2>
   <p>コメントああああああああああああああああああああああああ</p>
 </div>
-<% if @user.id != current_user.id %>
+<% if user_signed_in? && @user.id != current_user.id %>
 <%= link_to "Follow", blogs_path, class:'btn_follow' %>
 <% end %>
-<% if @user.id == current_user.id %>
+<% if user_signed_in? && @user.id == current_user.id %>
   <div id="user_menu">
     <ul>
       <li><%= link_to "User Profile", edit_user_registration_path %></li>
@@ -30,26 +30,49 @@
     </ul>
   </div>
 <% end %>
-<div id="latest_blog">
-  <h2>最近のフレーズ</h2>
+<div id="latest_blog" class="blog_list">
+  <h2>最近作成したフレーズ</h2>
   <ul>
   <% @blogs10.each do |blog| %>
   <li>
-    <a href="<%= blog_path(blog.id) %>">
+    <a href="<%= blog_path(blog.id) %>" data-turbolinks="false">
       <div class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></div>
 
       <div class="blog_nices"><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></div>
-      <div class="blog_title">Title : <%= blog.title %></div>
+      <div class="blog_title"><h3>"<%= blog.title %>"</h3></div>
       <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
       <div class="blog_bar"><%= phrase_length blog %></div>
       <div class="blog_scale">
         <%= @keys.find{ |item| item[:id] == blog.phrase.key }[:name] %>
         <%= @scales.find{ |item| item[:id] == blog.phrase.scale }[:name] %>
       </div>
-
     </a>
   </li>
   <% end %>
   </ul>
-  <%= link_to "Phrase全件", phrases_user_path %>
+  <%= link_to "Phrase全件", phrases_user_path(@user.id) %>
+</div>
+<div id="latest_nice" class="blog_list">
+  <h2>最近Nice!したフレーズ</h2>
+  <ul>
+  <% @nices.each do |nice| %>
+    <li>
+      <a href="<%= blog_path(nice[:blog_id])%>" data-turbolinks="false">
+        <div class="blog_head">
+          <div class="blog_prof">
+            <div class="prof_icon"></div>
+            <span><%= User.find(nice.blog[:user_id])[:name] %></span>
+          </div>
+          <div class="blog_date"><%= nice.blog[:created_at].strftime('%Y/%m/%d') %></div>
+        </div>
+        <h3>"<%= nice.blog[:title] %>"</h3>
+        <dl class="blog_status">
+          <dd><%= phrase_keyscale(nice.blog) %></dd>
+          <dd><span>♩=<%= nice.blog.phrase.bpm %></span></dd>
+          <dd><span>Nice!</span><span><%= nice.blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
+        </dl>
+      </a>
+    </li>
+  <% end %>
+  </ul>
 </div>

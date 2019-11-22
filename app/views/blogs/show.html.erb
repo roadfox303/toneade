@@ -1,33 +1,42 @@
 <div id="blog_profile">
   <ul>
+    <a href="<%= user_path(@user.id) %>" class="btn_userprof">
     <li><div class="prof_icon_M"></div></li>
     <li><p class="prof_name"><%= @user.name %></p><p class="prof_follower"><span>1234</span><span>Followers</span></p></li>
-    <% unless @user.id == current_user.id %>
-    <li><%= link_to "Follow", blogs_path, class:'btn_follow' %></li>
+    </a>
+    <% if user_signed_in? %>
+      <% unless @user.id == current_user.id %>
+      <li><%= link_to "Follow", blogs_path, class:'btn_follow' %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
 <div id="blog_content">
-  <div id="blog_title"><span>Title</span><h2><%= @blog.title %></h2></div>
+  <div class="date"><%= @blog.created_at.strftime('%Y/%m/%d %-H:%-M') %></div>
+  <div id="blog_title"><span>Title</span><h2>"<%= @blog.title %>"</h2></div>
   <ul class="blog_status">
     <li class="bars">
       <span>Length</span><%= phrase_length @blog %>
     </li>
     <li class="nices">
-      <% unless @blog.user_id == current_user.id %>
-        <% if @nice.present? %>
+      <% if user_signed_in? %>
+        <% unless @blog.user_id == current_user.id %>
+          <% if @nice.present? %>
+              <span>Nice!</span><span><%= @nice_number %></span>
+              <a href="<%= nice_path(id: @nice.id) %>" data-method="delete">
+                <span class="icon icon-heart-on"></span>
+              </a>
+          <% else %>
             <span>Nice!</span><span><%= @nice_number %></span>
-            <a href="<%= nice_path(id: @nice.id) %>" data-method="delete">
-              <span class="icon icon-heart-on"></span>
+            <a href="<%= nices_path(blog_id: @blog.id) %>" data-method="post">
+              <span class="icon icon-heart-off"></span>
             </a>
+          <% end %>
         <% else %>
-          <span>Nice!</span><span><%= @nice_number %></span>
-          <a href="<%= nices_path(blog_id: @blog.id) %>" data-method="post">
-            <span class="icon icon-heart-off"></span>
-          </a>
+        <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
         <% end %>
       <% else %>
-      <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
+        <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
       <% end %>
     </li>
   </ul>
@@ -36,17 +45,18 @@
     <h2>Comment</h2>
     <p><%= @blog.content %></p>
   </div>
-  <% if @user.id == current_user.id %>
-  <div id="owner_menu">
-    <%= link_to "Edit", edit_blog_path(@blog.id), data: { "turbolinks"=> false },class:'blog_edit' %>
-    <%= link_to "Delete", blog_path(@blog.id), method: :delete, class:'blog_delete' %>
-  </div>
+  <% if user_signed_in? %>
+    <% if @user.id == current_user.id %>
+    <div id="owner_menu">
+      <%= link_to "Edit", edit_blog_path(@blog.id), data: { "turbolinks"=> false },class:'blog_edit' %>
+      <%= link_to "Delete", blog_path(@blog.id), method: :delete, class:'blog_delete' %>
+    </div>
+    <% end %>
   <% end %>
   <div id="blog_phrase">
     <ul class="blog_status">
       <li class="phrase_scale">
-        <%= @keys.find{ |item| item[:id] == @blog.phrase.key }[:name] %>
-        <%= @scales.find{ |item| item[:id] == @blog.phrase.scale }[:name] %> Scale
+        <%= phrase_keyscale(@blog) %> Scale
       </li>
       <li class="phrase_time">
         <span>♩=<%= @blog.phrase.bpm %></span>
@@ -56,6 +66,4 @@
     <ul id="phrase_progression"></ul>
     <% end %>
   </div>
-
-
 </div>

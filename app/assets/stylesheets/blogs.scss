@@ -785,6 +785,9 @@ select.UI,.track_block_row select{
   overflow: hidden;
   color:$dark-color;
 }
+.btn_userprof{
+  display: block;
+}
 #blog_profile ul{
   list-style: none;
   display: table-row;
@@ -830,6 +833,9 @@ select.UI,.track_block_row select{
 #blog_content{
   margin-top: 2rem;
 }
+#blog_content .date{
+  margin: 0 0 0.5rem;
+}
 #blog_content #blog_title{
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
@@ -844,6 +850,9 @@ select.UI,.track_block_row select{
   display: inline;
   font-size: 1.6rem;
   letter-spacing: 0;
+}
+#blog_content #blog_title h2{
+  font-weight: bold;
 }
 #blog_content .blog_status{
   width: 100%;
