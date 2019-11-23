@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <%= link_to "フレーズ作成", new_blog_path, data: { "turbolinks"=> false }, class:"btn_create" %>
+  <%= link_to "Create", new_blog_path, data: { "turbolinks"=> false }, class:"btn_create" %>
 <% end %>
 <% unless @blogs.empty?%>
 <div id="phrase_all" class="blog_list">
@@ -17,6 +17,7 @@
         </div>
         <h3>"<%= blog[:title] %>"</h3>
         <dl class="blog_status">
+          <dd><span><%= phrase_keyscale(blog) %></span></dd>
           <dd><span>♩=<%= blog.phrase.bpm %></span></dd>
           <% if user_signed_in? %>
             <% if blog.nices.find_by([:user_id] == current_user.id) %>

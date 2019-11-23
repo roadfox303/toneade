@@ -43,8 +43,7 @@
       <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
       <div class="blog_bar"><%= phrase_length blog %></div>
       <div class="blog_scale">
-        <%= @keys.find{ |item| item[:id] == blog.phrase.key }[:name] %>
-        <%= @scales.find{ |item| item[:id] == blog.phrase.scale }[:name] %>
+        <%= phrase_keyscale(blog) %>
       </div>
     </a>
   </li>

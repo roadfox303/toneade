@@ -1,13 +1,12 @@
 <h1>User Phrase</h1>
 <p>フレーズ全部</p>
-<div id="user_phrase_all" class="blog_list">
+<div id="latest_blog" class="blog_list">
   <h2><%= @user.name %>のフレーズ</h2>
   <ul>
   <% @blogs.each do |blog| %>
   <li>
     <a href="<%= blog_path(blog.id) %>" data-turbolinks="false">
       <div class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></div>
-
       <div class="blog_nices"><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></div>
       <div class="blog_title"><h3>"<%= blog.title %>"</h3></div>
       <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
@@ -20,5 +19,4 @@
   </li>
   <% end %>
   </ul>
-  <%= link_to "Phrase全件", phrases_user_path %>
 </div>

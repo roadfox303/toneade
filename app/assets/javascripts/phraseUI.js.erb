@@ -757,6 +757,9 @@ $(document).on('turbolinks:load', function() {
         $('.edit_b').removeClass('select_track');
         edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
         $('#edit_track_chord .swiper-slide:last-child .edit_b span').empty();
+        // gggg = $('#edit_track_chord .swiper-slide:last-child .edit_b').attr('class').match(/[^\s]+/g);
+        $('#edit_track_chord .swiper-slide:last-child .edit_b').removeClass().addClass('edit_b')
+        // console.log(gggg[1]);
         $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
           $(element).text(last += 1);
         });
