@@ -7,5 +7,10 @@ module ApplicationHelper
       "#{data} Bars"
     end
   end
-  
+  def phrase_keyscale(blog)
+    key = @keys.find{ |item| item[:id] == blog.phrase.key }
+    scale = @scales.find{ |item| item[:id] == blog.phrase.scale }
+    key[:name] + " " + scale[:name]
+  end
+
 end

@@ -478,6 +478,10 @@ $(document).on('turbolinks:load', function() {
   const isUpperCase = c => {
     return /^[A-Z]+$/g.test(c)
   }
+  /* １文字目だけ大文字に変換 */
+  String.prototype.capitalize = function(){
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  }
 
   /* 連想配列をキーでソート */
 
@@ -753,6 +757,9 @@ $(document).on('turbolinks:load', function() {
         $('.edit_b').removeClass('select_track');
         edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
         $('#edit_track_chord .swiper-slide:last-child .edit_b span').empty();
+        // gggg = $('#edit_track_chord .swiper-slide:last-child .edit_b').attr('class').match(/[^\s]+/g);
+        $('#edit_track_chord .swiper-slide:last-child .edit_b').removeClass().addClass('edit_b')
+        // console.log(gggg[1]);
         $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
           $(element).text(last += 1);
         });
@@ -883,7 +890,7 @@ $(document).on('turbolinks:load', function() {
                 let tone = data.find(item => item['time'] == (bar + ":" + b + ":" + 0));
                 if( tone != null){
                   let scale_item = set_scale.find(item => item['note_name'] == pickKey(tone['root']));
-                  add += '<div class="edit_b phrase_chord func_' + scale_item['function'] + '"><span class="chord_function">' + scale_item['function'].toUpperCase() + '</span><span class="chord_degree active">' + scale_item['degree'] + '</span><span class="chord_name">' + search_chord(tone)[0] + '</span><span class="tone">' + tone['note'] + '</span></div>'
+                  add += '<div class="edit_b phrase_chord func_' + scale_item['function'] + '"><span class="chord_function">' + scale_item['function'].capitalize() + '</span><span class="chord_degree active">' + scale_item['degree'] + '</span><span class="chord_name">' + search_chord(tone)[0] + '</span><span class="tone">' + tone['note'] + '</span></div>'
                 }else{
                   add += '<div class="edit_b"><span class="chord_function"></span><span class="chord_degree active"></span><span class="chord_name"></span><span class="tone"></span></div>'
                 }
@@ -961,7 +968,7 @@ $(document).on('turbolinks:load', function() {
         let origin_pos_top = _this.position().top;
         let origin_pos_left = _this.position().left;
         let funcClass = _this.children().attr('class');
-        let viewFunc = funcClass.slice(-1).toUpperCase();
+        let viewFunc = funcClass.split("_")[1].capitalize();
         if ($('.degree',this).text() != ""){
           viewDegree = $('.degree',this).text();
         }

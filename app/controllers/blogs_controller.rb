@@ -7,7 +7,7 @@ class BlogsController < ApplicationController
   def index
     @page_name = "Phrase Index"
     gon.page_name = @page_name
-    @blogs = Blog.all.reverse
+    @blogs = Blog.all.order(created_at: :desc)
   end
 
   def new
@@ -95,7 +95,9 @@ class BlogsController < ApplicationController
       gon.blog_sequense = false
       @track = false
     end
-    @nice = current_user.nices.find_by(blog_id: @blog.id)
+    if user_signed_in?
+      @nice = current_user.nices.find_by(blog_id: @blog.id)
+    end
     @nice_number =  @blog.nices.all.size
   end
 

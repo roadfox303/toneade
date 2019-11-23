@@ -11,9 +11,9 @@
           </div>
           <div class="blog_date"><%= nice.blog[:created_at].strftime('%Y/%m/%d') %></div>
         </div>
-        <h3><%= nice.blog[:title] %></h3>
+        <h3>"<%= nice.blog[:title] %>"</h3>
         <dl class="blog_status">
-          <dd><%= @keys.find{ |item| item[:id] == nice.blog.phrase[:key] }[:name] %> <%= @scales.find{ |item| item[:id] == nice.blog.phrase[:scale] }[:name] %></dd>
+          <dd><%= phrase_keyscale(nice.blog) %></dd>
           <dd><span>♩=<%= nice.blog.phrase.bpm %></span></dd>
           <dd><span>Nice!</span><span><%= nice.blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
         </dl>
