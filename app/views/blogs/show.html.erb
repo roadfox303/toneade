@@ -2,12 +2,23 @@
   <ul>
     <a href="<%= user_path(@user.id) %>" class="btn_userprof">
     <li><div class="prof_icon_M"></div></li>
-    <li><p class="prof_name"><%= @user.name %></p><p class="prof_follower"><span>1234</span><span>Followers</span></p></li>
+    <li><p class="prof_name"><%= @user.name %></p><p class="prof_follower"><span><%= @user.passive_relationships.size %></span><span>Followers</span></p></li>
     </a>
-    <% if user_signed_in? %>
-      <% unless @user.id == current_user.id %>
-      <li><%= link_to "Follow", blogs_path, class:'btn_follow' %></li>
+    <% if user_signed_in? && @user.id != current_user.id %>
+    <li>
+      <% unless current_user.following?(@user) %>
+        <%= form_with(model: current_user.active_relationships.build(followed_id: @user.id),html:{name:'follow'})  do |f| %>
+          <%= f.hidden_field :followed_id %>
+          <%= f.hidden_field :return, :value => blog_path(@blog.id) %>
+          <a href="javascript:follow.submit()" class="btn_follow">Follow</a>
+        <% end %>
+      <% else %>
+        <%= form_with(model: current_user.active_relationships.find_by(followed_id: @user.id), method: :delete,html:{name:'unfollow'} ) do |f| %>
+        <%= f.hidden_field :return, :value => blog_path(@blog.id) %>
+          <a href="javascript:unfollow.submit()" class="btn_follow">Unfollow</a>
+        <% end %>
       <% end %>
+    </li>
     <% end %>
   </ul>
 </div>

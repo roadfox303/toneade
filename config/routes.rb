@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'relationships/create'
+  get 'relationships/destroy'
   get 'users/show'
   root 'blogs#index'
 
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   end
   resources :blogs
   resources :nices, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
