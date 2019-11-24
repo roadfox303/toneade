@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :phrases
   has_many :nices, dependent: :destroy
   has_many :nice_blogs, through: :nices, source: :blog
+  has_many :comments, dependent: :destroy
+  has_many :comment_blogs, through: :comments, source: :blog
   has_many :active_relationships, foreign_key: 'follower_id', class_name: 'Relationship', dependent: :destroy
   has_many :passive_relationships, foreign_key: 'followed_id', class_name: 'Relationship', dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed

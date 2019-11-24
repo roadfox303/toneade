@@ -1,4 +1,13 @@
 $(document).on('turbolinks:load', function() {
+  $('.modal_impression').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_impression',
+    inject_position: '#blog_profile'
+  });
   $('.modal_upload').modaal({
     overlay_opacity: 0.3,
     overlay_close: 'false',
@@ -567,8 +576,8 @@ $(document).on('turbolinks:load', function() {
       return set_scale
     }
     if( gon.page_name == "Phrase"){
-      toneData = JSON.parse(gon.blog_progression);
       if(gon.blog_sequense != false){
+        toneData = JSON.parse(gon.blog_progression);
         let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
         toneData.map(function(tone,i) {
           let chord_tone = search_chord(tone);
@@ -588,7 +597,7 @@ $(document).on('turbolinks:load', function() {
       project_profile(phrase_key,phrase_scale,4);
       generateDiatonicChordBtn(phrase_key,scale);
       let inputM,inputB,inputChordType;
-      let inputDur = '4n'
+      let inputDur = '1m'
       // phrase_length = toneData[toneData.length -1]['time'].split(':')[0];
       // console.log(toneData.length);
 
