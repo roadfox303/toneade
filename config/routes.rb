@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     member do
       get :phrases
       get :nices
-      get :followed
+      get :follow
       get :follower
     end
   end
