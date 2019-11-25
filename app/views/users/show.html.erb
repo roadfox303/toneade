@@ -33,8 +33,8 @@
     <ul>
       <li><%= link_to "User Profile", edit_user_registration_path %></li>
       <li><a>Preset Patch</a></li>
-      <li><a>Followed List</a></li>
-      <li><a>Follower List</a></li>
+      <li><%= link_to "Follow List", follow_user_path %></li>
+      <li><%= link_to "Follower List", follower_user_path %></li>
       <li><%= link_to "User Phrase", phrases_user_path %></li>
       <li><%= link_to "User Nices", nices_user_path %></li>
       <li><%= link_to "Create Phrase", new_blog_path %></li>
