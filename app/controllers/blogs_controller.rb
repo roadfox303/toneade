@@ -99,6 +99,8 @@ class BlogsController < ApplicationController
       @nice = current_user.nices.find_by(blog_id: @blog.id)
     end
     @nice_number =  @blog.nices.all.size
+    @blog_comments = @blog.comments
+    gon.blog_comments = @blog_comments
   end
 
   private

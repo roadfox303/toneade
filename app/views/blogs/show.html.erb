@@ -23,46 +23,42 @@
   </ul>
 </div>
 <div id="blog_content">
-  <div class="date"><%= @blog.created_at.strftime('%Y/%m/%d %-H:%-M') %></div>
+  <div class="date"><%= @blog.created_at.strftime('%Y/%m/%d %-H:%M') %></div>
   <div id="blog_title"><span>Title</span><h2>"<%= @blog.title %>"</h2></div>
   <ul class="blog_status">
     <li class="bars">
       <span>Length</span><%= phrase_length @blog %>
     </li>
     <li class="nices">
-      <% if user_signed_in? %>
-        <% unless @blog.user_id == current_user.id %>
-          <% if @nice.present? %>
-              <span>Nice!</span><span><%= @nice_number %></span>
-              <a href="<%= nice_path(id: @nice.id) %>" data-method="delete">
-                <span class="icon icon-heart-on"></span>
-              </a>
-          <% else %>
+      <% if user_signed_in? && @blog.user_id != current_user.id %>
+        <% if @nice.present? %>
             <span>Nice!</span><span><%= @nice_number %></span>
-            <a href="<%= nices_path(blog_id: @blog.id) %>" data-method="post">
-              <span class="icon icon-heart-off"></span>
+            <a href="<%= nice_path(id: @nice.id) %>" data-method="delete">
+              <span class="icon icon-heart-on"></span>
             </a>
-          <% end %>
         <% else %>
-        <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
+          <span>Nice!</span><span><%= @nice_number %></span>
+          <a href="<%= nices_path(blog_id: @blog.id) %>" data-method="post">
+            <span class="icon icon-heart-off"></span>
+          </a>
         <% end %>
       <% else %>
-        <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
+      <span>Nice!</span><span><%= @nice_number %></span><span class="icon icon-heart-on"></span>
       <% end %>
     </li>
   </ul>
+  <% if @track != false %>
   <a id="play_phrase" class="play"><span class="icon icon-playback-play"></span></a>
+  <% end %>
   <div id="blog_comment">
     <h2>Comment</h2>
     <p><%= @blog.content %></p>
   </div>
-  <% if user_signed_in? %>
-    <% if @user.id == current_user.id %>
+  <% if user_signed_in? && @user.id == current_user.id %>
     <div id="owner_menu">
       <%= link_to "Edit", edit_blog_path(@blog.id), data: { "turbolinks"=> false },class:'blog_edit' %>
       <%= link_to "Delete", blog_path(@blog.id), method: :delete, class:'blog_delete' %>
     </div>
-    <% end %>
   <% end %>
   <div id="blog_phrase">
     <ul class="blog_status">
@@ -78,3 +74,49 @@
     <% end %>
   </div>
 </div>
+
+<div id="impressions">
+  <h2>Impressions</h2>
+  <% if user_signed_in? %>
+    <%= form_with(model: @comments, url: comments_path, local: true, id:"new_impression" ) do |f| %>
+      <%= f.text_area :content, placeholder:"comment", id: "new_impression_comment" %>
+      <%= f.hidden_field :user_id, :value => current_user.id  %>
+      <%= f.hidden_field :blog_id, :value => @blog.id  %>
+      <%= f.submit "コメント送信", class:"submit" %>
+    <% end %>
+  <% else %>
+    <div>コメントを投稿するにはログインしてください。</div>
+  <% end %>
+  <div id="impression_list">
+    <ul>
+    <% @blog_comments.each do |comment| %>
+    <li>
+      <div class="comment_status">
+        <span class="comment_serial"><%= comment.serial%></span>
+        <span class="comment_date"><%= comment.created_at.strftime('%Y/%m/%d %-H:%M') %></span>
+      </div>
+      <div class="comment_content"><%= comment.content%></div>
+      <div class="comment_footer">
+        <div class="comment_user"><span>commentd by <a href="<%= user_path(comment.user.id) %>"><%= comment.user.name%></a></span></div>
+        <% if user_signed_in? && comment.user.id == current_user.id %>
+        <div class="comment_menu">
+          <a href="#modal" onclick="editTarget(<%= comment.id %>);" class="modal_impression"><span class="icon icon-pencil"></span></a>
+          <a href="<%= comment_path(id: comment.id, blog_id: @blog.id) %>" data-method="delete" data-confirm="コメントを削除しますか？"><span class="icon icon-trashcan"></span></a>
+        </div>
+        <% end %>
+      </div>
+    </li>
+    <% end %>
+    </ul>
+  </div>
+</div>
+<% if user_signed_in? %>
+<div id="modal_impression" style="display:none;">
+  <%= form_with(model: @comments,url: comment_path(0), method: :patch, local: true, id:"edit_impression" ) do |f| %>
+    <%= f.text_area :content, placeholder:"impression", id: "edit_impression_comment" %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :blog_id, :value => @blog.id %>
+    <%= f.submit "コメント送信", class:"submit" %>
+  <% end %>
+</div>
+<% end %>

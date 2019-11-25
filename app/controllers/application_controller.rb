@@ -88,12 +88,12 @@ class ApplicationController < ActionController::Base
   ]
 
   NOTE = [
-    { id: 1, degree: "I", function: "T", interval: 0, scale_id: 1, triad_id: 2, seventh_id: 6, tensions:[] },
-    { id: 2, degree: "II", function: "s", interval: 2, scale_id: 1, triad_id: 3, seventh_id: 7, tensions:[] },
-    { id: 3, degree: "III", function: "t", interval: 4, scale_id: 1, triad_id: 3, seventh_id: 7, tensions:[] },
-    { id: 4, degree: "IV", function: "S", interval: 5, scale_id: 1, triad_id: 2, seventh_id: 6, tensions:[] },
-    { id: 5, degree: "V", function: "D", interval: 7, scale_id: 1, triad_id: 2, seventh_id: 5, tensions:[] },
-    { id: 6, degree: "VI", function: "t", interval: 9, scale_id: 1, triad_id: 3, seventh_id: 7, tensions:[] },
+    { id: 1, degree: "I", function: "T", interval: 0, scale_id: 1, triad_id: 2, seventh_id: 7, tensions:[] },
+    { id: 2, degree: "II", function: "s", interval: 2, scale_id: 1, triad_id: 3, seventh_id: 8, tensions:[] },
+    { id: 3, degree: "III", function: "t", interval: 4, scale_id: 1, triad_id: 3, seventh_id: 8, tensions:[] },
+    { id: 4, degree: "IV", function: "S", interval: 5, scale_id: 1, triad_id: 2, seventh_id: 7, tensions:[] },
+    { id: 5, degree: "V", function: "D", interval: 7, scale_id: 1, triad_id: 2, seventh_id: 6, tensions:[] },
+    { id: 6, degree: "VI", function: "t", interval: 9, scale_id: 1, triad_id: 3, seventh_id: 8, tensions:[] },
     { id: 7, degree: "VII", function: "d", interval: 11, scale_id: 1, triad_id: 4, seventh_id: 10, tensions:[] },
     { id: 8, degree: "I", function: "Tm", interval: 0, scale_id: 2, triad_id: 3, seventh_id: 8, tensions:[] },
     { id: 9, degree: "II", function: "sm", interval: 2, scale_id: 2, triad_id: 4, seventh_id: 10, tensions:[] },
@@ -160,6 +160,10 @@ class ApplicationController < ActionController::Base
     { id: 39, type: "9(+11)", notes: [0,4,7,10,14,18], category: "extention" },
     { id: 40, type: "13", notes: [0,4,7,10,14,17,21], category: "extention" },
   ]
+
+
+
+
 
   SUBSTITUTE = [
     {id:1, scale:"major", }

@@ -1,24 +1,28 @@
 <div id="user_nices" class="blog_list">
   <h2>Nice!しているフレーズ</h2>
-  <ul>
-  <% @nices.each do |nice| %>
-    <li>
-      <a href="<%= blog_path(nice[:blog_id])%>" data-turbolinks="false">
-        <div class="blog_head">
-          <div class="blog_prof">
-            <div class="prof_icon"></div>
-            <span><%= User.find(nice.blog[:user_id])[:name] %></span>
+  <% unless @nices == 0 %>
+    <ul>
+    <% @nices.each do |nice| %>
+      <li>
+        <a href="<%= blog_path(nice[:blog_id])%>" data-turbolinks="false">
+          <div class="blog_head">
+            <div class="blog_prof">
+              <div class="prof_icon"></div>
+              <span><%= User.find(nice.blog[:user_id])[:name] %></span>
+            </div>
+            <div class="blog_date"><%= nice.blog[:created_at].strftime('%Y/%m/%d') %></div>
           </div>
-          <div class="blog_date"><%= nice.blog[:created_at].strftime('%Y/%m/%d') %></div>
-        </div>
-        <h3>"<%= nice.blog[:title] %>"</h3>
-        <dl class="blog_status">
-          <dd><%= phrase_keyscale(nice.blog) %></dd>
-          <dd><span>♩=<%= nice.blog.phrase.bpm %></span></dd>
-          <dd><span>Nice!</span><span><%= nice.blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
-        </dl>
-      </a>
-    </li>
+          <h3>"<%= nice.blog[:title] %>"</h3>
+          <dl class="blog_status">
+            <dd><%= phrase_keyscale(nice.blog) %></dd>
+            <dd><span>♩=<%= nice.blog.phrase.bpm %></span></dd>
+            <dd><span>Nice!</span><span><%= nice.blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
+          </dl>
+        </a>
+      </li>
+    <% end %>
+    </ul>
+  <% else %>
+  <div class="content_empty">Nice!しているフレーズはありません。</div>
   <% end %>
-  </ul>
 </div>

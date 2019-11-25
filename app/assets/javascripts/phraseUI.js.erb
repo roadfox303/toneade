@@ -1,4 +1,5 @@
 $(document).on('turbolinks:load', function() {
+
   $('.modal_upload').modaal({
     overlay_opacity: 0.3,
     overlay_close: 'false',
@@ -26,18 +27,9 @@ $(document).on('turbolinks:load', function() {
     content_source: '#modal_octave',
     inject_position: '#blog_form'
   });
-  $('.btn_notice').modaal({
-    overlay_opacity: 0.3,
-    overlay_close: 'true',
-    start_open: true,
-    hide_close: 'true',
-    close_text: '×',
-    animation: 'none',
-    content_source: '#modal_notice',
-    inject_position: 'body'
-  });
+
   $('.my-link').modaal({ start_open: true });
-  autosize($('textarea'));
+
   $('.modal_close').on('click',function(){
     $('.modal_upload').modaal('close');
   });
@@ -567,8 +559,8 @@ $(document).on('turbolinks:load', function() {
       return set_scale
     }
     if( gon.page_name == "Phrase"){
-      toneData = JSON.parse(gon.blog_progression);
       if(gon.blog_sequense != false){
+        toneData = JSON.parse(gon.blog_progression);
         let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
         toneData.map(function(tone,i) {
           let chord_tone = search_chord(tone);
@@ -588,10 +580,9 @@ $(document).on('turbolinks:load', function() {
       project_profile(phrase_key,phrase_scale,4);
       generateDiatonicChordBtn(phrase_key,scale);
       let inputM,inputB,inputChordType;
-      let inputDur = '4n'
+      let inputDur = '1m'
       // phrase_length = toneData[toneData.length -1]['time'].split(':')[0];
       // console.log(toneData.length);
-
 
       function project_profile(key,sc,octave){
         tonalData = gon.keys.find(function(element) {

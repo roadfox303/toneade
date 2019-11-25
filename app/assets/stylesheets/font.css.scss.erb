@@ -1,6 +1,16 @@
 @charset "UTF-8";
 
 @font-face {
+    font-family: 'toneade-font';
+    src: url('<%= asset_path('toneade-font.eot') %>');
+    src: url('<%= asset_path('toneade-font.eot') + '?#iefix' %>') format('embedded-opentype'),
+         url('<%= asset_path('toneade-font.woff') %>') format('woff'),
+         url('<%= asset_path('toneade-font.ttf') %>') format('truetype'),
+         url('<%= asset_path('toneade-font.svg') + '#toneade-font' %>') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* @font-face {
   font-family: "toneade-font";
   src:url("../fonts/toneade-font.eot");
   src:url("../fonts/toneade-font.eot?#iefix") format("embedded-opentype"),
@@ -10,7 +20,7 @@
   font-weight: normal;
   font-style: normal;
 
-}
+} */
 
 [data-icon]:before {
   font-family: "toneade-font" !important;
@@ -37,6 +47,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 .icon-beat-4:before {
   content: "\61";
@@ -131,9 +142,6 @@
 .icon-playback-record:before {
   content: "\45";
 }
-.icon-keyboard:before {
-  content: "\46";
-}
 .icon-trashcan:before {
   content: "\47";
 }
@@ -145,4 +153,37 @@
 }
 .icon-upload-cloud:before {
   content: "\4a";
+}
+.icon-th-list:before {
+  content: "\4b";
+}
+.icon-mirror:before {
+  content: "\4c";
+}
+.icon-address-book:before {
+  content: "\4d";
+}
+.icon-left-bold:before {
+  content: "\4e";
+}
+.icon-left:before {
+  content: "\4f";
+}
+.icon-right:before {
+  content: "\50";
+}
+.icon-right-bold:before {
+  content: "\51";
+}
+.icon-th-large:before {
+  content: "\52";
+}
+.icon-reply:before {
+  content: "\53";
+}
+.icon-pencil:before {
+  content: "\54";
+}
+.icon-keyboard:before {
+  content: "\55";
 }

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
   resources :blogs
   resources :nices, only: [:create, :destroy]
+  resources :comments, only: [:create, :edit, :update, :destroy]
   resources :relationships, only: [:create, :destroy]
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
