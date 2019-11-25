@@ -116,7 +116,6 @@ class ApplicationController < ActionController::Base
     { id: 26, degree: "V", function: "D", interval: 7, scale_id: 4, triad_id: 2, seventh_id: 6, tensions:[] },
     { id: 27, degree: "VI", function: "tm", interval: 9, scale_id: 4, triad_id: 4, seventh_id: 10, tensions:[] },
     { id: 28, degree: "VII", function: "d", interval: 11, scale_id: 4, triad_id: 4, seventh_id: 10, tensions:[] },
-
   ]
 
   CHORD = [

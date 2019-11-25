@@ -100,6 +100,7 @@ class BlogsController < ApplicationController
     end
     @nice_number =  @blog.nices.all.size
     @blog_comments = @blog.comments
+    gon.blog_comments = @blog_comments
   end
 
   private

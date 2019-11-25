@@ -23,7 +23,7 @@
   </ul>
 </div>
 <div id="blog_content">
-  <div class="date"><%= @blog.created_at.strftime('%Y/%m/%d %-H:%-M') %></div>
+  <div class="date"><%= @blog.created_at.strftime('%Y/%m/%d %-H:%M') %></div>
   <div id="blog_title"><span>Title</span><h2>"<%= @blog.title %>"</h2></div>
   <ul class="blog_status">
     <li class="bars">
@@ -78,8 +78,8 @@
 <div id="impressions">
   <h2>Impressions</h2>
   <% if user_signed_in? %>
-    <%= form_with(model: @comments, url: comments_path, local: true, id:"blog_impression" ) do |f| %>
-      <%= f.text_area :content, placeholder:"impression", id: "impression_comment" %>
+    <%= form_with(model: @comments, url: comments_path, local: true, id:"new_impression" ) do |f| %>
+      <%= f.text_area :content, placeholder:"comment", id: "new_impression_comment" %>
       <%= f.hidden_field :user_id, :value => current_user.id  %>
       <%= f.hidden_field :blog_id, :value => @blog.id  %>
       <%= f.submit "コメント送信", class:"submit" %>
@@ -89,24 +89,33 @@
   <% end %>
   <div id="impression_list">
     <ul>
-    <% @blog_comments.each do |c| %>
+    <% @blog_comments.each do |comment| %>
     <li>
-      <div><%= c.serial%></div>
-      <div><%= c.content%></div>
-      <div><%= c.created_at.strftime('%Y/%m/%d %-H:%-M') %></div>
-      <div><%= c.user.name%></div>
+      <div class="comment_status">
+        <span class="comment_serial"><%= comment.serial%></span>
+        <span class="comment_date"><%= comment.created_at.strftime('%Y/%m/%d %-H:%M') %></span>
+      </div>
+      <div class="comment_content"><%= comment.content%></div>
+      <div class="comment_footer">
+        <div class="comment_user"><span>commentd by <a href="<%= user_path(comment.user.id) %>"><%= comment.user.name%></a></span></div>
+        <% if user_signed_in? && comment.user.id == current_user.id %>
+        <div class="comment_menu">
+          <a href="#modal" onclick="editTarget(<%= comment.id %>);" class="modal_impression"><span class="icon icon-pencil"></span></a>
+          <a href="<%= comment_path(id: comment.id, blog_id: @blog.id) %>" data-method="delete" data-confirm="コメントを削除しますか？"><span class="icon icon-trashcan"></span></a>
+        </div>
+        <% end %>
+      </div>
     </li>
     <% end %>
     </ul>
   </div>
-  <a href="#modal" class="modal_impression">upload</a>
 </div>
 <% if user_signed_in? %>
 <div id="modal_impression" style="display:none;">
-  <%= form_with(model: @comments, url: comments_path, local: true, id:"blog_impression" ) do |f| %>
-    <%= f.text_area :content, placeholder:"impression", id: "impression_comment" %>
-    <%= f.hidden_field :user_id, :value => current_user.id  %>
-    <%= f.hidden_field :blog_id, :value => @blog.id  %>
+  <%= form_with(model: @comments,url: comment_path(0), method: :patch, local: true, id:"edit_impression" ) do |f| %>
+    <%= f.text_area :content, placeholder:"impression", id: "edit_impression_comment" %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <%= f.hidden_field :blog_id, :value => @blog.id %>
     <%= f.submit "コメント送信", class:"submit" %>
   <% end %>
 </div>

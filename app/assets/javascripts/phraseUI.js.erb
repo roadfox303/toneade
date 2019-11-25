@@ -1,13 +1,5 @@
 $(document).on('turbolinks:load', function() {
-  $('.modal_impression').modaal({
-    overlay_opacity: 0.3,
-    overlay_close: 'false',
-    hide_close: 'true',
-    close_text: '決定',
-    animation: 'none',
-    content_source: '#modal_impression',
-    inject_position: '#blog_profile'
-  });
+
   $('.modal_upload').modaal({
     overlay_opacity: 0.3,
     overlay_close: 'false',
@@ -35,18 +27,9 @@ $(document).on('turbolinks:load', function() {
     content_source: '#modal_octave',
     inject_position: '#blog_form'
   });
-  $('.btn_notice').modaal({
-    overlay_opacity: 0.3,
-    overlay_close: 'true',
-    start_open: true,
-    hide_close: 'true',
-    close_text: '×',
-    animation: 'none',
-    content_source: '#modal_notice',
-    inject_position: 'body'
-  });
+
   $('.my-link').modaal({ start_open: true });
-  autosize($('textarea'));
+
   $('.modal_close').on('click',function(){
     $('.modal_upload').modaal('close');
   });
@@ -600,7 +583,6 @@ $(document).on('turbolinks:load', function() {
       let inputDur = '1m'
       // phrase_length = toneData[toneData.length -1]['time'].split(':')[0];
       // console.log(toneData.length);
-
 
       function project_profile(key,sc,octave){
         tonalData = gon.keys.find(function(element) {

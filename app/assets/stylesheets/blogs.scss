@@ -45,7 +45,7 @@ select{
 }
 #blog_content {
   width: 100%;
-  margin: 0;
+  margin: 0!important;
 }
 #blog_inputs, #phrase_inputs,.btn_set, #add_btns {
   list-style: none;
@@ -413,13 +413,25 @@ select.UI,.track_block_row select{
 #view_track .view_close{
   float: left;
   display: block;
-  background: #f00;
   margin: 3px;
   padding: 0 0.5rem;
   height: 24px;
+  width:32px;
   line-height: 24px;
 }
-
+#view_track .view_close .icon{
+  width: 32px;
+  height: 32px;
+  position: relative;
+}
+#view_track .view_close span{
+  border-radius: 0;
+}
+#view_track .view_close.icon:before{
+  position: absolute;
+  left: 0;
+  top:0;
+}
 #view_track span{
   // overflow: hidden;
   // float: left;
@@ -962,4 +974,73 @@ select.UI,.track_block_row select{
 #owner_menu a{
   padding: 0 1rem;
   color: $dark-color;
+}
+#impressions{
+  margin-top: 2rem;
+}
+#impressions h2{
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+#new_impression_comment,#edit_impression_comment{
+  width: 100%;
+}
+#impression_list{
+  margin-top: 2rem;
+}
+#impression_list ul{
+  display: block;
+  list-style: none;
+}
+#impression_list li{
+  display: block;
+  background: #eeeeee;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1rem;
+  margin: 0 0 0.5rem;
+}
+#impression_list li:last-child{
+  border-bottom: none;
+}
+#impression_list .comment_status{
+  display: table;
+  width: 100%;
+  border-bottom: 1px solid $dark-color;
+  margin-bottom: 0.5rem;
+}
+#impression_list span{
+  display: table-cell;
+}
+#impression_list .comment_date{
+  text-align: right;
+}
+#impression_list .comment_content{
+  padding: 1rem 0;
+}
+#impression_list .comment_footer{
+  display: table;
+  width: 100%;
+}
+#impression_list .comment_user{
+  display: table-cell;
+}
+#impression_list .comment_user span{
+  font-size: 1.2rem;
+}
+#impression_list .comment_menu{
+  display: table;
+  width: 100%;
+}
+#impression_list .comment_menu a{
+  display: table-cell;
+}
+#impression_list .comment_menu span{
+  display: block;
+  position: relative;
+  padding-left: 2rem;
+}
+#impression_list .comment_menu .icon:before{
+  font-size: 1.8rem;
+  position: absolute;
+  left: 0;
 }
