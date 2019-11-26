@@ -1,6 +1,6 @@
 <div id="user_nices" class="blog_list">
   <h2>Nice!しているフレーズ</h2>
-  <% unless @nices == 0 %>
+  <% if @nices.present? %>
     <ul>
     <% @nices.each do |nice| %>
       <li>
