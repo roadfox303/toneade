@@ -65,6 +65,12 @@ $line-color: #cccccc;
   background: #cccccc;
   border-radius: 50%;
 }
+.edit_user input,.edit_user textarea,.new_user input,.new_user textarea{
+  width:100%;
+}
+.edit_user .field,.new_user .field{
+margin-bottom: 2rem;
+}
 // .pagination span:last-child{
 //   border-right: 0;
 // }

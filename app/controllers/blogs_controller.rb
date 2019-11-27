@@ -7,7 +7,10 @@ class BlogsController < ApplicationController
   def index
     @page_name = "Phrase Index"
     gon.page_name = @page_name
-    @blogs = Blog.page(params[:page]).per(10).order(created_at: :desc)
+    # @articles = Blog.all.includes(:user)
+    # binding.pry
+    # @nices = current_user.nices
+    @blogs = Blog.all.includes(:user,:phrase,:nices).page(params[:page]).per(10).order(created_at: :desc)
     # @blogs = Blog.all.order(created_at: :desc)
   end
 
