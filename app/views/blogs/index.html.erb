@@ -11,7 +11,7 @@
         <div class="blog_head">
           <div class="blog_prof">
             <div class="prof_icon"></div>
-            <span><%= User.find(blog[:user_id])[:name] %></span>
+            <span><%= blog.user.name %></span>
           </div>
           <div class="blog_date"><%= blog[:created_at].strftime('%Y/%m/%d') %></div>
         </div>
@@ -20,7 +20,7 @@
           <dd><span><%= phrase_keyscale(blog) %></span></dd>
           <dd><span>♩=<%= blog.phrase.bpm %></span></dd>
           <% if user_signed_in? %>
-            <% if blog.nices.find_by([:user_id] == current_user.id) %>
+            <% if blog.nices.find_by(user_id: current_user.id) %>
             <dd><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
             <% else %>
             <dd><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-off"></span></dd>

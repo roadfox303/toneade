@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_id, only: [:show, :phrases]
+  before_action :set_id, only: [:show, :phrases, :edit]
   before_action :toneade_const, only: [:show, :phrases, :nices]
 
   def index
@@ -41,6 +41,10 @@ class UsersController < ApplicationController
   def follower
     @page_name = "Follower List"
     @followers = current_user.followers
+  end
+  def edit
+    @page_name = "User Profilessss"
+    binding.pry
   end
 
   private
