@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def index
     @page_name = "User List"
     gon.page_name = @page_name
-    @user = User.all
+    @users = User.page(params[:page]).per(10).order(created_at: :desc)
   end
 
   def show
@@ -25,12 +25,12 @@ class UsersController < ApplicationController
   def phrases
     @page_name = "User Phrase List"
     @user = User.find(params[:id])
-    @blogs = Blog.where(user_id: @user.id).order(created_at: :desc)
+    @blogs = Blog.where(user_id: @user.id).page(params[:page]).per(10).order(created_at: :desc)
   end
 
   def nices
     @page_name = "Nice List"
-    @nices = Nice.where(user_id: current_user.id)
+    @nices = Nice.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :desc)
   end
 
   def follow

@@ -20,9 +20,38 @@ $(document).on('turbolinks:load', function() {
   });
   autosize($('textarea'));
 
-})
+  // $(window).on('load resize', function(){
+  //   pagenationResize();
+  // });
+  // $(document).on('click', '.pagination span', function (){
+  //   pagenationResize();
+  // });
+
+
+
+
+});
 function editTarget(id) {
   let comment = gon.blog_comments.find(item => item['id'] == id);
   $('#edit_impression_comment').val(comment['content']);
   $('#edit_impression').attr('action', '/comments/' + id );
 }
+// function pagenationResize(){
+//   let cell_size = 0;
+//   let cell_space = $('.pagination').width();
+//
+//   $('.pagination span').each(function(index, element) {
+//     console.log($(this).attr('class'));
+//     _this = $(this);
+//
+//     if (_this.attr('class').match(/page/)) {
+//       cell_size ++ ;
+//     }else{
+//       cell_space -= _this.width();
+//     }
+//   });
+//   $('.pagination span.page').css({
+//     'width': cell_space / cell_size
+//   });
+//
+// }

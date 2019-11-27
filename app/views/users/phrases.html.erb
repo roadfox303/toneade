@@ -1,22 +1,26 @@
-<h1>User Phrase</h1>
-<p>フレーズ全部</p>
 <div id="latest_blog" class="blog_list">
+  <%= link_to "Create", new_blog_path, data: { "turbolinks"=> false }, class:"btn_create" %>
   <h2><%= @user.name %>のフレーズ</h2>
-  <ul>
-  <% @blogs.each do |blog| %>
-  <li>
-    <a href="<%= blog_path(blog.id) %>" data-turbolinks="false">
-      <div class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></div>
-      <div class="blog_nices"><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></div>
-      <div class="blog_title"><h3>"<%= blog.title %>"</h3></div>
-      <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
-      <div class="blog_bar"><%= phrase_length blog %></div>
-      <div class="blog_scale">
-        <%= @keys.find{ |item| item[:id] == blog.phrase.key }[:name] %>
-        <%= @scales.find{ |item| item[:id] == blog.phrase.scale }[:name] %>
-      </div>
-    </a>
-  </li>
+  <% if @blogs.present? %>
+    <ul>
+    <% @blogs.each do |blog| %>
+    <li>
+      <a href="<%= blog_path(blog.id) %>" data-turbolinks="false">
+        <div class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></div>
+        <div class="blog_nices"><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></div>
+        <div class="blog_title"><h3>"<%= blog.title %>"</h3></div>
+        <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
+        <div class="blog_bar"><%= phrase_length blog %></div>
+        <div class="blog_scale">
+          <%= @keys.find{ |item| item[:id] == blog.phrase.key }[:name] %>
+          <%= @scales.find{ |item| item[:id] == blog.phrase.scale }[:name] %>
+        </div>
+      </a>
+    </li>
+    <% end %>
+    </ul>
+    <%= paginate @blogs %>
+  <% else %>
+  <div class="content_empty">制作したフレーズはありません。</div>
   <% end %>
-  </ul>
 </div>

@@ -40,6 +40,38 @@ $line-color: #cccccc;
   text-align: center;
   padding: 2rem 0;
 }
+.pagination{
+  display: table;
+  width: auto;
+  margin: 2rem auto;
+  text-decoration: none;
+}
+.pagination span{
+  display: table-cell;
+  text-align: center;
+  height: 28px;
+  width: 28px;
+  line-height: 28px;
+}
+.pagination span a{
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  margin: 0 auto;
+  text-decoration: none;
+}
+.pagination .current{
+  display: inline-block;
+  background: #cccccc;
+  border-radius: 50%;
+}
+// .pagination span:last-child{
+//   border-right: 0;
+// }
+// .pagination span.first, .pagination span.prev, .pagination span.next, .pagination span.last{
+//   width:32px;
+//   height: 32px;
+// }
 @media screen and ( min-width:320px) {
   h1{
     font-size: 2.4rem;
