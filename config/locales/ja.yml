@@ -1,6 +1,32 @@
 ---
 ja:
   activerecord:
+    models:
+      user: ユーザー
+      blog: ブログ
+      phrase: フレーズ
+      track: トラック
+      comment: コメント
+    attributes:
+      user:
+        name: ユーザーネーム
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+      blog:
+        title: フレーズタイトル
+        comment: フレーズコメント
+        user_id: 作成者
+        created_at: 作成日時
+        updated_at: 更新日時
+      phrase:
+        key: キー
+        scale: スケール
+        bpm: テンポ
+      track:
+        name: トラックネーム
+      comment:
+        content: コメント内容
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

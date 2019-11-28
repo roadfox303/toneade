@@ -9,7 +9,12 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "コメントを投稿しました"
     else
-      flash[:notice] = "コメントの投稿に失敗しました"
+      error_num = @comment.errors.count
+      error_msg = ""
+      @comment.errors.full_messages.each do |msg|
+        error_msg << msg
+      end
+      flash[:notice] = error_msg
     end
     redirect_to blog_path(params[:blog_id])
   end

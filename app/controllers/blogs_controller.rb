@@ -5,7 +5,7 @@ class BlogsController < ApplicationController
   before_action :toneade_const
 
   def index
-    @page_name = "Phrase Index"
+    @page_name = "All Phrases"
     gon.page_name = @page_name
     # @articles = Blog.all.includes(:user)
     # binding.pry

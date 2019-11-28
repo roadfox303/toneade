@@ -52,7 +52,7 @@
   <% end %>
   <div id="blog_comment">
     <h2>Comment</h2>
-    <p><%= @blog.content %></p>
+    <p><%= simple_format(@blog.content) %></p>
   </div>
   <% if user_signed_in? && @user.id == current_user.id %>
     <div id="owner_menu">
@@ -95,7 +95,7 @@
         <span class="comment_serial"><%= comment.serial%></span>
         <span class="comment_date"><%= comment.created_at.strftime('%Y/%m/%d %-H:%M') %></span>
       </div>
-      <div class="comment_content"><%= comment.content%></div>
+      <div class="comment_content"><%= simple_format(comment.content) %></div>
       <div class="comment_footer">
         <div class="comment_user"><span>commentd by <a href="<%= user_path(comment.user.id) %>"><%= comment.user.name%></a></span></div>
         <% if user_signed_in? && comment.user.id == current_user.id %>
