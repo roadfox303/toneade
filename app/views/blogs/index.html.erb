@@ -1,0 +1,40 @@
+<% if user_signed_in? %>
+  <%= link_to "Create", new_blog_path, data: { "turbolinks"=> false }, class:"btn_create" %>
+<% end %>
+<% unless @blogs.empty?%>
+<div id="phrase_all" class="blog_list">
+  <h2>投稿フレーズ一覧</h2>
+  <ul>
+  <% @blogs.each do |blog| %>
+    <li>
+      <a href="<%= blog_path(blog.id)%>" data-turbolinks="false">
+        <div class="blog_head">
+          <div class="blog_prof">
+            <div class="prof_icon"></div>
+            <span><%= blog.user.name %></span>
+          </div>
+          <div class="blog_date"><%= blog[:created_at].strftime('%Y/%m/%d') %></div>
+        </div>
+        <h3>"<%= blog[:title] %>"</h3>
+        <dl class="blog_status">
+          <dd><span><%= phrase_keyscale(blog) %></span></dd>
+          <dd><span>♩=<%= blog.phrase.bpm %></span></dd>
+          <% if user_signed_in? %>
+            <% if blog.nices.find_by(user_id: current_user.id) %>
+            <dd><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
+            <% else %>
+            <dd><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-off"></span></dd>
+            <% end %>
+          <% else %>
+          <dd><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
+          <% end %>
+        </dl>
+      </a>
+    </li>
+  <% end %>
+  <div id="ttt">
+  <%= paginate @blogs %>
+  </div>
+  </ul>
+</div>
+<% end %>

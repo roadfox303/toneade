@@ -1,0 +1,28 @@
+$(document).on('turbolinks:load', function() {
+  $('.modal_impression').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_impression',
+    inject_position: '#blog_profile'
+  });
+  $('.btn_notice').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'true',
+    start_open: true,
+    hide_close: 'true',
+    close_text: '×',
+    animation: 'none',
+    content_source: '#modal_notice',
+    inject_position: 'body'
+  });
+  autosize($('textarea'));
+
+});
+function editTarget(id) {
+  let comment = gon.blog_comments.find(item => item['id'] == id);
+  $('#edit_impression_comment').val(comment['content']);
+  $('#edit_impression').attr('action', '/comments/' + id );
+}
