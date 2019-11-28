@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
-  root 'blogs#index'
   get 'relationships/create'
   get 'relationships/destroy'
   get 'users/show'
+  root 'blogs#index'
+
+
+  # ログイン、アカウント編集後、任意のページに推移させるための記述
+  # devise_for :users, controllers: {
+  #         registrations: 'users/registrations',
+  #         sessions: 'users/sessions'
+  # }
 
   devise_for :users
   resources :users, only: [:index,:show] do
