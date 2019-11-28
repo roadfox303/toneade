@@ -106,60 +106,9 @@ $(document).on('turbolinks:load', function() {
     });
   }
   /* Tone.js */
-  let c_maj = ["E4","G4","C5"]
-  let g7 = ["D4","F4","A4","B4"]
-  let cs7 = ["C#4", "F4", "G#4", "B4"]
-  let cM7 = ["B4","C4", "E4", "G4"]
-  let fsM7 = ["C#4", "F4", "F#4", "A#4"]
-  let dsM7 = ["D#4", "G4", "A#4", "D5"]
-  let em7 = ["E4", "G4", "B4", "D5"]
-  let fM7 = [ "C4", "E4","F4", "A4"]
-  let fm7 = ["C4", "D#4","F4", "G#4"]
-  let fmM7 = ["C4", "E4","F4", "G#4"]
-  let f7 = ["C4", "D#4","F4", "A4"]
-  let dm7 = ["D4", "F4", "A4","C4"]
-  let dm9 = ["D4", "F4", "A4", "C3", "E4"]
 
-
-  // let toneData = [
-  //   { note: chord, dur: "8n" },
-  //   { note: "F4", dur: "4n" },
-  //   [{ note: "G4", dur: "8n" }, { note: "G4", dur: "8n" }],
-  //   { note: "G4", dur: "4n" },
-  //
-  //   { note: "E4", dur: "8n" },
-  //   [{ note: "G4", dur: "8n" }, { note: "C5", dur: "8n" }],
-  //   { note: "C5", dur: "8n" },
-  //   [{ note: "C5", dur: "8n" }, { note: "D5", dur: "2n" }],
-  //
-  //   null,
-  //   { note: "E5", dur: "8n" },
-  //   { note: "E5", dur: "8n" },
-  //   { note: "D5", dur: "2n" },
-  //
-  //   null,
-  //   [{ note: "C5", dur: "8n" },{ note: "A4", dur: "8n" }],
-  //   [{ note: "C5", dur: "2n" },{ note: "C5", dur: "2n" }],
-  // ];
   let chordPreview = []
-  let toneData = [
-    // {'time': '0:0:0', "note": cM7, 'dur': '2n','root':'D4','type':'m9','omit':[],'rotate':1},
-    // {'time': '0:2:0', "note":fM7, 'dur': '2n'},
-    // {'time': '1:0:0', "note": g7, 'dur': '2n'},
-    // {'time': '1:2:0', "note": cM7, 'dur': '2n'},
-    // {'time': '0:0:0', 'note': c_maj, 'dur': ' 16n',root:'C△'},
-    // {'time': '0:3:0', "note": 'G4', 'dur': '16n',root:'C△'},
-    // {'time': '1:2:0', "note": 'E4', 'dur': '16n',root:'C△'},
-    // {'time': '2:0:0', "note": 'A4', 'dur': '4n',root:'C△'},
-    // {'time': '2:1.5:0', "note": 'B4', 'dur': '4n'},
-    // {'time': '2:2.8:0', "note": 'A4', 'dur': '4n'},
-    // {'time': '3:0.2:0', "note": 'G#4', 'dur': '4n'},
-    // {'time': '3:1.6:0', "note": 'A#4', 'dur': '4n'},
-    // {'time': '3:2.8:0', "note": 'G#4', 'dur': '4n'},
-    // {'time': '4:0:0', "note": 'G4', 'dur': '16n'},
-    // {'time': '4:0.75:0', "note": 'F4', 'dur': '16n'},
-    // {'time': '4:1.25:0', "note": 'G4', 'dur': '1n'},
-  ];
+  let toneData = [];
   // console.log(generateChords("C4","△7","name"));
 
 
@@ -278,10 +227,6 @@ $(document).on('turbolinks:load', function() {
     let bottom = pickKey(chord[0]);
     for (let i = 0 ; i < bufferA.length ; i++){
       bufferB = bufferA;
-      // root = convert_note_to_number(bufferB[0]);
-      // bufferB = bufferB.map(function(note) {
-      //   return convert_note_to_number(note) - root
-      // });
       root = convert_note_to_number(bufferB[0]);
       bufferB = bufferB.map(function(note) {
         return convert_note_to_number(note) - root
@@ -325,7 +270,6 @@ $(document).on('turbolinks:load', function() {
     return result
   }
 
-
   /* 構成音が近いコードを探索 */
   function search_substitute(chode,key){
 
@@ -333,25 +277,7 @@ $(document).on('turbolinks:load', function() {
   /* コードのダイアトニック度を指標化 */
   function diatonic_point(chord,key,scale){
 
-
   }
-  // console.log(diatonic_point(["E4","G#4","B4"],"C","Major"));
-
-  // console.log(analyze_chord(["F#4","C5","D#5","F#5","A5"],"name"));
-  /* ルートを判定(ルートのノートネームを返す。違えばfalse) */
-  // function judgRoot(chord){
-  //   let name = analyze_chord(chord,'name');
-  //   let result;
-  //   if (name != false){
-  //     name = pickKey(name).split('/')[0];
-  //     for (let i = 0 ; i < chord.length ; i++){
-  //       if (chord[i].includes(name) == true){
-  //         return chord[i];
-  //       }
-  //     }
-  //   }
-  //   return false;
-  // }
 
   /* セカンダリドミナントを生成 */
   function generate_secondaryDominant(chord){
@@ -374,14 +300,6 @@ $(document).on('turbolinks:load', function() {
       return false;
     }
   }
-  // V7     7-11-2-5
-  // bII7   1-5-8-11
-  // bII7   1-5-8-11-3-6
-  // IV7     5-9-0-3
-  // VI7     11-3-6-9
-  // 裏コード　ルートが半音6個違い且つ３度音を共有している
-  // IIm7   2-5-9-12
-  // bVIm7  8-11-3-6
 
   /* ノートをルートにコードを生成(root:(number,string),array:コードタイプ,format:'number','name') */
   function generateChords(root,type,format){
@@ -419,9 +337,6 @@ $(document).on('turbolinks:load', function() {
       return 0;
     }
   }
-  // console.log(generate_substituteDominant(["C3","E3","G3","A#3"]));
-  // console.log(search_secondaryDominant(["C4","E4","G4"]));
-
 
   /* コードを転回(chord:array) */
   function rotate_chord(chord,direction){
@@ -499,9 +414,7 @@ $(document).on('turbolinks:load', function() {
   	},
     volume: -10,
   }).toMaster();
-  // const seq = new Tone.Sequence((time, { note, dur }) => {
-  //   synth.triggerAttackRelease(note, dur, time);
-  // }, toneData, "4n").start(0);
+
   function addMelody(time, { note, dur }) {
     synth.triggerAttackRelease(note, dur, time);
   }
@@ -531,22 +444,6 @@ $(document).on('turbolinks:load', function() {
 
   /* UI */
   $(function(){
-    // $(document).on('click', '.test_edit', function (){
-    //   let GM=["G3","B3","D4"];
-    //   let Em=["E3","G3","B3"];
-    //   toneData = [
-    //     {'time': '0:0:0', 'note': ["C4","E4","G4"], 'dur': '4n'},
-    //     {'time': '0:1:0', 'note': ["G3","B3","D4"], 'dur': '4n'},
-    //     {'time': '0:2:0', 'note': ["A3","C4","E4"], 'dur': '4n'},
-    //     {'time': '0:3:0', 'note': Em, 'dur': '4n'},
-    //     {'time': '1:0:0', 'note': ["F3","A3","C3"], 'dur': '4n'},
-    //     {'time': '1:1:0', 'note': ["C3","E3","G3"], 'dur': '4n'},
-    //     {'time': '1:2:0', 'note': ["F3","A3","C3"], 'dur': '4n'},
-    //     {'time': '1:3:0', 'note': GM, 'dur': '4n'},
-    //   ];
-    // });
-    // console.log(toneData);
-    // alert(gon.tracks[0]["name"]);
     /* キー、ノート、オクターブ情報を含めた、スケールデータを構築 */
     function set_scaleData(key,scale){
       let set_key = gon.keys.find(item => item['id'] == key);
@@ -581,8 +478,6 @@ $(document).on('turbolinks:load', function() {
       generateDiatonicChordBtn(phrase_key,scale);
       let inputM,inputB,inputChordType;
       let inputDur = '1m'
-      // phrase_length = toneData[toneData.length -1]['time'].split(':')[0];
-      // console.log(toneData.length);
 
       function project_profile(key,sc,octave){
         tonalData = gon.keys.find(function(element) {
@@ -594,7 +489,6 @@ $(document).on('turbolinks:load', function() {
         scale = gon.notes.filter(note => note['scale_id'] == scaleData['id']);
         key = {'name':key, 'number':tonalData['octave'][octave + 1]}
         scale.map(array => array['number'] = key['number'] + array['interval']);
-        // test = notesData.find((note) => note.degree === 'III');
       }
       let track_num = 1;
       let last_measure = 4;
@@ -624,9 +518,6 @@ $(document).on('turbolinks:load', function() {
           $('.tr_name').eq(index).val(val["name"]);
           selectGenerate($('.tr_type').eq(index), gon.tr_types, gon.tracks[index]["tr_type"]);
           selectGenerate($('.inst_type').eq(index), gon.inst_categorys);
-
-          // console.log(toneData);
-          // $("select option").attr("selected", true);
         });
       }else{
         selectGenerate($('.tr_type'),gon.tr_types,1);
@@ -635,12 +526,7 @@ $(document).on('turbolinks:load', function() {
       editTrackSet(beat,toneData);
 
       /* select optionにトラックタイプを挿入 */
-      // selectGenerate($('.tr_type'),gon.tr_types);
 
-      /* UIのbpmをTone.jsに反映 */
-      // $(document).on('change', '#blog_phrase_attributes_bpm', function(){
-      //   Tone.Transport.bpm.value = $(this).val();
-      // });
       /* master setting の変更を取得 */
       $(document).on('change', '#phrase_inputs select', function(){
         let _this = $(this);
@@ -663,7 +549,6 @@ $(document).on('turbolinks:load', function() {
             generateDiatonicChordBtn(phrase_key,scale);
             break;
         }
-        // beat = $('#blog_phrase_attributes_beat option:selected').text();
       });
 
       /* UIのinput情報をformに反映 */
@@ -701,27 +586,8 @@ $(document).on('turbolinks:load', function() {
       function setForm_toneData(data){
         let track = $('.track_edit_header h3').text().replace(/[^0-9]/g, "");
         let parent = $('.track_form:nth-child(' + track + ')');
-
         $('input:nth-child(4)',parent).val(JSON.stringify(data));
-        // $('input:nth-child(4)',parent).val(JSON.stringify(data));
-        // console.log($('input:nth-child(4)',parent).val());
       }
-
-      /**/
-
-
-      // alert(gon.phrase.scale);
-      /* トラック追加 */
-
-      /* トラック名のフォーム反映 */
-      // $('input[type="text"]').keyup(function() {
-      //
-      //   //入力したvalue値を変数に格納
-      //   var val = $(this).val();
-      //
-      //   //選択したvalue値をp要素に出力
-      //   $('p').text(val);
-      // });
 
       /* トラック追加 */
       $('.add_track').on('click',function(){
@@ -890,20 +756,6 @@ $(document).on('turbolinks:load', function() {
             }
             edit.appendSlide(['<div class="swiper-slide"><ul class="tr_guide">' + addition + '</ul></div>']);
           }
-
-          // $('#edit_track_chord .swiper-slide:last-child .edit_b span').empty();
-          // $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
-          //   $(element).text(last += 1);
-          // });
-
-          // console.log(data);
-          // data.map(function(tone,i) {
-          //   let chord_tone = search_chord(tone);
-          //   let chord_degree = set_scale.find(item => item['note_name'] == chord_tone[1]);
-          //   let time = tone['time'].split(':');
-          //   let locate = (Number(time[0]) + 1) + ":" + (Number(time[1]) + 1) + ":" + (time[2]);
-          //   $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_' + chord_degree['function'] + '"><span>' + chord_degree['degree'] + chord_tone[2] + '</span></div></li>');
-          // });
         }
         if ($('#edit_track_chord .swiper-slide li:first-child .edit_b').length == 3){
           $('.edit_b').css({
@@ -933,12 +785,6 @@ $(document).on('turbolinks:load', function() {
             chords.push({'id':chords.length + 1, 'root':array['number'], 'notes':chord['notes']});
           });
         }
-        // console.log(chords);
-      }
-
-
-      function generateChordBtn(key,array,selected) {
-
       }
 
       /* コードボタン入力処理 */
@@ -995,11 +841,8 @@ $(document).on('turbolinks:load', function() {
             $('#view_track').css('height', custom_height + 'px');
           });
         }
-        // let notes = $('span',this).text().split('/')[1];
-        // let tone = notes.split(',');
-        // synth.triggerAttackRelease(tone, '4n');
+
         $(".chord_btns li").setTouchEnd(function(event){
-          // console.log($(this).attr('class'));
           $('#view_track').css('height', contain_height + 'px');
           let notes = $('.chord_data',this).text().split('/')[1];
           let inputRotate = $('.chord_data',this).text().split('/')[2];
@@ -1032,7 +875,6 @@ $(document).on('turbolinks:load', function() {
             toneData.sort(sort_by(order));
           }
           setForm_toneData(toneData);
-          // console.log(toneData);
         });
       });
       /* セレクトした入力データを削除 */

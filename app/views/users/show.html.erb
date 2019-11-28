@@ -6,14 +6,15 @@
     <li><span class="data"><%= @user.active_relationships.size %></span><span class="title">Follows</span></li>
   </ul>
   <ul class="prof_status">
-    <li>create <span><%= @blogs_num %></span> Phrases</li>
+    <li>created <span><%= @blogs_num %></span> Phrases</li>
     <li>Nice's total <span><%= @nice_total %></span><span class="icon icon-heart-on"></span></li>
   </ul>
 </div>
 <% if @user.comment %>
 <div id="prof_comment">
   <h2>user comment</h2>
-  <p><%= @user.comment %></p>
+  <p><%= simple_format(@user.comment) %></p>
+
 </div>
 <% end %>
 <% if user_signed_in? && @user.id != current_user.id %>
@@ -33,12 +34,12 @@
 <% if user_signed_in? && @user.id == current_user.id %>
   <div id="user_menu">
     <ul>
-      <li><%= link_to "User Profile", edit_user_registration_path %></li>
+      <li><%= link_to "Profile", edit_user_registration_path %></li>
       <li><a>User Patch</a></li>
       <li><%= link_to "Follow List", follow_user_path %></li>
       <li><%= link_to "Follower List", follower_user_path %></li>
-      <li><%= link_to "User Phrase", phrases_user_path %></li>
-      <li><%= link_to "User Nices", nices_user_path %></li>
+      <li><%= link_to "My Phrase", phrases_user_path %></li>
+      <li><%= link_to "My Nices", nices_user_path %></li>
       <li><%= link_to "Create Phrase", new_blog_path %></li>
     </ul>
   </div>
