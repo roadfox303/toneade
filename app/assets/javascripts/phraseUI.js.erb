@@ -883,6 +883,7 @@ $(document).on('turbolinks:load', function() {
           $('.select_track').html('<span class="chord_function active"></span><span class="chord_degree"></span><span class="chord_name"></span>');
           let deleteIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
           toneData.splice(deleteIndex, 1);
+          $('.select_track').removeClass().addClass('edit_b select_track');
         }
       });
       /* 同クロックの入力済データを確認(t:タイムコード)return:インデックス */
