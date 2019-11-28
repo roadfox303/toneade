@@ -20,11 +20,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  GET /resource/edit
-  def edit
-    @page_name = "User Profile"
-    binding.pry
-  end
+  # GET /resource/edit
+  # def edit
+  #   @page_name = "User Profile"
+  #   binding.pry
+  # end
 
   # PUT /resource
   # def update
