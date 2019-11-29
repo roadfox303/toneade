@@ -785,104 +785,243 @@ $(document).on('turbolinks:load', function() {
             chords.push({'id':chords.length + 1, 'root':array['number'], 'notes':chord['notes']});
           });
         }
+        btn_flickSet();
       }
 
       /* コードボタン入力処理 */
-      let viewDegree;
-      let contain_height = $('#view_track').height();
-      $(document).on('mousedown', '.chord_btns li', function (){
-        _this = $(this);
-        let chord_id = $('.chord_data',this).text().split('/')[0];
-        let c = $('.chord_data',this).text().split('/')[1];
-        let chord_tone = c.split(',');
-        let u_chord = c.split(',');
-        let d_chord = c.split(',');
-        let bufferA = [];
-        let bufferB = [];
-        let inputRoot = chord_tone[0];
-        let origin_height = _this.height();
-        let origin_width = _this.width();
-        let origin_pos_top = _this.position().top;
-        let origin_pos_left = _this.position().left;
-        let funcClass = _this.children().attr('class');
-        let viewFunc = funcClass.split("_")[1].capitalize();
-        if ($('.degree',this).text() != ""){
-          viewDegree = $('.degree',this).text();
-        }
 
-        let custom_height = contain_height;
 
-        $('#screen').addClass('active');
-        if(_this.hasClass('clone') == false ){
-          btn_c = _this.clone(true).addClass('clone clone_center').css({
-            'top': origin_pos_top,
-            'left': origin_pos_left
-          });
-          _this.after(btn_c);
-          chord_tone.map(function(item,i) {
-            let num = i + 1;
-            bufferA = rotate_chord(u_chord,'up');
-            bufferB = rotate_chord(d_chord,'down');
-            btn_t = _this.clone(true).addClass('clone clone_top rotate_' + num).css({
-              'top': origin_pos_top - (origin_height + 2) * num,
-              'left': origin_pos_left
-            });
-            _this.after(btn_t);
-            $('.clone_top.rotate_' + num).children('a').html('R ' + num + '<span class="chord_data">' + chord_id + '/' + bufferA + '/' + num + '</span>');
-            btn_b = _this.clone(true).addClass('clone clone_bottom rotate_' + num).css({
-              'top': origin_pos_top + (origin_height + 2) * num,
-              'left': origin_pos_left
-            });
-            _this.after(btn_b);
-            $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + bufferB + '/-' + num + '</span>');
-            u_chord = bufferA;
-            d_chord = bufferB;
-            custom_height += 32;
-            $('#view_track').css('height', custom_height + 'px');
-          });
-        }
 
-        $(".chord_btns li").setTouchEnd(function(event){
-          $('#view_track').css('height', contain_height + 'px');
-          let notes = $('.chord_data',this).text().split('/')[1];
-          let inputRotate = $('.chord_data',this).text().split('/')[2];
-          let tone = notes.split(',');
-          synth.triggerAttackRelease(tone, '4n');
-          $('#screen').removeClass('active');
-          $('.clone').remove();
-          let inputType = analyze_chord(tone,'full');
-          if (inputB >= 0){
-            let writeData = {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
-            let writeIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
-            if ( writeIndex >= 0){
-              toneData[writeIndex] = writeData
-            }else{
-              toneData.push(writeData);
+      function btn_flickSet(){
+        let viewDegree;
+        let contain_height = $('#view_track').height();
+        var isTouch = ('ontouchstart' in window);
+        let elem,posX,posY,chord_id,btn_chord_tone,u_chord,d_chord,inputRoot,funcClass,viewFunc,cellFunc;
+        let btn_bufferA = [];
+        let btn_bufferB = [];
+        let origin_height,origin_width,origin_pos_top,origin_pos_left;
+        // $(".chord_btns li").setTouchStart(function(event){
+        //   // alert("aaaa");
+        //   console.log("downAAAA");
+        // });
+        // $(".chord_btns li").setTouchMove(function(event){
+        //   posXT = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+        //   posYT = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+        //   if($(document.elementFromPoint(posXT, posYT)).attr('id') != 'screen'){
+        //     elem = document.elementFromPoint(posXT, posYT);
+        //   }
+        //   // console.log($(elem));
+        // });
+        // $(".chord_btns li").setTouchEnd(function(event){
+        //
+        //   console.log($(elem));
+        // });
+
+        $('.chord_btns li').on({
+          'touchstart mousedown': function(e) {
+            e.preventDefault();
+            _this = $(this);
+            elem = this;
+            cellFunc = $('a',_this).attr('class');
+            chord_id = $('.chord_data',this).text().split('/')[0];
+            let c = $('.chord_data',this).text().split('/')[1];
+            btn_chord_tone = c.split(',');
+            u_chord = c.split(',');
+            d_chord = c.split(',');
+            inputRoot = btn_chord_tone[0];
+            origin_height = _this.height();
+            origin_width = _this.width();
+            origin_pos_top = _this.position().top;
+            origin_pos_left = _this.position().left;
+            funcClass = _this.children().attr('class');
+            viewFunc = funcClass.split("_")[1].capitalize();
+            if ($('.degree',this).text() != ""){
+              viewDegree = $('.degree',this).text();
             }
-            let viewType = $('.active').attr('class').split(' ')[0];
-            switch (viewType){
-              case 'chord_function':
-              $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
-              break;
-              case 'chord_degree':
-              $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
-              break;
-              case 'chord_name':
-              $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
-              break;
+            let custom_height = contain_height;
+
+            $('#screen').addClass('active');
+            if(_this.hasClass('clone') == false ){
+              btn_c = _this.clone(true).addClass('clone clone_center').css({
+                'top': origin_pos_top,
+                'left': origin_pos_left
+              });
+              _this.after(btn_c);
+              btn_chord_tone.map(function(item,i) {
+                let num = i + 1;
+                btn_bufferA = rotate_chord(u_chord,'up');
+                btn_bufferB = rotate_chord(d_chord,'down');
+                btn_t = _this.clone(true).addClass('clone clone_top rotate_' + num).css({
+                  'top': origin_pos_top - (origin_height + 2) * num,
+                  'left': origin_pos_left
+                });
+                _this.after(btn_t);
+                $('.clone_top.rotate_' + num).children('a').html('R ' + num + '<span class="chord_data">' + chord_id + '/' + btn_bufferA + '/' + num + '</span>');
+                btn_b = _this.clone(true).addClass('clone clone_bottom rotate_' + num).css({
+                  'top': origin_pos_top + (origin_height + 2) * num,
+                  'left': origin_pos_left
+                });
+                _this.after(btn_b);
+                $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + btn_bufferB + '/-' + num + '</span>');
+                u_chord = btn_bufferA;
+                d_chord = btn_bufferB;
+                custom_height += 32;
+                $('#view_track').css('height', custom_height + 'px');
+              });
             }
-            $('.select_track').removeClass().addClass('edit_b ' + $('a',this).attr('class') + ' phrase_chord select_track')
-            toneData.sort(sort_by(order));
+          },
+          'touchmove mousemove': function(e) {
+            posX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+            posY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+            if($(document.elementFromPoint(posX, posY)).attr('id') != 'screen'){
+              elem = document.elementFromPoint(posX, posY);
+            }
+            if (!this.touched) {
+              return;
+            }
+
+            e.preventDefault();
+          },
+          'touchend mouseup': function(e) {
+            upEvent(elem);
+            function upEvent(elem){
+              $('#view_track').css('height', contain_height + 'px');
+              let notes = $('.chord_data',elem).text().split('/')[1];
+              let inputRotate = $('.chord_data',elem).text().split('/')[2];
+              let tone = notes.split(',');
+              synth.triggerAttackRelease(tone, '4n');
+              $('#screen').removeClass('active');
+              $('.clone').remove();
+              let inputType = analyze_chord(tone,'full');
+              if (inputB >= 0){
+                let writeData = {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
+                let writeIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
+                if ( writeIndex >= 0){
+                  toneData[writeIndex] = writeData
+                }else{
+                  toneData.push(writeData);
+                }
+                let viewType = $('.active').attr('class').split(' ')[0];
+                switch (viewType){
+                  case 'chord_function':
+                  $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+                  break;
+                  case 'chord_degree':
+                  $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+                  break;
+                  case 'chord_name':
+                  $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+                  break;
+                }
+                $('.select_track').removeClass().addClass('edit_b ' + cellFunc + ' phrase_chord select_track')
+                toneData.sort(sort_by(order));
+              }
+            }
+            setForm_toneData(toneData);
+            if (!this.touched) {
+                return;
+            }
+            // タッチ処理は終了したため、フラグをたたむ
+            this.touched = false;
           }
-          setForm_toneData(toneData);
         });
-      });
+      }
+
+
+      // $(document).on('mousedown', '.chord_btns li', function (){
+      //   _this = $(this);
+      //   let chord_id = $('.chord_data',this).text().split('/')[0];
+      //   let c = $('.chord_data',this).text().split('/')[1];
+      //   let chord_tone = c.split(',');
+      //   let u_chord = c.split(',');
+      //   let d_chord = c.split(',');
+      //   let bufferA = [];
+      //   let bufferB = [];
+      //   let inputRoot = chord_tone[0];
+      //   let origin_height = _this.height();
+      //   let origin_width = _this.width();
+      //   let origin_pos_top = _this.position().top;
+      //   let origin_pos_left = _this.position().left;
+      //   let funcClass = _this.children().attr('class');
+      //   let viewFunc = funcClass.split("_")[1].capitalize();
+      //   if ($('.degree',this).text() != ""){
+      //     viewDegree = $('.degree',this).text();
+      //   }
+      //
+      //   let custom_height = contain_height;
+      //
+      //   $('#screen').addClass('active');
+      //   if(_this.hasClass('clone') == false ){
+      //     btn_c = _this.clone(true).addClass('clone clone_center').css({
+      //       'top': origin_pos_top,
+      //       'left': origin_pos_left
+      //     });
+      //     _this.after(btn_c);
+      //     chord_tone.map(function(item,i) {
+      //       let num = i + 1;
+      //       bufferA = rotate_chord(u_chord,'up');
+      //       bufferB = rotate_chord(d_chord,'down');
+      //       btn_t = _this.clone(true).addClass('clone clone_top rotate_' + num).css({
+      //         'top': origin_pos_top - (origin_height + 2) * num,
+      //         'left': origin_pos_left
+      //       });
+      //       _this.after(btn_t);
+      //       $('.clone_top.rotate_' + num).children('a').html('R ' + num + '<span class="chord_data">' + chord_id + '/' + bufferA + '/' + num + '</span>');
+      //       btn_b = _this.clone(true).addClass('clone clone_bottom rotate_' + num).css({
+      //         'top': origin_pos_top + (origin_height + 2) * num,
+      //         'left': origin_pos_left
+      //       });
+      //       _this.after(btn_b);
+      //       $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + bufferB + '/-' + num + '</span>');
+      //       u_chord = bufferA;
+      //       d_chord = bufferB;
+      //       custom_height += 32;
+      //       $('#view_track').css('height', custom_height + 'px');
+      //     });
+      //   }
+      //
+      //   $(".chord_btns li").setTouchEnd(function(event){
+      //     $('#view_track').css('height', contain_height + 'px');
+      //     let notes = $('.chord_data',this).text().split('/')[1];
+      //     let inputRotate = $('.chord_data',this).text().split('/')[2];
+      //     let tone = notes.split(',');
+      //     synth.triggerAttackRelease(tone, '4n');
+      //     $('#screen').removeClass('active');
+      //     $('.clone').remove();
+      //     let inputType = analyze_chord(tone,'full');
+      //     if (inputB >= 0){
+      //       let writeData = {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
+      //       let writeIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
+      //       if ( writeIndex >= 0){
+      //         toneData[writeIndex] = writeData
+      //       }else{
+      //         toneData.push(writeData);
+      //       }
+      //       let viewType = $('.active').attr('class').split(' ')[0];
+      //       switch (viewType){
+      //         case 'chord_function':
+      //         $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+      //         break;
+      //         case 'chord_degree':
+      //         $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+      //         break;
+      //         case 'chord_name':
+      //         $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+      //         break;
+      //       }
+      //       $('.select_track').removeClass().addClass('edit_b ' + $('a',this).attr('class') + ' phrase_chord select_track')
+      //       toneData.sort(sort_by(order));
+      //     }
+      //     setForm_toneData(toneData);
+      //   });
+      // });
       /* セレクトした入力データを削除 */
       $(document).on('click', '#btn_delete_data', function (){
         if (inputB >= 0){
           $('.select_track').html('<span class="chord_function active"></span><span class="chord_degree"></span><span class="chord_name"></span>');
           let deleteIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
           toneData.splice(deleteIndex, 1);
+          $('.select_track').removeClass().addClass('edit_b select_track');
         }
       });
       /* 同クロックの入力済データを確認(t:タイムコード)return:インデックス */
