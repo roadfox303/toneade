@@ -19,4 +19,11 @@ RSpec.describe Blog, type: :model do
     expect(Blog.all.count).to eq 0
   end
 
+  it "ブログ内容編集" do
+    Blog.create(title: 'あああああ', content: 'あいうえお', user_id: @user.id)
+    last = Blog.last
+    last.update(title: 'ブログ編集', content: 'あばばばば', user_id: @user.id)
+    expect(last).to be_valid
+  end
+
 end
