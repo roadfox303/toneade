@@ -21,7 +21,13 @@ end
                 key: 1,
                 scale: 1,
                 bpm: 120,
-                master_data: ""
+                master_data: "",
+                tracks_attributes: [
+                  name: "track1",
+                  tr_type: 1,
+                  instrument: [],
+                  data: []
+                ]
               }
 
               )
