@@ -210,6 +210,21 @@ select{
   font-size: 1.8rem;
   font-weight: normal;
 }
+.track_data_edit{
+  position: absolute;
+  right: 45px;
+  top:0;
+  height: 32px;
+}
+.track_data_edit a{
+  width:20px;
+}
+.track_data_edit a:before{
+  font-size: 2rem;
+  line-height: 32px;
+  position: absolute;
+  top: 4px;
+}
 .btn_monitor{
   float: right;
   background:$btn_negative-color;
