@@ -36,7 +36,7 @@ class BlogsController < ApplicationController
       redirect_to blogs_path
     else
       flash[:notice] = "ブログの作成に失敗しました"
-      render :new
+      redirect_to blogs_path
     end
   end
 
