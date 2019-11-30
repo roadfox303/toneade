@@ -669,6 +669,15 @@ $(document).on('turbolinks:load', function() {
           $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
         }
       });
+      $(document).on('click', '.track_data_edit', function (){
+        $('#view_blog').removeClass('view_on');
+        $('#view_track').addClass('view_on');
+        tr = $(this).parent().attr('id').replace(/[^0-9]/g, "");
+        $('.track_edit_header').attr('id','tr_' + tr);
+        $('.track_edit_header h3').text('TR:' + tr);
+        $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
+
+      });
       $(document).on('click', '.view_close', function (){
         $('#view_track').removeClass('view_on');
         $('#view_blog').addClass('view_on');
