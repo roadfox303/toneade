@@ -1,0 +1,1096 @@
+$(document).on('turbolinks:load', function() {
+
+  $('.modal_upload').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_upload',
+    inject_position: '#blog_form'
+  });
+  $('#btn_duration').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_duration',
+    inject_position: '#blog_form'
+  });
+  $('#btn_octave').modaal({
+    overlay_opacity: 0.3,
+    overlay_close: 'false',
+    hide_close: 'true',
+    close_text: '決定',
+    animation: 'none',
+    content_source: '#modal_octave',
+    inject_position: '#blog_form'
+  });
+
+  $('.my-link').modaal({ start_open: true });
+
+  $('.modal_close').on('click',function(){
+    $('.modal_upload').modaal('close');
+  });
+  $('.submit').on('click',function(){
+    $('#blog_form').submit();
+  });
+  addModal();
+  let swiper = new Swiper('.tracks', {
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'progressbar'
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      640: {
+        slidesPerView: 2
+      },
+      960: {
+        slidesPerView: 3
+      },
+      1280: {
+        slidesPerView: 4
+      },
+    }
+  });
+  let edit = new Swiper('.edit_chord', {
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'progressbar'
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      640: {
+        slidesPerView: 2
+      },
+      960: {
+        slidesPerView: 3
+      },
+      1280: {
+        slidesPerView: 4
+      },
+    }
+  });
+  $('#view_track').css('display','none');
+  function addModal(){
+    $('.tracks .swiper-slide:first-child li .track_block:last-child .tr_del').modaal({
+      overlay_opacity: 0.3,
+      overlay_close: 'false',
+      hide_close: 'true',
+      close_text: '決定',
+      animation: 'none',
+      content_source: '#modal_track_del',
+      inject_position: '#blog_form'
+    });
+  }
+  /* Tone.js */
+
+  let chordPreview = []
+  let toneData = [];
+  // console.log(generateChords("C4","△7","name"));
+
+
+  /* toneadeの変数にキー、スケール、ノートを設定 */
+
+  // console.log(generateChords("G3","7","name"));
+  /* 音名をノートナンバーに変換 */
+  function convert_note_to_number(note){
+    let key = pickKey(note);
+    let oct = pickOct(note);
+    if (Number.isNaN(oct)){
+      oct = -1;
+    }
+    let index = gon.keys.findIndex(({name}) => name === key);
+    return gon.keys[index]['octave'][oct + 1]
+    // let result = x.toString(12);
+  }
+  /* ノートナンバーを音名に変換 */
+  function convert_number_to_note(num){
+    let oct;
+    let index = gon.keys.findIndex(childSearch);
+    function childSearch(element) {
+      if (element['octave'].includes(num) == true){
+        oct = element['octave'].findIndex(item => item === num) - 1;
+        return true;
+      }
+    }
+    return gon.keys[index]['name'] + oct;
+  }
+  /* オープンボイシング(重複音含む)をクローズド(重複削除)に変換(chord:array, answer:'number'か'name') */
+  function convert_closeVoicing(chord,format){
+    // Math.floor(数字)
+    let bottom = pickKey(chord[0]);
+    let number;
+    let octave = chord.map(note => pickOct(note));
+    let octHash = countDuplicate(octave);
+    let keys=[];
+    for(let key in octHash)keys.push(key);
+    octSortArr = keys.sort(
+      function (a,b){
+          return octHash[b]-octHash[a];
+      }
+    );
+    let uniq = chord.map(note => pickKey(note)).filter(function (x, i, self) {
+        let result = self.indexOf(x) === i;
+        return result
+    });
+    if (uniq.length == chord.length){
+      number = uniq.map((note, i) => (convert_note_to_number(note) + (octave[i] + 1) * 12));
+    }else{
+      number = uniq.map(note => (convert_note_to_number(note) + (Number(octSortArr[0]) + 1) * 12)).sort(
+        function(a,b){
+          return (a < b ? -1 : 1);
+        }
+      );
+    }
+
+    uniq = number.map(note => convert_number_to_note(note));
+    for (let i = 0 ; i < uniq.length ; i++){
+      if (pickKey(uniq[0]) == bottom){
+        break;
+      }else{
+        uniq = rotate_chord(uniq,'up');
+      }
+    }
+
+    switch (format){
+      case 'number' :
+      result = uniq.map(note => convert_note_to_number(note));
+      break;
+      case 'name' :
+      result = uniq;
+      break;
+      default:
+      result = uniq;
+    }
+    return result
+  }
+  /* コード機能を判定() */
+  function analyze_chordFunction(toneData,key,scale){
+    let set_key = gon.keys.find(item => item['id'] == key);
+    let set_scale_data = gon.scales.find(item => item['id'] == scale);
+    let tonal_
+
+    console.log(set_key,set_scale);
+  }
+  /* コードを探索 (toneData:hash)*/
+  function search_chord(toneData){
+    let omit = toneData['omit'];
+    let rotate = toneData['rotate'];
+    let root = pickKey(toneData['root']);
+    let bottom = pickKey(toneData['note'][0]);
+    let type = toneData['type'];
+    let result;
+    if (omit.length == 0 && rotate == 0){
+      return [root + type,root,type]
+    }else{
+      result = analyze_chord(toneData['note'],'full');
+      // alert(result);
+      if (result == false){
+        if (root != bottom){
+          result = [root + type + '/' + bottom,root,type];
+        }else{
+          result = [root + type,root,type];
+        }
+      }
+      return result;
+    }
+  }
+  // console.log(search_chord(toneData[0]));
+
+  /* コードを解析(chord:array, format:'type'または'name'もしくは'full') */
+  function analyze_chord(chord,format){
+    let bufferA = convert_closeVoicing(chord);
+    let bufferB,result,root;
+    let bottom = pickKey(chord[0]);
+    for (let i = 0 ; i < bufferA.length ; i++){
+      bufferB = bufferA;
+      root = convert_note_to_number(bufferB[0]);
+      bufferB = bufferB.map(function(note) {
+        return convert_note_to_number(note) - root
+      });
+      let index = gon.chords.findIndex(function(element){
+        if (element['notes'].join() == bufferB.join()){
+          return true;
+        }
+      });
+      // console.log(i,bufferB,index);
+      if (index != -1){
+        root = pickKey(bufferA[0]);
+        switch (format){
+          case 'type' :
+            result =  gon.chords[index]['type'];
+          break;
+          case 'name' :
+            if (i == 0){
+              result =  root + gon.chords[index]['type'];
+            }else{
+              result =  root + gon.chords[index]['type'] + '/' + bottom;
+            }
+          break;
+          case 'full' :
+            if (i == 0){
+              result =  [root + gon.chords[index]['type'], root, gon.chords[index]['type']];
+            }else{
+              result =  [root + gon.chords[index]['type'] + '/' + bottom, root, gon.chords[index]['type']];
+            }
+          break;
+        }
+        break;
+      }
+      else{
+        bufferA = rotate_chord(bufferA,'up');
+      }
+    }
+    if (result == undefined){
+      result = false;
+    }
+    return result
+  }
+
+  /* 構成音が近いコードを探索 */
+  function search_substitute(chode,key){
+
+  }
+  /* コードのダイアトニック度を指標化 */
+  function diatonic_point(chord,key,scale){
+
+  }
+
+  /* セカンダリドミナントを生成 */
+  function generate_secondaryDominant(chord){
+    return generate_dominant7(chord,7);
+  }
+  /* 裏コードを生成 */
+  function generate_substituteDominant(chord){
+    return generate_dominant7(chord,6);
+  }
+  /* 代理のドミナントセブンスを生成(chord:array, num:integer半音何個) */
+  function generate_dominant7(chord,num){
+    let analyze = analyze_chord(chord,'full');
+    let root = chord.find(function(element) {
+      return element.includes(analyze[1]);
+    });
+    if (analyze[2] == '7'){
+      let secondRoot = (convert_note_to_number(root)) + num;
+      return generateChords(secondRoot,"7","name");
+    }else{
+      return false;
+    }
+  }
+
+  /* ノートをルートにコードを生成(root:(number,string),array:コードタイプ,format:'number','name') */
+  function generateChords(root,type,format){
+    let result,number,name,index,notes,chords = [];
+    if (typeof root == 'string'){
+      number = convert_note_to_number(root);
+      root = pickKey(root);
+    }else{
+      number = root;
+      root = pickKey(convert_number_to_note(root));
+    }
+    index = gon.chords.findIndex(function(element){
+      if (element['type'] == type){
+        return true;
+      }
+    });
+    notes = (gon.chords[index]['notes']).map((note, i) => note + number);
+    name = root + gon.chords[index]['type'];
+    if (format == 'name'){
+      result = [notes.map((note, i) => convert_number_to_note(note)),name];
+    }else{
+      result = [notes,name];
+    }
+    return result
+  }
+
+  function omitNote(chord){
+
+  }
+  /* フレーズの小節数をカウント(data:toneData) */
+  function phrase_bars(data){
+    if(data.length != 0){
+      return Number(data[data.length - 1]['time'].split(':')[0]) + 1;
+    }else{
+      return 0;
+    }
+  }
+
+  /* コードを転回(chord:array) */
+  function rotate_chord(chord,direction){
+    let result;
+    switch (direction){
+      case 'up' :
+      chord.push(octaveUp(chord[0]));
+      chord.shift();
+      break;
+      case 'down' :
+      chord.unshift(octaveDown(chord.slice(-1)[0]));
+      chord.pop();
+      break;
+    }
+    return chord
+  }
+  /* ノートをオクターブアップ(note:string) */
+  function octaveUp(note){
+    return pickKey(note) + (pickOct(note) + 1);
+  }
+  /* ノートをオクターブダウン(note:string) */
+  function octaveDown(note){
+    return pickKey(note) + (pickOct(note) - 1);
+  }
+  /* 音階名をピックアップ (note:string)*/
+  function pickKey(note){
+    return note.replace(/[0-9,-]/g, "")
+  }
+  /* オクターブをピックアップ(note:string) */
+  function pickOct(note){
+    let oct = note.replace(/[^0-9,-]/g, "")
+    return parseInt(oct, 10)
+  }
+  /* 配列の重複をカウント */
+  function countDuplicate(arr){
+    return arr.reduce(function(counts, key){
+      counts[key] = (counts[key])? counts[key] + 1 : 1 ;
+      return counts;
+    }, {});
+  };
+
+  function Compare(a,b){
+    return arr[a]-arr[b];
+  }
+  /* 大文字を判断（大文字:true） */
+  const isUpperCase = c => {
+    return /^[A-Z]+$/g.test(c)
+  }
+  /* １文字目だけ大文字に変換 */
+  String.prototype.capitalize = function(){
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  }
+
+  /* 連想配列をキーでソート */
+
+  const order = [
+    {key: 'time', reverse: false}
+  ];
+
+  function sort_by(list) {
+    return (a, b) => {
+        for (let i=0; i<list.length; i++) {
+            const order_by = list[i].reverse ? 1 : -1;
+            if (a[list[i].key] < b[list[i].key]) return order_by;
+            if (a[list[i].key] > b[list[i].key]) return order_by * -1;
+        }
+        return 0;
+    };
+}
+
+  // const synth = new Tone.MembraneSynth().toMaster();
+  const synth = new Tone.PolySynth(6, Tone.Synth, {
+    oscillator : {
+  		type : "square"
+  	},
+    volume: -10,
+  }).toMaster();
+
+  function addMelody(time, { note, dur }) {
+    synth.triggerAttackRelease(note, dur, time);
+  }
+  var sequence
+  let playing = false;
+  Tone.Transport.bpm.value = 120;
+
+  $(document).on('click', '.play', function (){
+    if (!playing) {
+      Tone.Transport.cancel();
+      sequence = new Tone.Part(addMelody, toneData).start(0);
+      Tone.Transport.start();
+      Tone.Transport.loop = 2
+      Tone.Transport.loopEnd = (phrase_bars(toneData) + "m");
+      playing = true;
+      $('span',this).removeClass().addClass('icon icon-playback-stop');
+    } else {
+      Tone.Transport.stop();
+      playing = false;
+      $('span',this).removeClass().addClass('icon icon-playback-play');
+    }
+  });
+  $(document).on('click','.phrase_chord', function (){
+    let tone = $('.tone',this).text().split(',');
+    synth.triggerAttackRelease(tone, '4n');
+  });
+
+  /* UI */
+  $(function(){
+    /* キー、ノート、オクターブ情報を含めた、スケールデータを構築 */
+    function set_scaleData(key,scale){
+      let set_key = gon.keys.find(item => item['id'] == key);
+      let tonal_number = set_key['octave'][4];
+      let set_scale = gon.notes.filter(note => note['scale_id'] == scale);
+      set_scale.map(function(array) {
+        array['note_name'] = pickKey(convert_number_to_note(tonal_number + array['interval']));
+        array['number'] = gon.keys.find(item => item['name'] == array['note_name'])['octave']
+      });
+      return set_scale
+    }
+    if( gon.page_name == "Phrase"){
+      if(gon.blog_sequense != false){
+        toneData = JSON.parse(gon.blog_progression);
+        let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
+        toneData.map(function(tone,i) {
+          let chord_tone = search_chord(tone);
+          let chord_degree = set_scale.find(item => item['note_name'] == chord_tone[1]);
+          let time = tone['time'].split(':');
+          let locate = (Number(time[0]) + 1) + ":" + (Number(time[1]) + 1) + ":" + (time[2]);
+          $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_' + chord_degree['function'] + '"><span>' + chord_degree['degree'] + chord_tone[2] + '</span><span class="tone">' + tone['note'] + '</span></div></li>');
+        });
+      }
+    }
+    if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
+      let phrase_key, key, phrase_scale, scale, diatonicMap, beat, chords, octave;
+      beat = $('#blog_phrase_attributes_beat option:selected').text();
+      phrase_key = $('#blog_phrase_attributes_key option:selected').text();
+      phrase_scale = $('#blog_phrase_attributes_scale option:selected').text();
+      octave = $('#btn_octave .oct').text();
+      project_profile(phrase_key,phrase_scale,4);
+      generateDiatonicChordBtn(phrase_key,scale);
+      let inputM,inputB,inputChordType;
+      let inputDur = '1m'
+
+      function project_profile(key,sc,octave){
+        tonalData = gon.keys.find(function(element) {
+          return element['name'] == key;
+        });
+        scaleData = gon.scales.find(function(element) {
+          return element['name'] == sc;
+        });
+        scale = gon.notes.filter(note => note['scale_id'] == scaleData['id']);
+        key = {'name':key, 'number':tonalData['octave'][octave + 1]}
+        scale.map(array => array['number'] = key['number'] + array['interval']);
+      }
+      let track_num = 1;
+      let last_measure = 4;
+
+      /* Editロード時、UIにトラック情報反映 */
+      if( gon.page_name == "Edit Phrase"){
+        let bars = 0;
+        if(gon.tracks[0]["data"] != []){
+          toneData = JSON.parse(gon.tracks[0]["data"]);
+          let bars = phrase_bars(toneData);
+          let loop = bars / 4;
+          let count = 0;
+          for(let i = 1; i < loop; i++ ){
+            addMeasure();
+          }
+        }
+        /* トラック生成 */
+        if ( gon.tracks.length >= 2 ){
+          track_num = gon.tracks.length;
+          for (let i = 1 ; i < track_num ; i++){
+            addTrack(i,"load");
+            addModal();
+          }
+        }
+        /* トラックにデータ反映 */
+        gon.tracks.forEach(function(val,index,ar){
+          $('.tr_name').eq(index).val(val["name"]);
+          selectGenerate($('.tr_type').eq(index), gon.tr_types, gon.tracks[index]["tr_type"]);
+          selectGenerate($('.inst_type').eq(index), gon.inst_categorys);
+        });
+      }else{
+        selectGenerate($('.tr_type'),gon.tr_types,1);
+        selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .inst_type'),gon.inst_categorys);
+      }
+      editTrackSet(beat,toneData);
+
+      /* select optionにトラックタイプを挿入 */
+
+      /* master setting の変更を取得 */
+      $(document).on('change', '#phrase_inputs select', function(){
+        let _this = $(this);
+        switch (true){
+          case _this.attr('id') == 'blog_phrase_attributes_bpm' :
+            Tone.Transport.bpm.value = $(this).val();
+            break;
+          case _this.attr('id') == 'blog_phrase_attributes_beat' :
+            beat = gon.beats.find(item => item['id'] == $(this).val())['name'];
+            editTrackSet(beat,toneData);
+            break;
+          case _this.attr('id') == 'blog_phrase_attributes_key' :
+            phrase_key = gon.keys.find(item => item['id'] == $(this).val())['name'];
+            project_profile(phrase_key,phrase_scale,4);
+            generateDiatonicChordBtn(phrase_key,scale);
+            break;
+          case _this.attr('id') == 'blog_phrase_attributes_scale' :
+            phrase_scale = gon.scales.find(item => item['id'] == $(this).val())['name'];
+            project_profile(phrase_key,phrase_scale,4);
+            generateDiatonicChordBtn(phrase_key,scale);
+            break;
+        }
+      });
+
+      /* UIのinput情報をformに反映 */
+      $(document).on('change', 'input.UI,select.UI', function(){
+        let _this = $(this);
+        let num,eq, parent;
+        switch (true){
+          case _this.hasClass('tr_name') == true :
+            num = (tr_number(_this.parent()) - 1);
+            parent = $('.track_form').eq(num);
+            eq = 1 ;
+            break;
+          case _this.hasClass('tr_type') == true :
+            num = (tr_number(_this.parent().parent()) - 1);
+            parent = $('.track_form').eq(num);
+            eq = 2 ;
+            $('.track_type').eq(num).text($('option:selected',this).text());
+            test = $('.track_block').eq(num + 1).attr('class');
+            break;
+          case _this.hasClass('tr_instrument') == true :
+            num = (tr_number(_this.parent()) - 1);
+            parent = $('.track_form').eq(num);
+            eq = 3 ;
+            break;
+          case _this.hasClass('tr_data') == true :
+            num = (tr_number(_this.parent()) - 1);
+            parent = $('.track_form').eq(num);
+            eq = 4 ;
+            break;
+        }
+        $('input:nth-child(' + eq +')',parent).val(_this.val());
+      });
+
+      /* トラックのシーケンスデータ(toneData)を送信フォームにセット */
+      function setForm_toneData(data){
+        let track = $('.track_edit_header h3').text().replace(/[^0-9]/g, "");
+        let parent = $('.track_form:nth-child(' + track + ')');
+        $('input:nth-child(4)',parent).val(JSON.stringify(data));
+      }
+
+      /* トラック追加 */
+      $('.add_track').on('click',function(){
+        addTrack(track_num,"new");
+        track_num += 1;
+        selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .tr_type'),gon.tr_types);
+        selectGenerate($('.tracks .swiper-slide:first-child li .track_block:last-child .inst_type'),gon.inst_categorys);
+        addModal();
+      });
+      /* 小節追加 */
+      $('.add_measure').on('click',function(){
+        // copy = $('.swiper-slide:last-child');
+        // $('.swiper-slide:last-child').clone(true).appendTo('.tracks');
+        addMeasure();
+      });
+      function  addMeasure(){
+        let last = last_measure;
+        swiper.appendSlide($('.tracks .swiper-slide:last-child').clone(true));
+        $('.tracks .swiper-slide:last-child .measure').each(function(index, element){
+          $(element).text(last += 1);
+        });
+        last = last_measure;
+        $('.tracks .swiper-slide:last-child .track_block').empty();
+        $('.edit_b').removeClass('select_track');
+        edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
+        $('#edit_track_chord .swiper-slide:last-child .edit_b span').empty();
+        // gggg = $('#edit_track_chord .swiper-slide:last-child .edit_b').attr('class').match(/[^\s]+/g);
+        $('#edit_track_chord .swiper-slide:last-child .edit_b').removeClass().addClass('edit_b')
+        // console.log(gggg[1]);
+        $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
+          $(element).text(last += 1);
+        });
+        last_measure = last;
+      }
+      /* トラック削除確認 */
+      $(document).on('click', '.tr_del', function (){
+        let tr = tr_number($(this));
+        $('.track_del p').text('Track ' + tr + ' を削除しますか？');
+        $('.del_accept:last-child').addClass('delete_' + tr);
+      });
+      $(document).on('click', '.del_accept', function (){
+        let tr = tr_number($(this));
+        $(".h_" + tr).remove();
+        $(".tracks .swiper-slide li .track_block.tr_" + tr).remove();
+      });
+
+      /* 視聴トラック　ソロ or オール */
+      $(document).on('click', '.btn_monitor', function (){
+        _this = $(this);
+        if (_this.parent().attr("class") == "track_edit_header"){
+          edit_track = _this.parent().attr("id");
+          if(_this.text() == "S" ){
+            $('.btn_monitor').addClass('btn_active');
+            _this.text('ALL');
+          }else{
+            $('.btn_monitor').removeClass('btn_active');
+            _this.addClass('btn_active');
+            $('.track_header.h_' + edit_track + ' .btn_monitor' ).addClass('btn_active');
+            _this.text('S');
+          }
+        }
+        else{
+          if(_this.hasClass('btn_all')){
+            $('.btn_monitor').addClass('btn_active');
+          }else{
+            $('.btn_monitor').removeClass('btn_active');
+            _this.addClass('btn_active');
+          }
+        }
+      });
+      /* トラックエディット遷移 */
+      $(document).on('click', '.track_block.chord', function (){
+        if ($(this).siblings('.measure').text() != 'Track Setting'){
+          $('#view_blog').removeClass('view_on');
+          $('#view_track').addClass('view_on');
+          tr = $(this).attr('class').replace(/[^0-9]/g, "");
+          $('.track_edit_header').attr('id','tr_' + tr);
+          $('.track_edit_header h3').text('TR:' + tr);
+          $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
+        }
+      });
+      $(document).on('click', '.track_data_edit', function (){
+        $('#view_blog').removeClass('view_on');
+        $('#view_track').addClass('view_on');
+        tr = $(this).parent().attr('id').replace(/[^0-9]/g, "");
+        $('.track_edit_header').attr('id','tr_' + tr);
+        $('.track_edit_header h3').text('TR:' + tr);
+        $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
+
+      });
+      $(document).on('click', '.view_close', function (){
+        $('#view_track').removeClass('view_on');
+        $('#view_blog').addClass('view_on');
+        $('.content_wrapper').css('background','#ffffff');
+      });
+
+      /* 入力ブロックセレクト */
+      $(document).on('click', '.edit_b', function (){
+        if($(this).hasClass('select_track')){
+          $('.edit_b').removeClass('select_track');
+          inputM = -1;
+          inputB = -1;
+        }else{
+          $('.edit_b').removeClass('select_track');
+          $(this).addClass('select_track');
+          // test = $(this).siblings('.edit_m').text();
+          var index = $('li .edit_b').index(this);
+          beat.split('/');
+          inputM = Math.ceil((index + 1) / beat[0]) - 1;
+          inputB = $(this).parent('li').children('.edit_b').index(this);
+        }
+      });
+
+      function addTrack(tr,mode){
+        last_pos = $('.tr_guide li').height();
+        tr += 1;
+        $('.track_header:last').after('<div class="track_header h_' + tr + '" id="h_' + tr + '"><h3>TR : '+ tr + '</h3><div class="track_type"></div><input type="text" placeholder="track name" class="tr_name UI" maxlength="24"><a class=" btn_monitor btn_active">S</a></div>');
+        $('.tracks .swiper-slide li').append('<div class="track_block tr_' + tr + '"></div>');
+        $('.tracks .swiper-slide:first-child li .track_block:last-child').append('<div class="track_block_row"><span>track type</span><select class="tr_type UI"></select><p><a class="tr_del del_' + tr + '">×</a></p></div><div class="track_block_row"><span>patch category</span><select class="inst_type search"></select></div><div class="track_block_row"><span>patch</span><select class="preset search"></select></div>');
+        $('#h_'+ tr ).css('top',(last_pos + 4));
+        if(mode == "new"){
+          $('#add_tr_form a').click();
+        }
+      }
+      function tr_number(element){
+        result = element.attr('class').replace(/[^0-9]/g, "");
+        return result
+      }
+      function selectGenerate(element,array,selected) {
+        array.forEach(function(val,index,ar){
+          if (index == (selected - 1)){
+            element.append('<option value="' + val[1] + '" selected="selected">' + val[0] + '</option>');
+          }else{
+
+            element.append('<option value="' + val[1] + '">' + val[0] + '</option>');
+          }
+        });
+      }
+      /* エディットトラック初期生成 */
+      function editTrackSet(beat,data){
+        let addition = '';
+        if(data.length == 0){
+          for (let m = 0 ; m < 4 ; m++){
+            let add = '<li><div class="edit_m">' + (m + 1) + '</div>'
+            for (let b = 0 ; b < beat.split('/')[0] ; b++){
+              add += '<div class="edit_b"><span class="chord_function"></span><span class="chord_degree active"></span><span class="chord_name"></span></div>'
+            }
+            addition += (add + '</li>');
+          }
+          // $('#edit_track_chord .swiper-slide').html('<ul class="tr_guide">' + addition + '</ul>');
+          // edit.appendSlide($('#edit_track_chord .swiper-slide:last-child').clone(true));
+          edit.appendSlide(['<div class="swiper-slide"><ul class="tr_guide">' + addition + '</ul></div>']);
+        }
+        else{
+          let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
+          // console.log("aaaaa",data);
+          let bars = phrase_bars(toneData);
+          let loop = bars / 4;
+          let count = 0;
+          for(let l = 0; l < loop; l++ ){
+            addition = '';
+            for(let m = 0; m < 4; m++ ){
+              bar = (m + (l * 4 ));
+              let add = '<li><div class="edit_m">' + (bar + 1) + '</div>'
+              for (let b = 0 ; b < beat.split('/')[0] ; b++){
+                let tone = data.find(item => item['time'] == (bar + ":" + b + ":" + 0));
+                if( tone != null){
+                  let scale_item = set_scale.find(item => item['note_name'] == pickKey(tone['root']));
+                  add += '<div class="edit_b phrase_chord func_' + scale_item['function'] + '"><span class="chord_function">' + scale_item['function'].capitalize() + '</span><span class="chord_degree active">' + scale_item['degree'] + '</span><span class="chord_name">' + search_chord(tone)[0] + '</span><span class="tone">' + tone['note'] + '</span></div>'
+                }else{
+                  add += '<div class="edit_b"><span class="chord_function"></span><span class="chord_degree active"></span><span class="chord_name"></span><span class="tone"></span></div>'
+                }
+              }
+              addition += (add + '</li>');
+            }
+            edit.appendSlide(['<div class="swiper-slide"><ul class="tr_guide">' + addition + '</ul></div>']);
+          }
+        }
+        if ($('#edit_track_chord .swiper-slide li:first-child .edit_b').length == 3){
+          $('.edit_b').css({
+            'height': '42.6px',
+            'line-height':'42.6px'
+          });
+        }else{
+          $('.edit_b').css({
+            'height': '32px',
+            'line-height':'32px'
+          });
+        }
+      }
+      /* ダイアトニックコードボタンを生成 */
+      function generateDiatonicChordBtn(key,scale){
+        chords = [];
+        $('#list_diatonic ul').empty();
+        diatonic(key,scale,'triad_id');
+        diatonic(key,scale,'seventh_id');
+        function diatonic(key,scale,type){
+          scale.map(function(array) {
+            let chord = gon.chords[array[type] - 1];
+            let root = convert_note_to_number(phrase_key + octave) + array['interval'];
+            let notes = chord['notes'].map(note => note + root);
+            let chordTone = notes.map(note => convert_number_to_note(note));
+            $('#list_diatonic ul').append('<li><a class="func_' + array['function'] + '"><span class="degree">' + array['degree'] + " " + chord['type'] + '</span><span class="chord_data">' + chords.length + '/' + chordTone + '/0' + '</span></a></li>');
+            chords.push({'id':chords.length + 1, 'root':array['number'], 'notes':chord['notes']});
+          });
+        }
+        btn_flickSet();
+      }
+
+      /* コードボタン入力処理 */
+
+
+
+      function btn_flickSet(){
+        let viewDegree;
+        let contain_height = $('#view_track').height();
+        var isTouch = ('ontouchstart' in window);
+        let elem,posX,posY,chord_id,btn_chord_tone,u_chord,d_chord,inputRoot,funcClass,viewFunc,cellFunc;
+        let btn_bufferA = [];
+        let btn_bufferB = [];
+        let origin_height,origin_width,origin_pos_top,origin_pos_left;
+        // $(".chord_btns li").setTouchStart(function(event){
+        //   // alert("aaaa");
+        //   console.log("downAAAA");
+        // });
+        // $(".chord_btns li").setTouchMove(function(event){
+        //   posXT = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+        //   posYT = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+        //   if($(document.elementFromPoint(posXT, posYT)).attr('id') != 'screen'){
+        //     elem = document.elementFromPoint(posXT, posYT);
+        //   }
+        //   // console.log($(elem));
+        // });
+        // $(".chord_btns li").setTouchEnd(function(event){
+        //
+        //   console.log($(elem));
+        // });
+
+        $('.chord_btns li').on({
+          'touchstart mousedown': function(e) {
+            e.preventDefault();
+            _this = $(this);
+            elem = this;
+            cellFunc = $('a',_this).attr('class');
+            chord_id = $('.chord_data',this).text().split('/')[0];
+            let c = $('.chord_data',this).text().split('/')[1];
+            btn_chord_tone = c.split(',');
+            u_chord = c.split(',');
+            d_chord = c.split(',');
+            inputRoot = btn_chord_tone[0];
+            origin_height = _this.height();
+            origin_width = _this.width();
+            origin_pos_top = _this.position().top;
+            origin_pos_left = _this.position().left;
+            funcClass = _this.children().attr('class');
+            viewFunc = funcClass.split("_")[1].capitalize();
+            if ($('.degree',this).text() != ""){
+              viewDegree = $('.degree',this).text();
+            }
+            let custom_height = contain_height;
+
+            $('#screen').addClass('active');
+            if(_this.hasClass('clone') == false ){
+              btn_c = _this.clone(true).addClass('clone clone_center').css({
+                'top': origin_pos_top,
+                'left': origin_pos_left
+              });
+              _this.after(btn_c);
+              btn_chord_tone.map(function(item,i) {
+                let num = i + 1;
+                btn_bufferA = rotate_chord(u_chord,'up');
+                btn_bufferB = rotate_chord(d_chord,'down');
+                btn_t = _this.clone(true).addClass('clone clone_top rotate_' + num).css({
+                  'top': origin_pos_top - (origin_height + 2) * num,
+                  'left': origin_pos_left
+                });
+                _this.after(btn_t);
+                $('.clone_top.rotate_' + num).children('a').html('R ' + num + '<span class="chord_data">' + chord_id + '/' + btn_bufferA + '/' + num + '</span>');
+                btn_b = _this.clone(true).addClass('clone clone_bottom rotate_' + num).css({
+                  'top': origin_pos_top + (origin_height + 2) * num,
+                  'left': origin_pos_left
+                });
+                _this.after(btn_b);
+                $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + btn_bufferB + '/-' + num + '</span>');
+                u_chord = btn_bufferA;
+                d_chord = btn_bufferB;
+                custom_height += 32;
+                $('#view_track').css('height', custom_height + 'px');
+              });
+            }
+          },
+          'touchmove mousemove': function(e) {
+            posX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+            posY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+            if($(document.elementFromPoint(posX, posY)).attr('id') != 'screen'){
+              elem = document.elementFromPoint(posX, posY);
+            }
+            if (!this.touched) {
+              return;
+            }
+
+            e.preventDefault();
+          },
+          'touchend mouseup': function(e) {
+            upEvent(elem);
+            function upEvent(elem){
+              $('#view_track').css('height', contain_height + 'px');
+              let notes = $('.chord_data',elem).text().split('/')[1];
+              let inputRotate = $('.chord_data',elem).text().split('/')[2];
+              let tone = notes.split(',');
+              synth.triggerAttackRelease(tone, '4n');
+              $('#screen').removeClass('active');
+              $('.clone').remove();
+              let inputType = analyze_chord(tone,'full');
+              if (inputB >= 0){
+                let writeData = {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
+                let writeIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
+                if ( writeIndex >= 0){
+                  toneData[writeIndex] = writeData
+                }else{
+                  toneData.push(writeData);
+                }
+                let viewType = $('.active').attr('class').split(' ')[0];
+                switch (viewType){
+                  case 'chord_function':
+                  $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+                  break;
+                  case 'chord_degree':
+                  $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+                  break;
+                  case 'chord_name':
+                  $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+                  break;
+                }
+                $('.select_track').removeClass().addClass('edit_b ' + cellFunc + ' phrase_chord select_track')
+                toneData.sort(sort_by(order));
+              }
+            }
+            setForm_toneData(toneData);
+            if (!this.touched) {
+                return;
+            }
+            // タッチ処理は終了したため、フラグをたたむ
+            this.touched = false;
+          }
+        });
+      }
+
+
+      // $(document).on('mousedown', '.chord_btns li', function (){
+      //   _this = $(this);
+      //   let chord_id = $('.chord_data',this).text().split('/')[0];
+      //   let c = $('.chord_data',this).text().split('/')[1];
+      //   let chord_tone = c.split(',');
+      //   let u_chord = c.split(',');
+      //   let d_chord = c.split(',');
+      //   let bufferA = [];
+      //   let bufferB = [];
+      //   let inputRoot = chord_tone[0];
+      //   let origin_height = _this.height();
+      //   let origin_width = _this.width();
+      //   let origin_pos_top = _this.position().top;
+      //   let origin_pos_left = _this.position().left;
+      //   let funcClass = _this.children().attr('class');
+      //   let viewFunc = funcClass.split("_")[1].capitalize();
+      //   if ($('.degree',this).text() != ""){
+      //     viewDegree = $('.degree',this).text();
+      //   }
+      //
+      //   let custom_height = contain_height;
+      //
+      //   $('#screen').addClass('active');
+      //   if(_this.hasClass('clone') == false ){
+      //     btn_c = _this.clone(true).addClass('clone clone_center').css({
+      //       'top': origin_pos_top,
+      //       'left': origin_pos_left
+      //     });
+      //     _this.after(btn_c);
+      //     chord_tone.map(function(item,i) {
+      //       let num = i + 1;
+      //       bufferA = rotate_chord(u_chord,'up');
+      //       bufferB = rotate_chord(d_chord,'down');
+      //       btn_t = _this.clone(true).addClass('clone clone_top rotate_' + num).css({
+      //         'top': origin_pos_top - (origin_height + 2) * num,
+      //         'left': origin_pos_left
+      //       });
+      //       _this.after(btn_t);
+      //       $('.clone_top.rotate_' + num).children('a').html('R ' + num + '<span class="chord_data">' + chord_id + '/' + bufferA + '/' + num + '</span>');
+      //       btn_b = _this.clone(true).addClass('clone clone_bottom rotate_' + num).css({
+      //         'top': origin_pos_top + (origin_height + 2) * num,
+      //         'left': origin_pos_left
+      //       });
+      //       _this.after(btn_b);
+      //       $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + bufferB + '/-' + num + '</span>');
+      //       u_chord = bufferA;
+      //       d_chord = bufferB;
+      //       custom_height += 32;
+      //       $('#view_track').css('height', custom_height + 'px');
+      //     });
+      //   }
+      //
+      //   $(".chord_btns li").setTouchEnd(function(event){
+      //     $('#view_track').css('height', contain_height + 'px');
+      //     let notes = $('.chord_data',this).text().split('/')[1];
+      //     let inputRotate = $('.chord_data',this).text().split('/')[2];
+      //     let tone = notes.split(',');
+      //     synth.triggerAttackRelease(tone, '4n');
+      //     $('#screen').removeClass('active');
+      //     $('.clone').remove();
+      //     let inputType = analyze_chord(tone,'full');
+      //     if (inputB >= 0){
+      //       let writeData = {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
+      //       let writeIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
+      //       if ( writeIndex >= 0){
+      //         toneData[writeIndex] = writeData
+      //       }else{
+      //         toneData.push(writeData);
+      //       }
+      //       let viewType = $('.active').attr('class').split(' ')[0];
+      //       switch (viewType){
+      //         case 'chord_function':
+      //         $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+      //         break;
+      //         case 'chord_degree':
+      //         $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+      //         break;
+      //         case 'chord_name':
+      //         $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
+      //         break;
+      //       }
+      //       $('.select_track').removeClass().addClass('edit_b ' + $('a',this).attr('class') + ' phrase_chord select_track')
+      //       toneData.sort(sort_by(order));
+      //     }
+      //     setForm_toneData(toneData);
+      //   });
+      // });
+      /* セレクトした入力データを削除 */
+      $(document).on('click', '#btn_delete_data', function (){
+        if (inputB >= 0){
+          $('.select_track').html('<span class="chord_function active"></span><span class="chord_degree"></span><span class="chord_name"></span>');
+          let deleteIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
+          toneData.splice(deleteIndex, 1);
+          $('.select_track').removeClass().addClass('edit_b select_track');
+        }
+      });
+      /* 同クロックの入力済データを確認(t:タイムコード)return:インデックス */
+      function dataExisting(t){
+        if(toneData.length > 0){
+          return toneData.findIndex(({time}) => time === t );
+        }
+      }
+
+      $(document).on('click', '#btn_duration', function (){
+        addModal();
+      });
+      $(document).on('click', '#select_duration li', function (){
+        $('#btn_duration').removeClass();
+        switch ($(this).text()){
+          case '1/4' :
+          inputDur = '4n';
+          $('#btn_duration').addClass('icon icon-beat-4');
+          break;
+          case '1/2' :
+          inputDur = '2n';
+          $('#btn_duration').addClass('icon icon-beat-2');
+          break;
+          case '1' :
+          inputDur = '1m';
+          $('#btn_duration').addClass('icon icon-measure-1');
+          break;
+          case '2' :
+          inputDur = '2m';
+          $('#btn_duration').addClass('icon icon-measure-2');
+          break;
+          case '4' :
+          inputDur = '4m';
+          $('#btn_duration').addClass('icon icon-measure-4');
+          break;
+        }
+        $('#btn_duration').modaal('close');
+      });
+      $(document).on('click', '#btn_octave', function (){
+        addModal();
+      });
+      $(document).on('click', '#select_octave li', function (){
+        let oct = $(this).text().replace(/[^0-9,-]/g, "");
+        $('#btn_octave .oct').text(oct);
+        octave = $('#btn_octave .oct').text();
+        generateDiatonicChordBtn(phrase_key,scale);
+        $('#btn_octave').modaal('close');
+      });
+      $(document).on('click', '.btn_function', function (){
+        $('.edit_b span').removeClass('active');
+        $('.edit_b .chord_function').addClass('active');
+      });
+      $(document).on('click', '.btn_degree', function (){
+        $('.edit_b span').removeClass('active');
+        $('.edit_b .chord_degree').addClass('active');
+      });
+      $(document).on('click', '.btn_chordName', function (){
+        $('.edit_b span').removeClass('active');
+        $('.edit_b .chord_name').addClass('active');
+      });
+    }
+  });
+})

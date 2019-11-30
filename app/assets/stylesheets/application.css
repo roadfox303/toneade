@@ -10,6 +10,39 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= normalize.css
+ *= _skeleton.css
+ *= swiper.css
+ *= toneade.scss
  *= require_tree .
  *= require_self
  */
+a {
+  color: #000;
+}
+
+ul {
+  margin: 0;
+}
+form{
+  margin-bottom: 0;
+}
+p{
+  margin: 0;
+}
+h1,h2,h3{
+  letter-spacing: 0.05rem;
+}
+textarea{
+  margin: 0;
+}
+#container{
+  padding: 0;
+}
+.content_wrapper{
+  margin-top: 48px;
+  min-height: calc( 100vh - 58px );
+  position: relative;
+  overflow: hidden;
+  padding: 0.6rem 0.5rem 0.5rem;
+}

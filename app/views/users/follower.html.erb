@@ -1,0 +1,22 @@
+<div id="user_followers" class="blog_list">
+  <h2>Follower User</h2>
+  <% if @followers.present? %>
+    <ul>
+    <% @followers.each do |follower| %>
+      <li>
+        <a href="<%= user_path(follower.id)%>" data-turbolinks="false">
+          <div class="blog_head">
+            <div class="blog_prof">
+              <div class="prof_icon"></div>
+              <span><%= follower.name %></span>
+            </div>
+            <div class="blog_count"><span><%= Blog.where(user_id: follower.id).size %> </span><span>Phrases</span></div>
+          </div>
+        </a>
+      </li>
+    <% end %>
+    </ul>
+  <% else %>
+  <div class="content_empty">Follower ユーザーはいません。</div>
+  <% end %>
+</div>
