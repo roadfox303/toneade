@@ -14,7 +14,15 @@ end
 
 20.times do |n|
   Blog.create(title: "シード#{n+1}" ,
-               content: "シードコメント#{n+1}",
-               user_id: User.find(n+1).id
-               )
+              content: "シードコメント#{n+1}",
+              user_id: User.find(n+1).id,
+              phrase_attributes: {
+                user_id: User.find(n+1).id,
+                key: 1,
+                scale: 1,
+                bpm: 120,
+                master_data: ""
+              }
+
+              )
 end
