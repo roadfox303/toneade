@@ -5,9 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-50.times do |n|
+30.times do |n|
   User.create!(name: "テストさん#{n}" ,
                email: "test#{n}@gmail.com",
                password: "password"
+               )
+end
+
+20.times do |n|
+  Blog.create!(title: "シード#{n}" ,
+               content: "シードコメント#{n}",
+               user_id: User.find(n).id
                )
 end
