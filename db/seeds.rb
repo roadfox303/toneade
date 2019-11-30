@@ -22,12 +22,12 @@ end
                 scale: 1,
                 bpm: 120,
                 master_data: "",
-                tracks_attributes:{
+                tracks_attributes: [
                   name: "track1",
                   tr_type: 1,
-                  instrument: 1,
+                  instrument: [],
                   data: []
-                }
+                ]
               }
 
               )
