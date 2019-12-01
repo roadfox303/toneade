@@ -93,6 +93,7 @@ class BlogsController < ApplicationController
       @track = @blog.phrase.tracks[0]
       gon.blog_key = @blog.phrase.key
       gon.blog_scale = @blog.phrase.scale
+      gon.blog_bpm = @blog.phrase.bpm
       gon.blog_progression = @blog.phrase.tracks[0]['data']
       gon.blog_sequense = @blog.phrase.tracks
     else
