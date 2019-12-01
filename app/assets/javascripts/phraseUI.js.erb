@@ -467,10 +467,7 @@ $(document).on('turbolinks:load', function() {
         Tone.Transport.bpm.value = gon.blog_bpm;
         toneData.map(function(tone,i) {
           let chord_tone = search_chord(tone);
-          console.log("A",chord_tone);
-
           let chord_degree = set_scale.find(item => item['note_name'] == chord_tone[1]);
-          console.log("C",chord_degree);
           let time = tone['time'].split(':');
           let locate = (Number(time[0]) + 1) + ":" + (Number(time[1]) + 1) + ":" + (time[2]);
           if (typeof chord_degree === "undefined") {
