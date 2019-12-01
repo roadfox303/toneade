@@ -395,13 +395,18 @@ $(document).on('turbolinks:load', function() {
   const order = [
     {key: 'time', reverse: false}
   ];
+  function numbelyze(t){
+    return Number(t.replace(/[^0-9]/g, ""))
+
+  }
 
   function sort_by(list) {
     return (a, b) => {
         for (let i=0; i<list.length; i++) {
             const order_by = list[i].reverse ? 1 : -1;
-            if (a[list[i].key] < b[list[i].key]) return order_by;
-            if (a[list[i].key] > b[list[i].key]) return order_by * -1;
+            console.log(Number(a[list[i].key].replace(/[^0-9]/g, "")));
+            if (numbelyze(a[list[i].key]) < numbelyze(b[list[i].key])) return order_by;
+            if (numbelyze(a[list[i].key]) > numbelyze(b[list[i].key])) return order_by * -1;
         }
         return 0;
     };
@@ -459,12 +464,17 @@ $(document).on('turbolinks:load', function() {
       if(gon.blog_sequense != false){
         toneData = JSON.parse(gon.blog_progression);
         let set_scale = set_scaleData(gon.blog_key,gon.blog_scale);
+        Tone.Transport.bpm.value = gon.blog_bpm;
         toneData.map(function(tone,i) {
           let chord_tone = search_chord(tone);
           let chord_degree = set_scale.find(item => item['note_name'] == chord_tone[1]);
           let time = tone['time'].split(':');
           let locate = (Number(time[0]) + 1) + ":" + (Number(time[1]) + 1) + ":" + (time[2]);
-          $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_' + chord_degree['function'] + '"><span>' + chord_degree['degree'] + chord_tone[2] + '</span><span class="tone">' + tone['note'] + '</span></div></li>');
+          if (typeof chord_degree === "undefined") {
+            $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_undefined"><span>' + '? ' + chord_tone[2] + '</span><span class="tone">' + tone['note'] + '</span></div></li>');
+          }else{
+            $('#phrase_progression').append('<li><div class="phrase_time">' + locate + '<span>' + chord_tone[0] + '</span></div><div class="phrase_chord func_' + chord_degree['function'] + '"><span>' + chord_degree['degree'] + chord_tone[2] + '</span><span class="tone">' + tone['note'] + '</span></div></li>');
+          }
         });
       }
     }
@@ -924,6 +934,7 @@ $(document).on('turbolinks:load', function() {
                 }
                 $('.select_track').removeClass().addClass('edit_b ' + cellFunc + ' phrase_chord select_track')
                 toneData.sort(sort_by(order));
+                console.log(toneData);
               }
             }
             setForm_toneData(toneData);
