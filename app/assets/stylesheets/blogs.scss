@@ -27,6 +27,12 @@ $Ext_full: rgba(255, 255, 255, 1);
 $T_alpha: rgba(123, 230, 255, 0.2);
 $S_alpha: rgba(209, 255, 123, 0.2);
 $D_alpha: rgba(255, 159, 196, 0.2);
+
+/*実装までの非表示項目*/
+.add_track{
+  display:none!important;
+}
+
 .swiper-container{
   background: #000;
 }
@@ -223,7 +229,7 @@ select{
   font-size: 2rem;
   line-height: 32px;
   position: absolute;
-  top: 4px;
+  top: 6px;
 }
 .btn_monitor{
   float: right;
