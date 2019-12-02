@@ -404,7 +404,6 @@ $(document).on('turbolinks:load', function() {
     return (a, b) => {
         for (let i=0; i<list.length; i++) {
             const order_by = list[i].reverse ? 1 : -1;
-            console.log(Number(a[list[i].key].replace(/[^0-9]/g, "")));
             if (numbelyze(a[list[i].key]) < numbelyze(b[list[i].key])) return order_by;
             if (numbelyze(a[list[i].key]) > numbelyze(b[list[i].key])) return order_by * -1;
         }
@@ -934,7 +933,6 @@ $(document).on('turbolinks:load', function() {
                 }
                 $('.select_track').removeClass().addClass('edit_b ' + cellFunc + ' phrase_chord select_track')
                 toneData.sort(sort_by(order));
-                console.log(toneData);
               }
             }
             setForm_toneData(toneData);
@@ -1042,6 +1040,7 @@ $(document).on('turbolinks:load', function() {
           let deleteIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
           toneData.splice(deleteIndex, 1);
           $('.select_track').removeClass().addClass('edit_b select_track');
+          setForm_toneData(toneData);
         }
       });
       /* 同クロックの入力済データを確認(t:タイムコード)return:インデックス */
