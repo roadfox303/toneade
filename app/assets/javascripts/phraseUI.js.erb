@@ -1,4 +1,12 @@
 $(document).on('turbolinks:load', function() {
+  $('#top_image').parallax({imageSrc: "/assets/wall_image/image_top.jpg"});
+  var rellax = new Rellax('.rellax');
+  $(window).on('load resize', function(){
+    $('#topimg_layer1').css({
+      'top':($('#top_image').height() - $('#topimg_layer1').height()) / 1.6 + 'px'
+    });
+  });
+
 
   $('.modal_upload').modaal({
     overlay_opacity: 0.3,
@@ -293,12 +301,14 @@ $(document).on('turbolinks:load', function() {
     let root = chord.find(function(element) {
       return element.includes(analyze[1]);
     });
-    if (analyze[2] == '7'){
-      let secondRoot = (convert_note_to_number(root)) + num;
-      return generateChords(secondRoot,"7","name");
-    }else{
-      return false;
-    }
+    let secondRoot = (convert_note_to_number(root)) + num;
+    return generateChords(secondRoot,"7","name");
+    // if (analyze[2] == '7'){
+    //   let secondRoot = (convert_note_to_number(root)) + num;
+    //   return generateChords(secondRoot,"7","name");
+    // }else{
+    //   return false;
+    // }
   }
 
   /* ノートをルートにコードを生成(root:(number,string),array:コードタイプ,format:'number','name') */
@@ -478,15 +488,20 @@ $(document).on('turbolinks:load', function() {
       }
     }
     if( gon.page_name == "Edit Phrase" || gon.page_name == "New Phrase"){
-      let phrase_key, key, phrase_scale, scale, diatonicMap, beat, chords, octave;
+      let phrase_key_id, phrase_key, key,phrase_scale_id, phrase_scale, scale, diatonicMap, beat, chords,diatonic_chords, octave;
       beat = $('#blog_phrase_attributes_beat option:selected').text();
       phrase_key = $('#blog_phrase_attributes_key option:selected').text();
       phrase_scale = $('#blog_phrase_attributes_scale option:selected').text();
       octave = $('#btn_octave .oct').text();
+      phrase_key_id = 1;
+      phrase_scale_id = 1;
       project_profile(phrase_key,phrase_scale,4);
       generateDiatonicChordBtn(phrase_key,scale);
+      // generateMatrixChordBtn(phrase_key,scale);
       let inputM,inputB,inputChordType;
-      let inputDur = '1m'
+      let inputDur = '1m';
+      $('.content_wrapper').addClass('bottomEndUp');
+
 
       function project_profile(key,sc,octave){
         tonalData = gon.keys.find(function(element) {
@@ -548,14 +563,20 @@ $(document).on('turbolinks:load', function() {
             editTrackSet(beat,toneData);
             break;
           case _this.attr('id') == 'blog_phrase_attributes_key' :
-            phrase_key = gon.keys.find(item => item['id'] == $(this).val())['name'];
+            let key_data = gon.keys.find(item => item['id'] == $(this).val())
+            phrase_key = key_data['name'];
+            phrase_key_id = key_data['id'];
             project_profile(phrase_key,phrase_scale,4);
             generateDiatonicChordBtn(phrase_key,scale);
+            // generateMatrixChordBtn(phrase_key,scale);
             break;
           case _this.attr('id') == 'blog_phrase_attributes_scale' :
-            phrase_scale = gon.scales.find(item => item['id'] == $(this).val())['name'];
+            let scale_data = gon.scales.find(item => item['id'] == $(this).val());
+            phrase_scale = scale_data['name'];
+            phrase_scale_id = scale_data['id'];
             project_profile(phrase_key,phrase_scale,4);
             generateDiatonicChordBtn(phrase_key,scale);
+            // generateMatrixChordBtn(phrase_key,scale);
             break;
         }
       });
@@ -793,16 +814,38 @@ $(document).on('turbolinks:load', function() {
         $('#list_diatonic ul').empty();
         diatonic(key,scale,'triad_id');
         diatonic(key,scale,'seventh_id');
-        function diatonic(key,scale,type){
-          scale.map(function(array) {
-            let chord = gon.chords[array[type] - 1];
-            let root = convert_note_to_number(phrase_key + octave) + array['interval'];
-            let notes = chord['notes'].map(note => note + root);
-            let chordTone = notes.map(note => convert_number_to_note(note));
-            $('#list_diatonic ul').append('<li><a class="func_' + array['function'] + '"><span class="degree">' + array['degree'] + " " + chord['type'] + '</span><span class="chord_data">' + chords.length + '/' + chordTone + '/0' + '</span></a></li>');
-            chords.push({'id':chords.length + 1, 'root':array['number'], 'notes':chord['notes']});
-          });
-        }
+
+        btn_flickSet();
+
+      }
+      function diatonic(key,scale,type){
+        scale.map(function(array) {
+          let chord = gon.chords[array[type] - 1];
+          let root = convert_note_to_number(phrase_key + octave) + array['interval'];
+          let notes = chord['notes'].map(note => note + root);
+          let chordTone = notes.map(note => convert_number_to_note(note));
+          $('#list_diatonic ul').append('<li><a class="func_' + array['function'] + '"><span class="degree">' + array['degree'] + " " + chord['type'] + '</span><span class="chord_data">' + chords.length + '/' + chordTone + '/0' + '</span></a></li>');
+          chords.push({'id':chords.length + 1, 'root':root, 'notes':chord['notes'],chordTone,'category':'diatonic'});
+          // diatonic_chords.push({'id':diatonic_chords.length + 1, 'root':root, 'notes':chord['notes'],chordTone});
+        });
+      }
+      /* マトリックス表示（ダイアトニック以外）を生成 */
+      function generateMatrixChordBtn(key,scale){
+        $('#list_2ndD ul').empty();
+        let diatonics = chords.filter(item => item['category'] == 'diatonic');
+        let target = diatonics.slice(0,(diatonics.length / 2));
+        let set_scale = set_scaleData(phrase_key_id,phrase_scale_id);
+        // console.log(aaa);
+        console.log(set_scale);
+        /* セカンダリードミナント生成 */
+        target.map(function(item,i) {
+          let chordTone = generate_secondaryDominant(item['chordTone']);
+          let chord_degree = set_scale.find(item => item['note_name'] == chordTone[0]);
+          console.log(chordTone[0][0]);
+          console.log(chord_degree);
+          $('#list_2ndD ul').append('<li><a class="func_2nd' + '"><span class="degree">' + 'chord_degree' + " " + '7' + '</span><span class="chord_data">' + chords.length + '/' + chordTone[0] + '/0' + '</span></a></li>');
+          // chords.push({'id':chords.length + 1, 'root':root, 'notes':chord['notes'],chordTone,'category':'diatonic'});
+        });
         btn_flickSet();
       }
 
@@ -834,9 +877,13 @@ $(document).on('turbolinks:load', function() {
         //
         //   console.log($(elem));
         // });
+        $(document).on('click', '.chord_btns li', function (){
+          alert("aaa");
+        });
 
         $('.chord_btns li').on({
           'touchstart mousedown': function(e) {
+            console.log("aaa");
             e.preventDefault();
             _this = $(this);
             elem = this;
@@ -1100,6 +1147,10 @@ $(document).on('turbolinks:load', function() {
       $(document).on('click', '.btn_chordName', function (){
         $('.edit_b span').removeClass('active');
         $('.edit_b .chord_name').addClass('active');
+      });
+      /* コード種類絞り込み */
+      $(document).on('click', '#chord_category li', function (){
+        console.log($('a',this).text());
       });
     }
   });
