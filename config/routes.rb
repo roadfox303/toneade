@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'relationships/create'
   get 'relationships/destroy'
   get 'users/show'
-  root 'blogs#index'
+  root 'blogs#top'
 
 
   # ログイン、アカウント編集後、任意のページに推移させるための記述
@@ -20,7 +20,11 @@ Rails.application.routes.draw do
       get :follower
     end
   end
-  resources :blogs
+  resources :blogs do
+    collection do
+      get :top
+    end
+  end
   resources :nices, only: [:create, :destroy]
   resources :comments, only: [:create, :edit, :update, :destroy]
   resources :relationships, only: [:create, :destroy]
