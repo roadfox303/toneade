@@ -4,6 +4,9 @@ class BlogsController < ApplicationController
   before_action :set_id, only: [:edit, :destroy, :update, :show]
   before_action :toneade_const
 
+  def top
+  end
+
   def index
     @page_name = "All Phrases"
     gon.page_name = @page_name
