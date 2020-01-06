@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :blogs do
     collection do
       get :top
+      get :manual
     end
   end
   resources :nices, only: [:create, :destroy]
