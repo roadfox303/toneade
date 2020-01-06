@@ -6,6 +6,38 @@ $(document).on('turbolinks:load', function() {
       'top':($('#top_image').height() - $('#topimg_layer1').height()) / 1.6 + 'px'
     });
   });
+  if (gon.page_name == 'UI Manual' && $(window).width() < 720){
+    $(window).on('scroll', function(){
+      let windowScroll = $(this).scrollTop();
+      $('.manual_menu dt').each(function(index, element){
+        // console.log(windowScroll);
+        let posY = $(this).offset().top;
+        let boxSize = $(this).height();
+        let imgSize = $('img',this).height();
+        let startY = posY - 43;
+        let endY = $(this).scrollTop();
+        console.log(windowScroll);
+        // console.log(index +':' + posY);
+        if (windowScroll > startY && windowScroll < (boxSize - imgSize + posY - 43) ){
+          $('img',this).css({
+            'position':'absolute',
+            'top':windowScroll - posY + 53
+          });
+        }
+        // if($('img',this).position().top > (boxSize - imgSize)){
+        //   $('img',this).css({
+        //     'position':'absolute',
+        //     'top':windowScroll - posX + 53
+        //   });
+        // }
+
+      })
+
+      // console.log();
+    });
+  }
+
+
 
 
   $('.modal_upload').modaal({

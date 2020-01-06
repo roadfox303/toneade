@@ -22,6 +22,7 @@
           <% if user_signed_in? %>
           <li><%= link_to "フレーズ一覧", blogs_path, class:"drawer-menu-item" %></li>
           <li><%= link_to "フレーズ作成", new_blog_path, data: { "turbolinks"=> false }, class:"drawer-menu-item" %></li>
+          <li><%= link_to "操作マニュアル", manual_blogs_path, class:"drawer-menu-item" %></li>
           <li><%= link_to "マイページ", user_path(id: current_user.id), class:"drawer-menu-item" %></li>
           <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"drawer-menu-item" %></li>
           <% else %>
