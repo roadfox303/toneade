@@ -5,6 +5,12 @@ class BlogsController < ApplicationController
   before_action :toneade_const
 
   def top
+    @page_name = "Servise"
+    gon.page_name = @page_name
+  end
+  def manual
+    @page_name = "UI Manual"
+    gon.page_name = @page_name
   end
 
   def index

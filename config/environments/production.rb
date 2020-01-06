@@ -31,7 +31,7 @@ Rails.application.configure do
   config.assets.paths << Rails.root.join("app", "assets", "fonts")
   config.assets.precompile += %w( .svg .eot .woff .ttf )
 
-  config.assets.compile = false
+  config.assets.compile = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
