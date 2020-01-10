@@ -10,34 +10,20 @@ $(document).on('turbolinks:load', function() {
     $(window).on('scroll', function(){
       let windowScroll = $(this).scrollTop();
       $('.manual_menu dt').each(function(index, element){
-        // console.log(windowScroll);
         let posY = $(this).offset().top;
         let boxSize = $(this).height();
         let imgSize = $('img',this).height();
         let startY = posY - 43;
         let endY = $(this).scrollTop();
-        // console.log(index +':' + posY);
         if (windowScroll > startY && windowScroll < (boxSize - imgSize + posY - 43) ){
           $('img',this).css({
             'position':'absolute',
             'top':windowScroll - posY + 53
           });
         }
-        // if($('img',this).position().top > (boxSize - imgSize)){
-        //   $('img',this).css({
-        //     'position':'absolute',
-        //     'top':windowScroll - posX + 53
-        //   });
-        // }
-
       })
-
-      // console.log();
     });
   }
-
-
-
 
   $('.modal_upload').modaal({
     overlay_opacity: 0.3,
@@ -246,7 +232,6 @@ $(document).on('turbolinks:load', function() {
       return [root + type,root,type]
     }else{
       result = analyze_chord(toneData['note'],'full');
-      // alert(result);
       if (result == false){
         if (root != bottom){
           result = [root + type + '/' + bottom,root,type];
