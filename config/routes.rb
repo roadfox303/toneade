@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'relationships/create'
   get 'relationships/destroy'
   get 'users/show'
   root 'blogs#top'
-
 
   # ログイン、アカウント編集後、任意のページに推移させるための記述
   # devise_for :users, controllers: {
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
   # }
 
   devise_for :users
-  resources :users, only: [:index,:show] do
+  resources :users, only: %i[index show] do
     member do
       get :phrases
       get :nices
@@ -26,10 +27,8 @@ Rails.application.routes.draw do
       get :manual
     end
   end
-  resources :nices, only: [:create, :destroy]
-  resources :comments, only: [:create, :edit, :update, :destroy]
-  resources :relationships, only: [:create, :destroy]
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
+  resources :nices, only: %i[create destroy]
+  resources :comments, only: %i[create edit update destroy]
+  resources :relationships, only: %i[create destroy]
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

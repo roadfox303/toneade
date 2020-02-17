@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Blog < ApplicationRecord
   validates :title, presence: true
   belongs_to :user
@@ -8,5 +10,5 @@ class Blog < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :comment_users, through: :comments, source: :user
 
-  validates :title, presence: true, length:{ maximum:64 }
+  validates :title, presence: true, length: { maximum: 64 }
 end
