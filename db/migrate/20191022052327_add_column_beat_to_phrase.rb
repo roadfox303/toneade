@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddColumnBeatToPhrase < ActiveRecord::Migration[5.2]
   def change
     add_column :phrases, :beat, :integer, null: false, default: 1

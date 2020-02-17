@@ -10,35 +10,20 @@ $(document).on('turbolinks:load', function() {
     $(window).on('scroll', function(){
       let windowScroll = $(this).scrollTop();
       $('.manual_menu dt').each(function(index, element){
-        // console.log(windowScroll);
         let posY = $(this).offset().top;
         let boxSize = $(this).height();
         let imgSize = $('img',this).height();
         let startY = posY - 43;
         let endY = $(this).scrollTop();
-        console.log(windowScroll);
-        // console.log(index +':' + posY);
         if (windowScroll > startY && windowScroll < (boxSize - imgSize + posY - 43) ){
           $('img',this).css({
             'position':'absolute',
             'top':windowScroll - posY + 53
           });
         }
-        // if($('img',this).position().top > (boxSize - imgSize)){
-        //   $('img',this).css({
-        //     'position':'absolute',
-        //     'top':windowScroll - posX + 53
-        //   });
-        // }
-
       })
-
-      // console.log();
     });
   }
-
-
-
 
   $('.modal_upload').modaal({
     overlay_opacity: 0.3,
@@ -247,7 +232,6 @@ $(document).on('turbolinks:load', function() {
       return [root + type,root,type]
     }else{
       result = analyze_chord(toneData['note'],'full');
-      // alert(result);
       if (result == false){
         if (root != bottom){
           result = [root + type + '/' + bottom,root,type];
@@ -454,12 +438,48 @@ $(document).on('turbolinks:load', function() {
 }
 
   // const synth = new Tone.MembraneSynth().toMaster();
-  const synth = new Tone.PolySynth(6, Tone.Synth, {
-    oscillator : {
-  		type : "square"
-  	},
-    volume: -10,
-  }).toMaster();
+  // const synth = new Tone.PolySynth(6, Tone.Synth, {
+  //   oscillator : {
+  // 		type : "square"
+  // 	},
+  //   volume: -10,
+  // }).toMaster();
+
+  const synth = new Tone.Sampler({
+			"A0" : "A0.[mp3|ogg]",
+			"C1" : "C1.[mp3|ogg]",
+			"D#1" : "Ds1.[mp3|ogg]",
+			"F#1" : "Fs1.[mp3|ogg]",
+			"A1" : "A1.[mp3|ogg]",
+			"C2" : "C2.[mp3|ogg]",
+			"D#2" : "Ds2.[mp3|ogg]",
+			"F#2" : "Fs2.[mp3|ogg]",
+			"A2" : "A2.[mp3|ogg]",
+			"C3" : "C3.[mp3|ogg]",
+			"D#3" : "Ds3.[mp3|ogg]",
+			"F#3" : "Fs3.[mp3|ogg]",
+			"A3" : "A3.[mp3|ogg]",
+			"C4" : "C4.[mp3|ogg]",
+			"D#4" : "Ds4.[mp3|ogg]",
+			"F#4" : "Fs4.[mp3|ogg]",
+			"A4" : "A4.[mp3|ogg]",
+			"C5" : "C5.[mp3|ogg]",
+			"D#5" : "Ds5.[mp3|ogg]",
+			"F#5" : "Fs5.[mp3|ogg]",
+			"A5" : "A5.[mp3|ogg]",
+			"C6" : "C6.[mp3|ogg]",
+			"D#6" : "Ds6.[mp3|ogg]",
+			"F#6" : "Fs6.[mp3|ogg]",
+			"A6" : "A6.[mp3|ogg]",
+			"C7" : "C7.[mp3|ogg]",
+			"D#7" : "Ds7.[mp3|ogg]",
+			"F#7" : "Fs7.[mp3|ogg]",
+			"A7" : "A7.[mp3|ogg]",
+			"C8" : "C8.[mp3|ogg]"
+		}, {
+			"release" : 1,
+			"baseUrl" : "/assets/"
+		}).toMaster();
 
   function addMelody(time, { note, dur }) {
     synth.triggerAttackRelease(note, dur, time);
@@ -909,13 +929,12 @@ $(document).on('turbolinks:load', function() {
         //
         //   console.log($(elem));
         // });
-        $(document).on('click', '.chord_btns li', function (){
-          alert("aaa");
-        });
+        // $(document).on('click', '.chord_btns li', function (){
+        //
+        // });
 
         $('.chord_btns li').on({
           'touchstart mousedown': function(e) {
-            console.log("aaa");
             e.preventDefault();
             _this = $(this);
             elem = this;
@@ -1025,93 +1044,6 @@ $(document).on('turbolinks:load', function() {
       }
 
 
-      // $(document).on('mousedown', '.chord_btns li', function (){
-      //   _this = $(this);
-      //   let chord_id = $('.chord_data',this).text().split('/')[0];
-      //   let c = $('.chord_data',this).text().split('/')[1];
-      //   let chord_tone = c.split(',');
-      //   let u_chord = c.split(',');
-      //   let d_chord = c.split(',');
-      //   let bufferA = [];
-      //   let bufferB = [];
-      //   let inputRoot = chord_tone[0];
-      //   let origin_height = _this.height();
-      //   let origin_width = _this.width();
-      //   let origin_pos_top = _this.position().top;
-      //   let origin_pos_left = _this.position().left;
-      //   let funcClass = _this.children().attr('class');
-      //   let viewFunc = funcClass.split("_")[1].capitalize();
-      //   if ($('.degree',this).text() != ""){
-      //     viewDegree = $('.degree',this).text();
-      //   }
-      //
-      //   let custom_height = contain_height;
-      //
-      //   $('#screen').addClass('active');
-      //   if(_this.hasClass('clone') == false ){
-      //     btn_c = _this.clone(true).addClass('clone clone_center').css({
-      //       'top': origin_pos_top,
-      //       'left': origin_pos_left
-      //     });
-      //     _this.after(btn_c);
-      //     chord_tone.map(function(item,i) {
-      //       let num = i + 1;
-      //       bufferA = rotate_chord(u_chord,'up');
-      //       bufferB = rotate_chord(d_chord,'down');
-      //       btn_t = _this.clone(true).addClass('clone clone_top rotate_' + num).css({
-      //         'top': origin_pos_top - (origin_height + 2) * num,
-      //         'left': origin_pos_left
-      //       });
-      //       _this.after(btn_t);
-      //       $('.clone_top.rotate_' + num).children('a').html('R ' + num + '<span class="chord_data">' + chord_id + '/' + bufferA + '/' + num + '</span>');
-      //       btn_b = _this.clone(true).addClass('clone clone_bottom rotate_' + num).css({
-      //         'top': origin_pos_top + (origin_height + 2) * num,
-      //         'left': origin_pos_left
-      //       });
-      //       _this.after(btn_b);
-      //       $('.clone_bottom.rotate_' + num).children('a').html('R -' + num + '<span class="chord_data">' + chord_id + '/' + bufferB + '/-' + num + '</span>');
-      //       u_chord = bufferA;
-      //       d_chord = bufferB;
-      //       custom_height += 32;
-      //       $('#view_track').css('height', custom_height + 'px');
-      //     });
-      //   }
-      //
-      //   $(".chord_btns li").setTouchEnd(function(event){
-      //     $('#view_track').css('height', contain_height + 'px');
-      //     let notes = $('.chord_data',this).text().split('/')[1];
-      //     let inputRotate = $('.chord_data',this).text().split('/')[2];
-      //     let tone = notes.split(',');
-      //     synth.triggerAttackRelease(tone, '4n');
-      //     $('#screen').removeClass('active');
-      //     $('.clone').remove();
-      //     let inputType = analyze_chord(tone,'full');
-      //     if (inputB >= 0){
-      //       let writeData = {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
-      //       let writeIndex = dataExisting((inputM + ':' + inputB + ':' + '0'));
-      //       if ( writeIndex >= 0){
-      //         toneData[writeIndex] = writeData
-      //       }else{
-      //         toneData.push(writeData);
-      //       }
-      //       let viewType = $('.active').attr('class').split(' ')[0];
-      //       switch (viewType){
-      //         case 'chord_function':
-      //         $('.select_track').html('<span class="chord_function active">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
-      //         break;
-      //         case 'chord_degree':
-      //         $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree active">' + viewDegree + '</span><span class="chord_name">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
-      //         break;
-      //         case 'chord_name':
-      //         $('.select_track').html('<span class="chord_function">' + viewFunc + '</span><span class="chord_degree">' + viewDegree + '</span><span class="chord_name active">' + inputType[0] +'</span><span class="tone">'+ tone +'</span>');
-      //         break;
-      //       }
-      //       $('.select_track').removeClass().addClass('edit_b ' + $('a',this).attr('class') + ' phrase_chord select_track')
-      //       toneData.sort(sort_by(order));
-      //     }
-      //     setForm_toneData(toneData);
-      //   });
-      // });
       /* セレクトした入力データを削除 */
       $(document).on('click', '#btn_delete_data', function (){
         if (inputB >= 0){

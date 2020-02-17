@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -14,7 +16,7 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
-  validates :name, presence: true, length: { maximum:20 }
+  validates :name, presence: true, length: { maximum: 20 }
 
   def follow!(other_user)
     active_relationships.create!(followed_id: other_user.id)
