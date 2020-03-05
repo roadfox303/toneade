@@ -1,0 +1,18 @@
+<script src="https://js.stripe.com/v3"></script>
+<div>
+  <h1>パッケージ</h1>
+  <ul class="item_patch">
+  <% @items.each do |item| %>
+  <li>
+    <h3><%= item.attributes.name %></h3>
+    <p><%= item.price %> <%= item.currency.upcase %></p>
+    <% Stripe::Product.retrieve(item.product).metadata.each do |meta| %>
+      <p><%= meta[0] %>/<%= meta[1] %></p>
+    <% end %>
+    <button class="btn_buy" id="<%= item.id %>" role="link">
+      BUY
+    </button>
+  </li>
+  <% end %>
+  </ul>
+</div>

@@ -25,6 +25,8 @@ gem 'gon'
 gem 'jquery-turbolinks'
 
 gem 'kaminari', '~> 0.17.0'
+gem 'dotenv-rails'
+gem 'stripe'
 
 group :development, :test do
   gem 'better_errors'
