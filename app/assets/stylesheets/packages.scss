@@ -1,3 +1,84 @@
 // Place all the styles related to the packages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#optional_package h2{
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 2rem 0;
+}
+.grid {
+  margin-bottom: 1.6em;
+  position: relative;
+  padding: 0;
+}
+.grid-item {
+  box-sizing: border-box;
+  min-width: 150px;
+  width: 50%;
+  padding: 1%;
+  margin: 0;
+}
+.grid-inner {
+  background:#fff;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.grid-inner img {
+  margin: 0;
+  vertical-align: bottom;
+}
+.item_patch {
+  list-style: none;
+}
+.grid-inner img{
+  display: block;
+  width: 75%;
+  margin: auto;
+}
+.grid-inner h3{
+  margin: 0 0 1rem;
+  text-align: center;
+  word-wrap: break-word;
+}
+.grid-inner .price{
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.grid-inner .caption{
+  text-align: center;
+}
+.grid-inner .btn_buy{
+  width: 100%;
+}
+@media screen and ( min-width:320px) {
+  #optional_package h2{
+    font-size: 2.5rem;
+    margin: 2rem 0;
+  }
+  .grid-item {
+    width: 50%;
+  }
+}
+@media screen and (min-width:560px) {
+  #optional_package h2{
+    font-size: 4rem;
+    margin: 5rem 0;
+  }
+  .grid-item {
+    width: 33.3%;
+  }
+}
+@media screen and (min-width:960px) {
+  #optional_package h2{
+    font-size: 5rem;
+    margin: 5rem 0;
+  }
+  .grid-item {
+    width: 20%;
+    min-width:240px;
+  }
+}
