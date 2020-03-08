@@ -1,4 +1,5 @@
 class PackagesController < ApplicationController
+  protect_from_forgery with: :null_session
   def index
     @page_name = 'Optional Packages'
     gon.page_name = @page_name
