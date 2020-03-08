@@ -16,8 +16,6 @@ class PackagesController < ApplicationController
   end
 
   def create
-    require 'json'
-    # Using Sinatra
     
   end
 
