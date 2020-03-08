@@ -30,9 +30,13 @@ Rails.application.routes.draw do
   resources :nices, only: %i[create destroy]
   resources :comments, only: %i[create edit update destroy]
   resources :relationships, only: %i[create destroy]
-  resources :packages, only: %i[index create destroy]
+  resources :packages, only: %i[index create destroy] do
+    collection do
+      get :success
+    end
+  end
 
-  post '/packages' do
+  post '/webhook' do
     payload = request.body.read
     event = nil
 
