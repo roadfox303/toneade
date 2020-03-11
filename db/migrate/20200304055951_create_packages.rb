@@ -1,8 +1,10 @@
 class CreatePackages < ActiveRecord::Migration[5.2]
   def change
     create_table :packages do |t|
-      t.string :item_id, null: false
-      t.integer :category, null: false , default: 0
+      t.string :product_id, null: false
+      t.string :category
+      t.string :name, null: false
+      t.string :image
       t.text :comment
       t.timestamps
     end

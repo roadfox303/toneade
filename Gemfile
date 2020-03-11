@@ -35,6 +35,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rubocop', require: false
   gem 'spring'
+  gem 'stripe_event'
 end
 
 group :development do

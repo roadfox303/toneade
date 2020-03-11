@@ -50,8 +50,10 @@ ActiveRecord::Schema.define(version: 2020_03_04_060350) do
   end
 
   create_table "packages", force: :cascade do |t|
-    t.string "item_id", null: false
-    t.integer "category", default: 0, null: false
+    t.string "product_id", null: false
+    t.string "category"
+    t.string "name", null: false
+    t.string "image"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
