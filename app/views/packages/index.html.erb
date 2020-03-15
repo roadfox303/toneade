@@ -1,0 +1,30 @@
+<script src="https://js.stripe.com/v3"></script>
+<div id="optional_package">
+  <h2>Optional Patch</h2>
+  <ul class="item_patch grid">
+  <% @items.each do |item| %>
+    <li class="grid-item">
+      <div class="grid-inner">
+        <% meta = Stripe::Product.retrieve(item.product).metadata %>
+        <% if meta.respond_to?('category') %>
+          <div><%= meta.category.upcase %></div>
+        <% end %>
+        <div><img src="<%= item.image %>" alt="<%= item.attributes.name %>"></div>
+        <h3><%= item.attributes.name %></h3>
+        <% if meta.respond_to?('caption') %>
+          <div class="caption"><%= meta.caption %></div>
+        <% end %>
+        <div class="price"><%= item.price %> <%= item.currency.upcase %></div>
+        <button class="btn_buy" id="<%= item.id %>" role="link">BUY</button>
+      </div>
+    </li>
+  <% end %>
+  </ul>
+</div>
+<script type="text/javascript">
+  jQuery('.grid').masonry({
+    itemSelector: '.grid-item',
+    gutter: 0
+  });
+  $('body').css('background','#dddddd');
+</script>
