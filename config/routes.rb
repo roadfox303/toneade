@@ -71,6 +71,7 @@ Rails.application.routes.draw do
       get :success
     end
   end
+  resources :ownds, only: %i[create destroy]
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

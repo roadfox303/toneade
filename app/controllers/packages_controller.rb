@@ -1,18 +1,10 @@
 class PackagesController < ApplicationController
-  protect_from_forgery with: :null_session
+  # protect_from_forgery with: :null_session
+  protect_from_forgery :except => [:webhook]
   def index
     @page_name = 'Optional Packages'
     gon.page_name = @page_name
     @items = Stripe::SKU.list().data
-    # @patchs = Stripe::Product.list().data.find_all { |product|
-    #   product.metadata.category == "patch"
-    # }
-    # @test = []
-    # @patchs.each{ |patch|
-    #   @test << Stripe::SKU.list(attributes[product]=red)
-    # }
-    # binding.pry
-
   end
 
   def create
@@ -25,23 +17,21 @@ class PackagesController < ApplicationController
   def webhook
     case params[:type]
     when 'checkout.session.completed' then
-      値1と一致する場合に行う処理
-    when 'product.created' then
-      package = Package.new(product_id: stripe_product_params.id, name: stripe_product_params.name)
-      package.save
-    when 'sku.created' then
-      package = Package.find_by(product_id: stripe_sku_params.product)
-      package.update(image: stripe_product_params.image)
+
     when 'product.updated' then
-      値3と一致する場合に行う処理
+      find_product(stripe_product_params[:id]).update(name: stripe_product_params[:name], category: stripe_product_params[:metadata][:category])
+    when 'product.deleted' then
+      find_product(stripe_product_params[:id]).destroy
+    when 'sku.created' then
+      name = Stripe::Product.retrieve(stripe_sku_params[:product]).name
+      package = Package.find_or_create_by(product_id: stripe_sku_params[:product], name: name)
+      package.image = stripe_sku_params[:image]
+      package.save
     when 'sku.updated' then
-      値3と一致する場合に行う処理
-    when 'sku.deleted' then
-      値3と一致する場合に行う処理
+      find_sku.update(image: stripe_sku_params[:image])
     else
       redirect_to blogs_path
     end
-    binding.pry
   end
 
   private
@@ -54,12 +44,20 @@ class PackagesController < ApplicationController
     end
   end
 
+  def find_product(p_id)
+    Package.find_by(product_id: p_id)
+  end
+
+  def find_sku
+    Package.find_by(product_id: stripe_sku_params[:product])
+  end
+
   def stripe_product_params
     params.require(:data).require(:object).permit(:id,:name,metadata:[:category])
   end
 
   def stripe_sku_params
-    params.require(:data).require(:object).permit(:id, :imagea, :product)
+    params.require(:data).require(:object).permit(:id, :image, :product)
   end
 
   def stripe_checkout_params
