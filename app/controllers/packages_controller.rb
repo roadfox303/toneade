@@ -1,9 +1,10 @@
 class PackagesController < ApplicationController
-  # protect_from_forgery with: :null_session
-  protect_from_forgery :except => [:webhook]
+  protect_from_forgery with: :null_session
+  # protect_from_forgery :except => [:webhook]
   def index
     @page_name = 'Optional Packages'
     gon.page_name = @page_name
+    gon.user_id = current_user.id
     @items = Stripe::SKU.list().data
   end
 
@@ -17,6 +18,13 @@ class PackagesController < ApplicationController
   def webhook
     case params[:type]
     when 'checkout.session.completed' then
+      binding.pry
+      package = Package.find_by(product_id: stripe_checkout_params[:product])
+      ownd = Ownd.find_or_create_by(user_id: stripe_checkout_user, package_id: package.id)
+      ownd.save
+      binding.pry
+      # redirect_to blog_path(params[:blog_id]), notice: 'Nice!しました'
+      # redirect_to users_path(stripe_checkout_params)
 
     when 'product.updated' then
       find_product(stripe_product_params[:id]).update(name: stripe_product_params[:name], category: stripe_product_params[:metadata][:category])
@@ -61,7 +69,11 @@ class PackagesController < ApplicationController
   end
 
   def stripe_checkout_params
-    params.require(:data).require(:object).require(:display_items)[0].require(:sku).permit(:id, :product, :image, attributes:[:name])
+    params.require(:data).require(:object).require(:display_items)[0].require(:sku).permit(:id, :product, :client_reference_id, :image, attributes:[:name])
+  end
+
+  def stripe_checkout_user
+    params.require(:data).require(:object)[:client_reference_id].split('_')[1]
   end
 
 end
