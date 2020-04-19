@@ -9,7 +9,7 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - run: gem install bundler
+      - run: gem install bundler:2.0.2
       - run: bundle install
   test:
     docker:
@@ -17,7 +17,7 @@ jobs:
     steps:
       - checkout
       - run: bundle exec rspec
-      
+
 workflows:
   version: 2.1
   build_and_test:
