@@ -57,14 +57,19 @@ rails 5.2.3
 ## ワイヤーフレーム
 [コード進行アプリ.pdf](https://github.com/roadfox303/toneade/files/3732947/default.pdf) -->
 
-## 使用予定 gem
-devise  
-carrierwave  
-mini_magick
-gon
+## 使用技術
+[CI]
+circle CI
 
-## 使用予定 js
-Tone.js  
-VueDraggable　又は　SortableJS  
-Swiper  
-midifile (midiパーサ)
+[API]
+Stripe
+
+[gem]
+devise  
+gon
+cocoon
+
+[js]
+Tone.js
+Swiper
+modaal
