@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - run: gem install bundler:2.0.2
-      - run: bundle install -- path vendor/bundle
+      - run: bundle install
   test:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - run: gem install bundler:2.0.2
-      - run: bundle install -- path vendor/bundle
+      - run: bundle install
       - run: bundle exec rake db:create db:schema:load
       - run: bundle exec rspec
 
