@@ -58,18 +58,18 @@ rails 5.2.3
 [コード進行アプリ.pdf](https://github.com/roadfox303/toneade/files/3732947/default.pdf) -->
 
 ## 使用技術
-[CI]
+[CI]  
 circle CI
 
-[API]
+[API]  
 Stripe
 
-[gem]
+[gem]  
 devise  
 gon
 cocoon
 
-[js]
+[js]  
 Tone.js
 Swiper
 modaal
