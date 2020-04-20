@@ -4,6 +4,7 @@ orbs:
 
 jobs:
   build:
+    working_directory: ~/tonade
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
       - image: circleci/postgres:11.3
@@ -11,7 +12,7 @@ jobs:
     steps:
       - checkout
       - run: gem install bundler:2.0.2
-      - run: bundle install
+      - run: bundle install -- path vendor/bundle
   test:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
@@ -19,7 +20,7 @@ jobs:
     steps:
       - checkout
       - run: gem install bundler:2.0.2
-      - run: bundle install
+      - run: bundle install -- path vendor/bundle
       - run: bundle exec rake db:create db:schema:load
       - run: bundle exec rspec
 
