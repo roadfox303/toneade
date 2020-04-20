@@ -18,6 +18,7 @@ jobs:
       - checkout
       - run: gem install bundler:2.0.2
       - run: bundle install
+      - run: rails db:migrate
       - run: bundle exec rspec
 
 workflows:
