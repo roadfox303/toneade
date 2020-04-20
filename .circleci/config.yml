@@ -23,7 +23,14 @@ jobs:
   test:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
       - image: circleci/postgres:9.6.9-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: toneade_test
     steps:
       - checkout
       - run: gem install bundler:2.0.2
