@@ -68,6 +68,7 @@ Stripe
 devise    
 gon  
 cocoon  
+RuboCop  
 
 [js]  
 Tone.js  
