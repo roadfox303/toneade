@@ -6,6 +6,7 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
+      - image: circleci/postgres:9.6.5-alpine-ram
     executor: ruby/default
     steps:
       - checkout
@@ -14,6 +15,7 @@ jobs:
   test:
     docker:
       - image: circleci/ruby:2.6.3-stretch-node
+      - image: circleci/postgres:9.6.5-alpine-ram
     steps:
       - checkout
       - run: gem install bundler:2.0.2
