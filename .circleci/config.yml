@@ -8,22 +8,26 @@ jobs:
       - image: circleci/ruby:2.6.3-stretch-node
         environment:
           RAILS_ENV: test
-          PGHOST: 127.0.0.1
-          PGUSER: postgres
+          POSTGRES_HOST: 127.0.0.1
       - image: circleci/postgres:11.3
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: app_test
     executor: ruby/default
     steps:
       - checkout
       - run: gem install bundler:2.0.2
       - run: bundle install
   test:
-      docker:
-        - image: circleci/ruby:2.6.3-stretch-node
-          environment:
-            RAILS_ENV: test
-            PGHOST: 127.0.0.1
-            PGUSER: postgres
-        - image: circleci/postgres:11.3
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+        environment:
+          RAILS_ENV: test
+          POSTGRES_HOST: 127.0.0.1
+      - image: circleci/postgres:11.3
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: app_test
     steps:
       - checkout
       - run: gem install bundler:2.0.2
