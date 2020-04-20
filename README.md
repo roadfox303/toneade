@@ -62,14 +62,14 @@ rails 5.2.3
 circle CI
 
 [API]  
-Stripe
+Stripe  
 
 [gem]  
-devise  
-gon
-cocoon
+devise    
+gon  
+cocoon  
 
 [js]  
-Tone.js
-Swiper
-modaal
+Tone.js  
+Swiper  
+modaal  
