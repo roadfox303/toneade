@@ -9,7 +9,6 @@ class BlogsController < ApplicationController
   def top
     @page_name = 'Servise'
     gon.page_name = @page_name
-    binding.pry
   end
 
   def manual
