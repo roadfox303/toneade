@@ -6,10 +6,10 @@ TONEADE は 音楽理論や楽器の経験がない初心者でも、簡単なUI
 
 [デプロイ]
 https://toneade.herokuapp.com/
-
-・テストユーザー
-メールアドレス:test@example.com
-パスワード:password
+|テストユーザー|ログイン情報|
+|:---:|:---:|
+|メールアドレス|test@example.com|
+|パスワード|password|
 
 [github]
 https://github.com/roadfox303/toneade
