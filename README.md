@@ -6,7 +6,7 @@ TONEADE は 音楽理論や楽器の経験がない初心者でも、簡単なUI
 
 [デプロイ]
 https://toneade.herokuapp.com/
-|テストユーザー|ログイン情報|
+|テストユーザー||
 |:---:|:---:|
 |メールアドレス|test@example.com|
 |パスワード|password|
