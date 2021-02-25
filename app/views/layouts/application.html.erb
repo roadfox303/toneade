@@ -34,7 +34,7 @@
         </ul>
       </nav>
     </header>
-    <div id="container">
+    <div id="container" class ="<%= controller.action_name %>">
       <div id="page_locate"><a href="<%= top_blogs_path %>" id="logo" data-turbolinks="false">TONEADE<span id="version"> α 1.0</span></a><h1><%= @page_name %></h1></div>
       <div class="content_wrapper">
         <%= yield %>

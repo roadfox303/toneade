@@ -81,7 +81,11 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
+  # <<: *default
+  # database: toneade_production
+  # username: toneade
+  # password: <%= ENV['TONEADE_DATABASE_PASSWORD'] %>
   <<: *default
-  database: toneade_production
-  username: toneade
-  password: <%= ENV['TONEADE_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
