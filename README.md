@@ -4,13 +4,17 @@
 TONEADE は 音楽理論や楽器の経験がない初心者でも、簡単なUI操作だけで、
 ポピュラー音楽で必要とされる基礎的な音楽理論に則ったフレーズを自由に作成し公開できるSNSです。
 
-### [デプロイ]
+[デプロイ]
 https://toneade.herokuapp.com/
+|テストユーザー||
+|:---:|:---:|
+|メールアドレス|test@example.com|
+|パスワード|password|
 
-### [github]
+[github]
 https://github.com/roadfox303/toneade
 
-### [アプリケーションwiki]
+[アプリケーションwiki]
 https://toneade.memo.wiki/
 
 <!-- 本アプリケーションは工夫次第でそこそこ作曲ソフト的な使い方もできますが、あくまで気軽な作曲アイデアのスケッチ、作曲前の実験場的な使い方を想定したサービスです。  
@@ -57,14 +61,20 @@ rails 5.2.3
 ## ワイヤーフレーム
 [コード進行アプリ.pdf](https://github.com/roadfox303/toneade/files/3732947/default.pdf) -->
 
-## 使用予定 gem
-devise  
-carrierwave  
-mini_magick
-gon
+## 使用技術
+[CI]  
+circle CI
 
-## 使用予定 js
+[API]  
+Stripe  
+
+[gem]  
+devise    
+gon  
+cocoon  
+RuboCop  
+
+[js]  
 Tone.js  
-VueDraggable　又は　SortableJS  
 Swiper  
-midifile (midiパーサ)
+modaal  

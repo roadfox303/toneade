@@ -25,6 +25,8 @@ gem 'gon'
 gem 'jquery-turbolinks'
 
 gem 'kaminari', '~> 0.17.0'
+gem 'dotenv-rails'
+gem 'stripe'
 
 group :development, :test do
   gem 'better_errors'
@@ -33,6 +35,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rubocop', require: false
   gem 'spring'
+  gem 'stripe_event'
 end
 
 group :development do
