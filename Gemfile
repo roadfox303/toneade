@@ -24,7 +24,7 @@ gem 'devise', '>= 4.7.1'
 gem 'gon'
 gem 'jquery-turbolinks'
 
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '~> 1.2.1'
 gem 'dotenv-rails'
 gem 'stripe'
 
