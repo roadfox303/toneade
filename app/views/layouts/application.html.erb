@@ -28,6 +28,7 @@
           <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"drawer-menu-item" %></li>
           <% else %>
           <li><%= link_to "フレーズ一覧", blogs_path, class:"drawer-menu-item" %></li>
+          <li><%= link_to "操作マニュアル", manual_blogs_path, class:"drawer-menu-item" %></li>
           <li><%= link_to "新規登録", new_user_registration_path, class:"drawer-menu-item" %></li>
           <li><%= link_to "ログイン", new_user_session_path, class:"drawer-menu-item" %></li>
           <% end %>
