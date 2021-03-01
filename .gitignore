@@ -21,7 +21,6 @@
 /yarn-error.log
 
 /vendor/bundle
-/config/database.yml
 /docker-compose.yml
 
 /public/assets
