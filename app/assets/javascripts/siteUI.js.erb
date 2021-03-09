@@ -14,9 +14,12 @@ $(document).on('turbolinks:load', function() {
     start_open: true,
     hide_close: 'true',
     close_text: '×',
-    animation: 'none',
+    animation: 'fade',
     content_source: '#modal_notice',
-    inject_position: 'body'
+    inject_position: 'body',
+    after_open: setTimeout(function() {
+      $('.btn_notice').modaal('close')
+    }, 5000)
   });
   autosize($('textarea'));
 

@@ -70,6 +70,14 @@ $D_alpha: rgba(255, 159, 196, 0.2);
   margin-top: 0;
   padding-top: 0;
 }
+#test_account{
+  font-size: 2rem;
+  color: #43b6d3;
+  transition: all 0.2s ease 0s;
+  &:hover{
+    color: #fff;
+  }
+}
 .inner_box{
   position: relative;
 }
@@ -83,15 +91,36 @@ $D_alpha: rgba(255, 159, 196, 0.2);
   top: 0;
 
 }
-#topimg_signup{
-  display: block;
-  font-size: 3rem;
-  background: $thema-color;
-  color: #fff;
-  padding: 2rem 4rem;
-  border-radius: 3.5rem;
-  text-decoration: none;
+#login_button{
+  margin: 2rem auto 0;
+  display: flex;
+  justify-content: center;
+  a{
+    width:10rem;
+    font-size: 2rem;
+    padding: 2rem 4rem;
+    margin: 0 1rem;
+    border-radius: 5rem;
+    text-decoration: none;
+    background: $thema-color;
+    color: #fff;
+    border-radius: 3.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease 0s;
+    &:hover{
+      background: #7ed7ed;
+    }
+  }
 }
+// #topimg_signup{
+//   display: block;
+//   font-size: 3rem;
+//   background: $thema-color;
+//   color: #fff;
+//   padding: 2rem 4rem;
+//   border-radius: 3.5rem;
+//   text-decoration: none;
+// }
 .top_container{
   padding: 8rem 0;
   color:#424242;
@@ -220,13 +249,20 @@ $D_alpha: rgba(255, 159, 196, 0.2);
     right: 0%;
     opacity: 0;
   }
-  #topimg_signup{
-    width:10rem;
-    margin: 2rem auto 0;
-    font-size: 2rem;
-    padding: 1rem 2rem;
-    border-radius: 5rem;
-    text-decoration: none;
+  #login_button{
+    margin: 2rem auto 1rem;
+    display: flex;
+    justify-content: center;
+    a{
+      width:6rem;
+      font-size: 1.6rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5rem;
+      text-decoration: none;
+    }
+  }
+  #test_account{
+    font-size: 1.2rem;
   }
   #top_concept li{
     width: 100%;
@@ -314,14 +350,29 @@ $D_alpha: rgba(255, 159, 196, 0.2);
     right: 0%;
     opacity: 0;
   }
-  #topimg_signup{
-    font-size: 3rem;
-    width:16rem;
-    margin: 3rem auto 0;
-    padding: 2rem 4rem;
-    border-radius: 5rem;
-    text-decoration: none;
+  #login_button{
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: center;
+    a{
+      width:12rem;
+      font-size: 2rem;
+      padding: 2rem 2.8rem;
+      border-radius: 5rem;
+      text-decoration: none;
+    }
   }
+  #test_account{
+    font-size: 1.6rem;
+  }
+  // #topimg_signup{
+  //   font-size: 3rem;
+  //   width:16rem;
+  //   margin: 3rem auto 0;
+  //   padding: 2rem 4rem;
+  //   border-radius: 5rem;
+  //   text-decoration: none;
+  // }
 
 }
 @media screen and (min-width:720px) {
@@ -368,6 +419,25 @@ $D_alpha: rgba(255, 159, 196, 0.2);
   }
   #top_concept3 dl{
     max-width:960px;
+  }
+  #login_button{
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: center;
+    a{
+      width:16rem;
+      font-size: 2.4rem;
+      padding: 2.4rem 3rem;
+      margin: 0 1rem;
+      border-radius: 10rem;
+      text-decoration: none;
+      background: $thema-color;
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+  #test_account{
+    font-size: 2rem;
   }
 }
 

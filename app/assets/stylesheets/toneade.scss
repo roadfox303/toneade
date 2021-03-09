@@ -4,6 +4,9 @@ $sub-color: rgba(97, 112, 125, 1);
 $dark-color: rgba(35, 41, 45, 1);
 $point-color: rgba(168, 35, 66, 1);
 $line-color: #cccccc;
+body {
+  background: #f4f4f4;
+}
 #page_locate{
   width: 100%;
   overflow: hidden;
@@ -107,6 +110,15 @@ margin-bottom: 2rem;
     padding-top: 10px;
   }
 }
+
+.drawer-hamburger {
+  padding: 0 9px;
+}
+.drawer-menu li{
+  border-bottom: 1px solid $line-color;
+  margin: 0;
+  padding: 0.5rem;
+}
 @media screen and (min-width:560px) {
   h1{
     font-size: 4rem;
@@ -118,6 +130,13 @@ margin-bottom: 2rem;
   #phrase_progression li{
     min-width:25%;
     flex-basis:25%;
+  }
+  .blog_list li{
+    margin: 0 0 2rem!important;
+    border: solid 1px #dddddd!important;
+    padding: 1rem!important;
+    border-radius: 3px!important;
+    background: #fff!important;
   }
 }
 @media screen and (min-width:960px) {
@@ -132,13 +151,30 @@ margin-bottom: 2rem;
     min-width:12.5%;
     flex-basis:12.5%;
   }
-}
-
-.drawer-hamburger {
-  padding: 0 9px;
-}
-.drawer-menu li{
-  border-bottom: 1px solid $line-color;
-  margin: 0;
-  padding: 0.5rem;
+  #container{
+    width:960px;
+    margin: 0 auto;
+  }
+  #container.top {
+    width:100%!important;
+  }
+  .content_wrapper{
+    margin-top: 60px!important;
+  }
+  #page_locate {
+    height: 60px;
+  }
+  #logo{
+    height: 60px;
+    line-height: 60px;
+  }
+  #page_locate{
+    padding: 0 1rem;
+  }
+  #page_locate h1{
+    line-height: 47px;
+  }
+  .drawer-hamburger {
+    padding: 0 9px;
+  }
 }

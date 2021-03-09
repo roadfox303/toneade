@@ -3,7 +3,12 @@
     <div id="topimg_layer1" class="pallax_layer rellax" data-rellax-speed="3">
       <span class="main_word">インスピレーションが<br />鍵盤やフレットから自由になる。</span>
       <span class="sub_word">簡単にコード進行を作成することができる、作編曲支援アプリです。</span>
-      <%= link_to "Sign Up", new_user_registration_path, id:"topimg_signup" %>
+      <div id="login_button">
+        <%= link_to "Sign Up", new_user_registration_path, id:"topimg_signup" %>
+        <%= link_to "Log In", new_user_session_path, id:"topimg_signin" %>
+      </div>
+      <!-- <a id="test_account">テストアカウントでログイン</a> -->
+      <%= link_to 'テストアカウントでログイン', users_guest_sign_in_path, method: :post, id:'test_account' %>
     </div>
     <div id="topimg_layer2" class="pallax_layer rellax" data-rellax-speed="1"><%= image_tag 'iphone_image.png', id:'img_iphone' %></div>
     <div id="topimg_layer3" class="pallax_layer rellax" data-rellax-speed="-7"><div id="topimg_logo">TONEADE</div>

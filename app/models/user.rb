@@ -20,6 +20,13 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 20 }
 
+  def self.guest
+    find_or_create_by(email: "test@example.com") do |user|
+      user.password = Rails.application.secrets.test_account_pass
+      user.password = "password"
+    end
+  end
+
   def follow!(other_user)
     active_relationships.create!(followed_id: other_user.id)
   end
