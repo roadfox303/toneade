@@ -20,6 +20,9 @@
 /node_modules
 /yarn-error.log
 
+/vendor/bundle
+/docker-compose.yml
+
 /public/assets
 .byebug_history
 

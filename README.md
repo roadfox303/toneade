@@ -38,6 +38,8 @@ rails 5.2.3
 ヘルプ機能、操作説明などはまだ未実装のため、フレーズ作成の操作は下記の画像をご参照ください。
 
 [toneade操作説明](https://user-images.githubusercontent.com/52414882/69954663-2bc9f480-153f-11ea-83ae-25ef111a49e0.jpg)
+
+## アプリケーション概要
 <!--
 
 
