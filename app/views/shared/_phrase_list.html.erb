@@ -1,0 +1,33 @@
+<div id="<%= list_id %>" class="blog_list">
+  <h2><%= title %></h2>
+  <% if list.present? %>
+    <ul>
+      <% list.each do |blog| %>
+        <li>
+          <a href="<%= blog_path(blog.id) %>" data-turbolinks="false">
+            <div class="list_head">
+              <span class="blog_bpm">♩=<%= blog.phrase.bpm %></span>
+              <span class="blog_bar"><%= phrase_length blog %></span>
+              <span class="blog_scale"><%= phrase_keyscale(blog) %></span>
+            </div>
+            <div class="list_body">
+              <div class="blog_date"><%= blog.created_at.strftime("%Y/%m/%d %H:%M") %></div>
+              <div class="blog_title"><h3>"<%= blog.title %>"</h3></div>
+              <div class="list_foot">
+                <div class="blog_prof">
+                  <div class="prof_icon"></div>
+                  <span><%= blog.user.name %></span>
+                </div>
+                <div class="blog_nices">
+                  <span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="content_empty">登録されたフレーズはありません。</div>
+  <% end %>
+</div>

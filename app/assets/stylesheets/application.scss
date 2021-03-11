@@ -17,8 +17,13 @@
  *= require_tree .
  *= require_self
  */
+$dark-color: rgba(55, 71, 65, 1);
+html{
+  color: $dark-color;
+}
 a {
-  color: #000;
+  color: $dark-color;
+  text-decoration: none;
 }
 
 ul {
@@ -48,5 +53,6 @@ input,select{
   min-height: calc( 100vh - 110px );
   position: relative;
   overflow: hidden;
-  padding: 0.6rem 0.5rem 0.5rem;
+  // padding: 0.6rem 0.5rem 0.5rem;
+  padding: 0.5rem 0;
 }

@@ -3,7 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $UI1-color: #cccccc;
 $UI2-color: #999999;
-$thema-color: #f00;
 $TR_border-color: #000;
 $guide_odd-color: rgba(55, 60, 64, 1);
 $guide_even-color: rgba(35, 41, 45, 1);
@@ -11,11 +10,14 @@ $sel_track-color: rgba(255,255,255,0.3);
 $btn_active-color: rgba(168, 35, 66, 1);
 $btn_negative-color: #333333;
 
-$base-color: rgba(197, 203, 207, 1);
-$thema-color: rgba(67, 182, 211, 1);
+$base-color: rgba(237, 240, 239, 1);
+$thema-color: rgba(148, 227, 45, 1);
+$thema-color-light: rgba(205, 250, 147, 1);
+$light-font: rgba(173, 186, 181, 1);
+$thema-font: rgba(128, 196, 39, 1);
+$dark-font: rgba(55, 71, 65, 1);
 $sub-color: rgba(97, 112, 125, 1);
-$dark-color: rgba(35, 41, 45, 1);
-$point-color: rgba(168, 35, 66, 1);
+$dark-color: rgba(35, 48, 43, 1);
 
 $T_full: rgba(123, 230, 255, 1);
 $S_full: rgba(209, 255, 123, 1);
@@ -72,10 +74,11 @@ $D_alpha: rgba(255, 159, 196, 0.2);
 }
 #test_account{
   font-size: 2rem;
-  color: #43b6d3;
+  color: $thema-font;
+  text-decoration: underline;
   transition: all 0.2s ease 0s;
   &:hover{
-    color: #fff;
+    color: $thema-color-light;
   }
 }
 .inner_box{
@@ -102,13 +105,13 @@ $D_alpha: rgba(255, 159, 196, 0.2);
     margin: 0 1rem;
     border-radius: 5rem;
     text-decoration: none;
-    background: $thema-color;
+    background: $thema-font;
     color: #fff;
     border-radius: 3.5rem;
     text-decoration: none;
     transition: all 0.2s ease 0s;
     &:hover{
-      background: #7ed7ed;
+      background: $thema-color!important;
     }
   }
 }
@@ -123,7 +126,7 @@ $D_alpha: rgba(255, 159, 196, 0.2);
 // }
 .top_container{
   padding: 8rem 0;
-  color:#424242;
+  color:$dark-font;
   overflow: hidden;
 }
 .top_container h2{
@@ -163,6 +166,8 @@ $D_alpha: rgba(255, 159, 196, 0.2);
 }
 #top_concept3{
   width: 100%;
+  padding: 0 0.8rem;
+  box-sizing: border-box;
   text-align: center;
 }
 #top_concept3 .caption{
@@ -431,13 +436,13 @@ $D_alpha: rgba(255, 159, 196, 0.2);
       margin: 0 1rem;
       border-radius: 10rem;
       text-decoration: none;
-      background: $thema-color;
+      background: $thema-font;
       color: #fff;
       text-decoration: none;
     }
   }
   #test_account{
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 }
 

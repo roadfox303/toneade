@@ -1,89 +1,81 @@
 <div id="profile">
-  <div class="prof_icon_M"></div>
-  <div class="prof_name"><span><%= @user.name %></span></div>
-  <ul class="prof_follows">
-    <li><span class="data"><%= @user.passive_relationships.size %></span><span class="title">Followers</span></li>
-    <li><span class="data"><%= @user.active_relationships.size %></span><span class="title">Follows</span></li>
-  </ul>
-  <ul class="prof_status">
-    <li>created <span><%= @blogs_num %></span> Phrases</li>
-    <li>Nice's total <span><%= @nice_total %></span><span class="icon icon-heart-on"></span></li>
-  </ul>
-</div>
-<% if @user.comment %>
-<div id="prof_comment">
-  <h2>user comment</h2>
-  <p><%= simple_format(@user.comment) %></p>
-
-</div>
-<% end %>
-<% if user_signed_in? && @user.id != current_user.id %>
-  <% unless current_user.following?(@user) %>
-    <%= form_with(model: current_user.active_relationships.build(followed_id: @user.id),html:{name:'follow'})  do |f| %>
-      <%= f.hidden_field :followed_id %>
-      <%= f.hidden_field :return, :value => user_path(@user.id) %>
-      <a href="javascript:follow.submit()" class="btn_follow">Follow</a>
-    <% end %>
-  <% else %>
-    <%= form_with(model: current_user.active_relationships.find_by(followed_id: @user.id), method: :delete,html:{name:'unfollow'} ) do |f| %>
-      <%= f.hidden_field :return, :value => user_path(@user.id) %>
-      <a href="javascript:unfollow.submit()" class="btn_follow">Unfollow</a>
-    <% end %>
+  <% if @user == current_user%>
+    <div id="button_prof_edit"><%= link_to edit_user_registration_path do %><i class="fas fa-cog"></i><% end %></div>
   <% end %>
-<% end %>
+  <div id="prof_box">
+    <div class="prof_icon_M"></div>
+    <div class="prof_name"><%= @user.name %></div>
+    <% if @user.comment %>
+      <div class="prof_comment"><%= simple_format(@user.comment) %></div>
+    <% end %>
+  </div>
+  <% if user_signed_in? && @user != current_user %>
+    <% unless current_user.following?(@user) %>
+      <%= form_with(model: current_user.active_relationships.build(followed_id: @user.id),html:{name:'follow'}) do |f| %>
+        <%= f.hidden_field :followed_id %>
+        <%= f.hidden_field :return, :value => user_path(@user.id) %>
+        <div class="button_follow"><a href="javascript:follow.submit()"><i class="fas fa-plus-circle"></i>Follow</a></div>
+      <% end %>
+    <% else %>
+      <%= form_with(model: current_user.active_relationships.find_by(followed_id: @user.id), method: :delete,html:{name:'unfollow'} ) do |f| %>
+        <%= f.hidden_field :return, :value => user_path(@user.id) %>
+        <div class="button_follow"><a href="javascript:unfollow.submit()"><i class="fas fa-minus-circle"></i>Unfollow</a></div>
+      <% end %>
+    <% end %>
+
+  <% elsif user_signed_in? && @user == current_user %>
+    <div class="button_follow"><%= link_to new_blog_path do %>New Phrase<% end %></div>
+  <% end %>
+  <ul class="prof_status">
+    <li>
+      <%= link_to phrases_user_path do %>
+        <span class="title">Phrases</span>
+        <span class="data"><%= @blogs_num %></span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to follow_user_path do %>
+        <span class="title">Following</span>
+        <span class="data"><%= @user.active_relationships.size %></span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to follow_user_path do %>
+        <span class="title">Followers</span>
+        <span class="data"><%= @user.passive_relationships.size %></span>
+      <% end %>
+    </li>
+  </ul>
+</div>
+
 <% if user_signed_in? && @user.id == current_user.id %>
   <div id="user_menu">
     <ul>
-      <li><%= link_to "Profile", edit_user_registration_path %></li>
-      <li><a>User Patch</a></li>
-      <li><%= link_to "Follow List", follow_user_path %></li>
-      <li><%= link_to "Follower List", follower_user_path %></li>
-      <li><%= link_to "My Phrase", phrases_user_path %></li>
-      <li><%= link_to "My Nices", nices_user_path %></li>
-      <li><%= link_to "Create Phrase", new_blog_path %></li>
+      <li>
+        <%= link_to phrases_user_path do %>
+          <i class="menu_icon icon icon-beat-8"></i>
+          <span>Phreses</span>
+          <span class="menu_num"><%= @blogs_num %></span>
+          <i class="icon icon-angle-right"></i>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to nices_user_path do %>
+          <i class="menu_icon icon icon-heart-on"></i>
+          <span>Nices</span>
+          <span class="menu_num"><%= @nices.size %></span>
+          <i class="icon icon-angle-right"></i>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to new_blog_path do %>
+          <i class="menu_icon icon icon-pencil"></i>
+          <span>New Phrase</span>
+          <i class="icon icon-angle-right"></i>
+        <% end %>
+      </li>
     </ul>
   </div>
 <% end %>
-<div id="latest_blog" class="blog_list">
-  <h2>最近作成したフレーズ</h2>
-  <ul>
-  <% @blogs10.each do |blog| %>
-  <li>
-    <a href="<%= blog_path(blog.id) %>" data-turbolinks="false">
-      <div class="blog_date"><%= blog.created_at.strftime("%y/%m/%d %H:%M") %></div>
-      <div class="blog_nices"><span>Nice!</span><span><%= blog.nices.size %></span><span class="icon icon-heart-on"></span></div>
-      <div class="blog_title"><h3>"<%= blog.title %>"</h3></div>
-      <div class="blog_bpm">♩=<%= blog.phrase.bpm %></div>
-      <div class="blog_bar"><%= phrase_length blog %></div>
-      <div class="blog_scale">
-        <%= phrase_keyscale(blog) %>
-      </div>
-    </a>
-  </li>
-  <% end %>
-  </ul>
-</div>
-<div id="latest_nice" class="blog_list">
-  <h2>最近Nice!したフレーズ</h2>
-  <ul>
-  <% @nices.each do |nice| %>
-    <li>
-      <a href="<%= blog_path(nice[:blog_id])%>" data-turbolinks="false">
-        <div class="blog_head">
-          <div class="blog_prof">
-            <div class="prof_icon"></div>
-            <span><%= User.find(nice.blog[:user_id])[:name] %></span>
-          </div>
-          <div class="blog_date"><%= nice.blog[:created_at].strftime('%Y/%m/%d') %></div>
-        </div>
-        <h3>"<%= nice.blog[:title] %>"</h3>
-        <dl class="blog_status">
-          <dd><%= phrase_keyscale(nice.blog) %></dd>
-          <dd><span>♩=<%= nice.blog.phrase.bpm %></span></dd>
-          <dd><span>Nice!</span><span><%= nice.blog.nices.size %></span><span class="icon icon-heart-on"></span></dd>
-        </dl>
-      </a>
-    </li>
-  <% end %>
-  </ul>
-</div>
+<%= render partial: 'shared/phrase_list', locals: { list: @blogs_all.limit(10), list_id:'latest_blog', title: '最近作成したフレーズ' } %>
+<%= render partial: 'shared/phrase_list', locals: { list: @nices.limit(10), list_id:'latest_blog', title: '最近Nice!したフレーズ' } %>
