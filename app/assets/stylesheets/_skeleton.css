@@ -173,7 +173,7 @@ input[type="button"] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555;
+  color: #fff;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -182,9 +182,12 @@ input[type="button"] {
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  background-color: transparent;
+  /* background-color: transparent; */
+  background: #94e32d;
+  transition:0.3s all ease 0s;
   border-radius: 4px;
-  border: 1px solid #bbb;
+  /* border: 1px solid #bbb; */
+  border: 0;
   cursor: pointer;
   box-sizing: border-box; }
 .button:hover,
@@ -197,8 +200,10 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  color: #333;
-  border-color: #888;
+  background: #cdfa93;
+  color: #80c427;
+  transition:0.3s all ease 0s;
+  /* border-color: #888; */
   outline: 0; }
 .button.button-primary,
 button.button-primary,
@@ -206,8 +211,8 @@ input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
-  background-color: #33C3F0;
-  border-color: #33C3F0; }
+  background-color: #94e32d;
+  border-color: #94e32d; }
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -266,7 +271,7 @@ input[type="url"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-  border: 1px solid #33C3F0;
+  border: 1px solid #94e32d;
   outline: 0; }
 label,
 legend {
