@@ -216,9 +216,8 @@ $(document).on('turbolinks:load', function() {
   function analyze_chordFunction(toneData,key,scale){
     let set_key = gon.keys.find(item => item['id'] == key);
     let set_scale_data = gon.scales.find(item => item['id'] == scale);
-    let tonal_
 
-    console.log(set_key,set_scale);
+    // console.log(set_key,set_scale);
   }
   /* コードを探索 (toneData:hash)*/
   function search_chord(toneData){
@@ -669,7 +668,11 @@ $(document).on('turbolinks:load', function() {
         let track = $('.track_edit_header h3').text().replace(/[^0-9]/g, "");
         // let parent = $('.track_form:nth-child(' + track + ')');
         // $('input:nth-child(4)',parent).val(JSON.stringify(data));
-        $('#blog_phrase_attributes_tracks_attributes_0_data').val(JSON.stringify(data));
+        if (data.length == 0){
+          $('#blog_phrase_attributes_tracks_attributes_0_data').val("");
+        }else{
+          $('#blog_phrase_attributes_tracks_attributes_0_data').val(JSON.stringify(data));
+        }
       }
 
       /* トラック追加 */
@@ -889,13 +892,13 @@ $(document).on('turbolinks:load', function() {
         let target = diatonics.slice(0,(diatonics.length / 2));
         let set_scale = set_scaleData(phrase_key_id,phrase_scale_id);
         // console.log(aaa);
-        console.log(set_scale);
+        // console.log(set_scale);
         /* セカンダリードミナント生成 */
         target.map(function(item,i) {
           let chordTone = generate_secondaryDominant(item['chordTone']);
           let chord_degree = set_scale.find(item => item['note_name'] == chordTone[0]);
-          console.log(chordTone[0][0]);
-          console.log(chord_degree);
+          // console.log(chordTone[0][0]);
+          // console.log(chord_degree);
           $('#list_2ndD ul').append('<li><a class="func_2nd' + '"><span class="degree">' + 'chord_degree' + " " + '7' + '</span><span class="chord_data">' + chords.length + '/' + chordTone[0] + '/0' + '</span></a></li>');
           // chords.push({'id':chords.length + 1, 'root':root, 'notes':chord['notes'],chordTone,'category':'diatonic'});
         });
@@ -1115,7 +1118,7 @@ $(document).on('turbolinks:load', function() {
       });
       /* コード種類絞り込み */
       $(document).on('click', '#chord_category li', function (){
-        console.log($('a',this).text());
+        // console.log($('a',this).text());
       });
     }
   });
