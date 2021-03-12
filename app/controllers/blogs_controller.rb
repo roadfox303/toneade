@@ -7,7 +7,7 @@ class BlogsController < ApplicationController
   before_action :toneade_const
 
   def top
-    @page_name = 'Servise'
+    @page_name = 'Chord Sequencer'
     gon.page_name = @page_name
   end
 
