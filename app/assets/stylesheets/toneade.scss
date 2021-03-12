@@ -1,7 +1,11 @@
-$base-color: rgba(245, 251, 239, 1);
-$thema-color: rgba(67, 182, 211, 1);
+$base-color: rgba(237, 240, 239, 1);
+$thema-color: rgba(148, 227, 45, 1);
+$thema-color-light: rgba(205, 250, 147, 1);
+$light-font: rgba(173, 186, 181, 1);
+$thema-font: rgba(128, 196, 39, 1);
+$dark-font: rgba(55, 71, 65, 1);
 $sub-color: rgba(97, 112, 125, 1);
-$dark-color: rgba(35, 41, 45, 1);
+$dark-color: rgba(35, 48, 43, 1);
 $point-color: rgba(168, 35, 66, 1);
 $line-color: #cccccc;
 body {
@@ -36,7 +40,7 @@ body {
 #logo{
   text-decoration: none;
   font-size: 2.4rem;
-  color: #000;
+  color: $thema-font;
   margin-right: 2rem;
   float: left;
   line-height: 48px;
@@ -131,13 +135,12 @@ margin-bottom: 2rem;
     min-width:25%;
     flex-basis:25%;
   }
-  .blog_list li{
-    margin: 0 0 2rem!important;
-    border: solid 1px #dddddd!important;
-    padding: 1rem!important;
-    border-radius: 3px!important;
-    background: #fff!important;
-  }
+  // .blog_list li{
+  //   margin: 0 0 2rem!important;
+  //   border: solid 1px #dddddd!important;
+  //   border-radius: 3px!important;
+  //   background: #fff!important;
+  // }
 }
 @media screen and (min-width:960px) {
   h1{

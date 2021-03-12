@@ -15,13 +15,12 @@ class UsersController < ApplicationController
     gon.page_name = @page_name
     @user = User.find(params[:id])
     @blogs_all = Blog.where(user_id: @user.id).order(created_at: :desc)
-    @blogs10 = @blogs_all.limit(10)
     @blogs_num = @blogs_all.size
-    @nice_total = 0
-    @blogs_all.each do |blog|
-      @nice_total += blog.nices.size
-    end
-    @nices = Nice.where(user_id: @user.id).order(created_at: :desc).limit(10)
+    # @nice_total = 0
+    # @blogs_all.each do |blog|
+    #   @nice_total += blog.nices.size
+    # end
+    @nices = @user.nice_blogs.order(created_at: :desc)
   end
 
   def phrases
@@ -32,7 +31,9 @@ class UsersController < ApplicationController
 
   def nices
     @page_name = 'Nice List'
-    @nices = Nice.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :desc)
+    @user = User.find(params[:id])
+    # @nices = Nice.where(user_id: current_user.id).page(params[:page]).per(10).order(created_at: :desc)
+    @nices = @user.nice_blogs.page(params[:page]).per(10).order(created_at: :desc)
   end
 
   def follow
