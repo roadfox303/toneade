@@ -36,7 +36,11 @@
         </ul>
       </nav>
     </header>
-    <div id="container" class ="<%= controller.action_name %>">
+    <% if controller.controller_name == 'sessions' || controller.controller_name == 'registrations' %>
+      <div id="container" class ="session">
+    <% else %>
+      <div id="container" class ="<%= controller.action_name %>">
+    <% end %>
       <div id="page_locate"><a href="<%= top_blogs_path %>" id="logo" data-turbolinks="false">TONEADE<span id="version"> α 1.0</span></a><h1><%= @page_name %></h1></div>
       <div class="content_wrapper">
         <%= yield %>
