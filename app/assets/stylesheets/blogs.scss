@@ -213,243 +213,6 @@ $D_alpha: rgba(255, 159, 196, 0.2);
 #top_concept3 dl:last-child{
   margin-bottom: 0;
 }
-@media screen and (max-width: 320px) {
-  #top_concept3 dl{
-    flex-flow: column nowrap;
-  }
-  #top_concept3 dt,
-  #top_concept3 dd{
-    width: 100%;
-  }
-  #top_concept3 dd{
-    border-left: none;
-  }
-}
-@media screen and ( min-width:320px) {
-  #top_image{
-    height: 33vh;
-  }
-  .pallax_layer{
-    height: 33vh;
-  }
-  #topimg_layer1 .main_word{
-    display: block;
-    font-size: 3.5vw;
-    line-height: 4.5vw;
-    font-weight: bold;
-  }
-  #topimg_layer1 .sub_word{
-    display: block;
-    font-size: 2vw;
-    line-height: 3vw;
-    margin-top: 0.6rem;
-    font-weight: normal;
-  }
-  #topimg_logo{
-    font-size: 2.4rem;
-    padding-top: 2vw;
-    text-indent: 5vw;
-  }
-  #img_iphone{
-    right: 0%;
-    opacity: 0;
-  }
-  #login_button{
-    margin: 2rem auto 1rem;
-    display: flex;
-    justify-content: center;
-    a{
-      width:6rem;
-      font-size: 1.6rem;
-      padding: 0.8rem 1.5rem;
-      border-radius: 5rem;
-      text-decoration: none;
-    }
-  }
-  #test_account{
-    font-size: 1.2rem;
-  }
-  #top_concept li{
-    width: 100%;
-    display: block;
-    padding: 0 5vw;
-    margin: 5vw 0;
-    box-sizing: border-box;
-  }
-  #top_concept li div,#top_concept li img{
-    box-sizing: border-box;
-  }
-  h3{
-    font-size: 2rem;
-    margin: 2rem 0;
-  }
-  .top_container{
-    padding: 4rem 0;
-  }
-  #top_concept{
-    float: left;
-    background: #ffffff;
-  }
-  #top_concept2,#top_concept3{
-    float: left;
-  }
-  #top_concept ul{
-    display: block;
-    padding: 0 2rem;
-  }
-  #top_concept li{
-    padding: 2rem 0;
-    margin: 0;
-    overflow: hidden;
-    display: table;
-  }
-  #top_concept li:first-child{
-    border-bottom: 1px solid #cccccc;
-    border-right: none;
-  }
-  #top_concept li h3{
-    margin: 0 0 1rem;
-  }
-  #top_concept li img{
-    display: block;
-    margin-bottom: 0;
-    float: left;
-    width: 25%;
-  }
-  #top_concept li div{
-    float: left;
-    width: 75%;
-    padding: 0;
-    padding-left: 2rem;
-    text-align: left;
-  }
-}
-#top_concept2{
-  background: $thema-color;
-  color: #fff;
-}
-#top_concept2 p{
-  font-size: 1.8rem;
-}
-@media screen and (min-width:560px) {
-  #top_image{
-    height: calc(100vh - 53px);
-  }
-  .pallax_layer{
-    height: calc(100vh - 53px);
-  }
-  #topimg_layer1 .main_word{
-    display: block;
-    font-size: 4.5vw;
-    line-height: 6vw;
-    font-weight: bold;
-  }
-  #topimg_layer1 .sub_word{
-    display: block;
-    font-size: 1.6vw;
-    line-height: 5vw;
-    font-weight: normal;
-  }
-  #topimg_logo{
-    font-size: 4rem;
-    padding-top: 2vw;
-    text-indent: 5vw;
-  }
-  #img_iphone{
-    right: 0%;
-    opacity: 0;
-  }
-  #login_button{
-    margin: 2rem auto 0;
-    display: flex;
-    justify-content: center;
-    a{
-      width:12rem;
-      font-size: 2rem;
-      padding: 2rem 2.8rem;
-      border-radius: 5rem;
-      text-decoration: none;
-    }
-  }
-  #test_account{
-    font-size: 1.6rem;
-  }
-  // #topimg_signup{
-  //   font-size: 3rem;
-  //   width:16rem;
-  //   margin: 3rem auto 0;
-  //   padding: 2rem 4rem;
-  //   border-radius: 5rem;
-  //   text-decoration: none;
-  // }
-
-}
-@media screen and (min-width:720px) {
-  #top_concept,#top_concept2{
-    float: none;
-  }
-  .top_container{
-    padding: 8rem 0;
-  }
-  #top_concept ul{
-    display: block;
-    padding: 4vw 2rem 2vw;
-  }
-  #top_concept li{
-    width: 50%;
-    display: table-cell;
-    padding: 0 5vw;
-  }
-  #top_concept li img{
-    width:50%;
-    margin: 0 auto 2rem;
-    float: none;
-    max-width: 256px;
-  }
-  #top_concept li div{
-    float:none;
-    text-align: center;
-    width: 100%;
-  }
-  #top_concept li:first-child{
-    border-right: 1px solid #cccccc;
-    border-bottom: none;
-  }
-}
-@media screen and (min-width:960px) {
-  #img_iphone{
-    height: 500px;
-    bottom: 0%;
-    right: 8%;
-    opacity: 100;
-  }
-  #top_concept ul{
-    display: table;
-  }
-  #top_concept3 dl{
-    max-width:960px;
-  }
-  #login_button{
-    margin: 2rem auto 0;
-    display: flex;
-    justify-content: center;
-    a{
-      width:16rem;
-      font-size: 2.4rem;
-      padding: 2.4rem 3rem;
-      margin: 0 1rem;
-      border-radius: 10rem;
-      text-decoration: none;
-      background: $thema-font;
-      color: #fff;
-      text-decoration: none;
-    }
-  }
-  #test_account{
-    font-size: 1.8rem;
-  }
-}
-
 /* manual */
 #manual{
   background: #eeeeee;
@@ -542,7 +305,7 @@ select{
 }
 #blog_content {
   width: 100%;
-  margin: 0!important;
+  // margin: 0!important;
 }
 #add_btns{
   display: none!important;
@@ -1336,38 +1099,69 @@ select.UI,.track_block_row select{
 
 
 /* ブログ詳細画面プロフィール */
+#container.show{
+  #blog_profile,#blog_content,#impressions{
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    box-sizing: border-box;
+  }
+}
+
 #blog_profile{
-  display: table;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  // justify-content: space-between;
   width: 100%;
-  height: 40px;
-  overflow: hidden;
-  color:$dark-color;
+  color:#fff;
+  background: $thema-color;
+  padding: 2rem 0;
 }
-.btn_userprof{
-  display: block;
-}
-#blog_profile ul{
-  list-style: none;
-  display: table-row;
-  height: 40px;
-}
-#blog_profile li{
-  display: table-cell;
-  padding: 0!important;
-  height: 40px;
-  margin: 0!important;
-}
-#blog_profile li:first-child{
-  width: 40px;
+#blog_profile #blog_user{
+  display: flex;
+  align-items: center;
+  margin-right: 0;
+  color: $dark-font;
+  .prof_icon_M{
+    height: 80px;
+    width: 80px;
+    flex-grow: 0;
+    margin: 0 1.5rem 0 1.2rem;
+  }
+  &:hover{
+    color: #fff;
+  }
 }
 #blog_profile p{
   display: block;
-  float: left;
   width: 100%;
   height: 20px;
   line-height: 20px;
   margin: 0;
   text-align: left;
+}
+#blog_profile form{
+  width: 80px;
+  a.btn_follow{
+    display: block;
+    height: 32px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid $thema-color;
+    box-sizing: border-box;
+    background: #fff;
+    color: $thema-font;
+    text-align: center;
+    line-height: 32px;
+    text-decoration: none;
+    transition:all 0.3s ease-out;
+    &:hover{
+      background: $thema-color-light;
+      border: solid 1px $thema-color;
+      color: $thema-color;
+    }
+  }
 }
 #blog_profile span{
   line-height: 20px;
@@ -1386,7 +1180,7 @@ select.UI,.track_block_row select{
   padding: 0 1rem;
   margin: 4px 0;
   float: left;
-  width: 100%;
+  // width: 100%;
 }
 #blog_content{
   margin-top: 2rem;
@@ -1443,6 +1237,9 @@ select.UI,.track_block_row select{
 }
 .nices span:nth-child(2){
   font-size: 1.6rem!important;
+}
+#container.show #play_phrase{
+  max-width: 120px;
 }
 #play_phrase {
   line-height: 32px;
@@ -1592,4 +1389,271 @@ select.UI,.track_block_row select{
 }
 .bottomEndUp{
   padding-bottom: 56px!important;
+}
+
+@media screen and (max-width: 320px) {
+  #top_concept3 dl{
+    flex-flow: column nowrap;
+  }
+  #top_concept3 dt,
+  #top_concept3 dd{
+    width: 100%;
+  }
+  #top_concept3 dd{
+    border-left: none;
+  }
+  #blog_profile #blog_user{
+    margin-right: 0!important;
+  }
+  #blog_profile form{
+    width: 100%;
+    margin-top: 1rem;
+    a.btn_follow{
+      width: 120px;
+      margin: 0 auto;
+      float: none;
+    }
+  }
+}
+@media screen and ( min-width:320px) {
+  #top_image{
+    height: 33vh;
+  }
+  .pallax_layer{
+    height: 33vh;
+  }
+  #topimg_layer1 .main_word{
+    display: block;
+    font-size: 3.5vw;
+    line-height: 4.5vw;
+    font-weight: bold;
+  }
+  #topimg_layer1 .sub_word{
+    display: block;
+    font-size: 2vw;
+    line-height: 3vw;
+    margin-top: 0.6rem;
+    font-weight: normal;
+  }
+  #topimg_logo{
+    font-size: 2.4rem;
+    padding-top: 2vw;
+    text-indent: 5vw;
+  }
+  #img_iphone{
+    right: 0%;
+    opacity: 0;
+  }
+  #login_button{
+    margin: 2rem auto 1rem;
+    display: flex;
+    justify-content: center;
+    a{
+      width:6rem;
+      font-size: 1.6rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5rem;
+      text-decoration: none;
+    }
+  }
+  #test_account{
+    font-size: 1.2rem;
+  }
+  #top_concept li{
+    width: 100%;
+    display: block;
+    padding: 0 5vw;
+    margin: 5vw 0;
+    box-sizing: border-box;
+  }
+  #top_concept li div,#top_concept li img{
+    box-sizing: border-box;
+  }
+  h3{
+    font-size: 2rem;
+    margin: 2rem 0;
+  }
+  .top_container{
+    padding: 4rem 0;
+  }
+  #top_concept{
+    float: left;
+    background: #ffffff;
+  }
+  #top_concept2,#top_concept3{
+    float: left;
+  }
+  #top_concept ul{
+    display: block;
+    padding: 0 2rem;
+  }
+  #top_concept li{
+    padding: 2rem 0;
+    margin: 0;
+    overflow: hidden;
+    display: table;
+  }
+  #top_concept li:first-child{
+    border-bottom: 1px solid #cccccc;
+    border-right: none;
+  }
+  #top_concept li h3{
+    margin: 0 0 1rem;
+  }
+  #top_concept li img{
+    display: block;
+    margin-bottom: 0;
+    float: left;
+    width: 25%;
+  }
+  #top_concept li div{
+    float: left;
+    width: 75%;
+    padding: 0;
+    padding-left: 2rem;
+    text-align: left;
+  }
+  #blog_profile form{
+    width: 100%;
+    margin-top: 0.5rem;
+    a.btn_follow{
+      width: 120px;
+      margin: 0 auto;
+      float: none;
+    }
+  }
+}
+#top_concept2{
+  background: $thema-color;
+  color: #fff;
+}
+#top_concept2 p{
+  font-size: 1.8rem;
+}
+@media screen and (min-width:560px) {
+  #top_image{
+    height: calc(100vh - 53px);
+  }
+  .pallax_layer{
+    height: calc(100vh - 53px);
+  }
+  #topimg_layer1 .main_word{
+    display: block;
+    font-size: 4.5vw;
+    line-height: 6vw;
+    font-weight: bold;
+  }
+  #topimg_layer1 .sub_word{
+    display: block;
+    font-size: 1.6vw;
+    line-height: 5vw;
+    font-weight: normal;
+  }
+  #topimg_logo{
+    font-size: 4rem;
+    padding-top: 2vw;
+    text-indent: 5vw;
+  }
+  #img_iphone{
+    right: 0%;
+    opacity: 0;
+  }
+  #login_button{
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: center;
+    a{
+      width:12rem;
+      font-size: 2rem;
+      padding: 2rem 2.8rem;
+      border-radius: 5rem;
+      text-decoration: none;
+    }
+  }
+  #test_account{
+    font-size: 1.6rem;
+  }
+  #blog_profile #blog_user{
+    margin-right: 4rem;
+  }
+  #blog_profile form{
+    width: 120px;
+    a.btn_follow{
+      width: 120px;
+    }
+  }
+  // #topimg_signup{
+  //   font-size: 3rem;
+  //   width:16rem;
+  //   margin: 3rem auto 0;
+  //   padding: 2rem 4rem;
+  //   border-radius: 5rem;
+  //   text-decoration: none;
+  // }
+
+}
+@media screen and (min-width:720px) {
+  #top_concept,#top_concept2{
+    float: none;
+  }
+  .top_container{
+    padding: 8rem 0;
+  }
+  #top_concept ul{
+    display: block;
+    padding: 4vw 2rem 2vw;
+  }
+  #top_concept li{
+    width: 50%;
+    display: table-cell;
+    padding: 0 5vw;
+  }
+  #top_concept li img{
+    width:50%;
+    margin: 0 auto 2rem;
+    float: none;
+    max-width: 256px;
+  }
+  #top_concept li div{
+    float:none;
+    text-align: center;
+    width: 100%;
+  }
+  #top_concept li:first-child{
+    border-right: 1px solid #cccccc;
+    border-bottom: none;
+  }
+}
+@media screen and (min-width:960px) {
+  #img_iphone{
+    height: 500px;
+    bottom: 0%;
+    right: 8%;
+    opacity: 100;
+  }
+  #top_concept ul{
+    display: table;
+  }
+  #top_concept3 dl{
+    max-width:960px;
+  }
+  #login_button{
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: center;
+    a{
+      width:16rem;
+      font-size: 2.4rem;
+      padding: 2.4rem 3rem;
+      margin: 0 1rem;
+      border-radius: 10rem;
+      text-decoration: none;
+      background: $thema-font;
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+  #test_account{
+    font-size: 1.8rem;
+  }
 }
