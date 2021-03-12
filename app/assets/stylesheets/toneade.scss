@@ -11,6 +11,10 @@ $line-color: #cccccc;
 body {
   background: #f4f4f4;
 }
+#container.session{
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
 #page_locate{
   width: 100%;
   overflow: hidden;
@@ -75,7 +79,10 @@ body {
   background: #cccccc;
   border-radius: 50%;
 }
-.edit_user input,.edit_user textarea,.new_user input,.new_user textarea{
+form#new_user{
+  margin-bottom: 1rem;
+}
+.edit_user input,.edit_user textarea,.new_user input,.new_user textarea,#container.session .button{
   width:100%;
 }
 .edit_user .field,.new_user .field{
