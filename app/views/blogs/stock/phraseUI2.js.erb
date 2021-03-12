@@ -118,7 +118,7 @@ $(document).on('turbolinks:load', function() {
       },
     }
   });
-  // $('#view_track').css('display','none');
+  $('#view_track').css('display','none');
   function addModal(){
     $('.tracks .swiper-slide:first-child li .track_block:last-child .tr_del').modaal({
       overlay_opacity: 0.3,
@@ -667,9 +667,8 @@ $(document).on('turbolinks:load', function() {
       /* トラックのシーケンスデータ(toneData)を送信フォームにセット */
       function setForm_toneData(data){
         let track = $('.track_edit_header h3').text().replace(/[^0-9]/g, "");
-        // let parent = $('.track_form:nth-child(' + track + ')');
-        // $('input:nth-child(4)',parent).val(JSON.stringify(data));
-        $('#blog_phrase_attributes_tracks_attributes_0_data').val(JSON.stringify(data));
+        let parent = $('.track_form:nth-child(' + track + ')');
+        $('input:nth-child(4)',parent).val(JSON.stringify(data));
       }
 
       /* トラック追加 */
@@ -742,25 +741,25 @@ $(document).on('turbolinks:load', function() {
         }
       });
       /* トラックエディット遷移 */
-      // $(document).on('click', '.track_block.chord', function (){
-      //   if ($(this).siblings('.measure').text() != 'Track Setting'){
-      //     $('#view_blog').removeClass('view_on');
-      //     $('#view_track').addClass('view_on');
-      //     tr = $(this).attr('class').replace(/[^0-9]/g, "");
-      //     $('.track_edit_header').attr('id','tr_' + tr);
-      //     $('.track_edit_header h3').text('TR:' + tr);
-      //     $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
-      //   }
-      // });
-      // $(document).on('click', '.track_data_edit', function (){
-      //   $('#view_blog').removeClass('view_on');
-      //   $('#view_track').addClass('view_on');
-      //   tr = $(this).parent().attr('id').replace(/[^0-9]/g, "");
-      //   $('.track_edit_header').attr('id','tr_' + tr);
-      //   $('.track_edit_header h3').text('TR:' + tr);
-      //   $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
-      //
-      // });
+      $(document).on('click', '.track_block.chord', function (){
+        if ($(this).siblings('.measure').text() != 'Track Setting'){
+          $('#view_blog').removeClass('view_on');
+          $('#view_track').addClass('view_on');
+          tr = $(this).attr('class').replace(/[^0-9]/g, "");
+          $('.track_edit_header').attr('id','tr_' + tr);
+          $('.track_edit_header h3').text('TR:' + tr);
+          $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
+        }
+      });
+      $(document).on('click', '.track_data_edit', function (){
+        $('#view_blog').removeClass('view_on');
+        $('#view_track').addClass('view_on');
+        tr = $(this).parent().attr('id').replace(/[^0-9]/g, "");
+        $('.track_edit_header').attr('id','tr_' + tr);
+        $('.track_edit_header h3').text('TR:' + tr);
+        $('.content_wrapper').css('background','rgba(35, 41, 45, 1)');
+
+      });
       $(document).on('click', '.view_close', function (){
         $('#view_track').removeClass('view_on');
         $('#view_blog').addClass('view_on');
