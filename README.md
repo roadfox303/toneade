@@ -70,7 +70,7 @@ circle CI
 [API]  
 Stripe  
 
-[gem]  
+[gem]
 devise    
 gon  
 cocoon  
