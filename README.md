@@ -4,15 +4,13 @@
 TONEADE は 音楽理論や楽器の経験がない初心者でも、簡単なUI操作だけで、
 ポピュラー音楽で必要とされる基礎的な音楽理論に則ったフレーズを自由に作成し公開できるSNSです。
 
-[デプロイ]
-https://toneade.herokuapp.com/
-|テストユーザー||
-|:---:|:---:|
-|メールアドレス|test@example.com|
-|パスワード|password|
+<img width="1440" alt="スクリーンショット 2021-03-16 9 15 37" src="https://user-images.githubusercontent.com/52414882/111237791-219b0f00-8639-11eb-92e3-26f86d41a7a2.png">
 
-[github]
-https://github.com/roadfox303/toneade
+<img width="360" alt="スクリーンショット 2021-03-16 9 25 49" src="https://user-images.githubusercontent.com/52414882/111238061-a84fec00-8639-11eb-8ac7-39f6879e7fa3.png">
+
+[URL]
+https://toneade.herokuapp.com/
+トップページから「テストアカウントでログイン」で、メールアドレス、パスワードの入力なしでログインできます。
 
 [アプリケーションwiki]
 https://toneade.memo.wiki/
@@ -29,17 +27,12 @@ DAWやシーケンサーにインポートして自身の創作活動にTONEADE�
 本格的なDAWやシーケンサーとしての機能は現在想定しておりません。素晴らしいDAWが世の中には沢山ありますので。  
 ですが利用者の反応次第では機能の拡張を行なっていきたいと考えています。 -->
 
-## バージョン情報
-ruby 2.6.3  
-rails 5.2.3
-
 ## 簡易操作説明
 現在 Toneade は開発途中のため、機能限定のα版として動作しております。
 ヘルプ機能、操作説明などはまだ未実装のため、フレーズ作成の操作は下記の画像をご参照ください。
 
 [toneade操作説明](https://user-images.githubusercontent.com/52414882/69954663-2bc9f480-153f-11ea-83ae-25ef111a49e0.jpg)
 
-## アプリケーション概要
 <!--
 
 
@@ -64,19 +57,35 @@ rails 5.2.3
 [コード進行アプリ.pdf](https://github.com/roadfox303/toneade/files/3732947/default.pdf) -->
 
 ## 使用技術
-[CI]  
-circle CI
+- ruby 2.6.3  
+- rails 5.2.3
+- postgresql 11
+- Docker/Docker-compese
 
-[API]  
-Stripe  
+- circle CI
 
-[gem]  
-devise    
-gon  
-cocoon  
-RuboCop  
+- Stripe  
 
-[js]  
-Tone.js  
-Swiper  
-modaal  
+- devise
+- gon
+- cocoon
+- RuboCop
+
+- Tone.js  
+- Swiper  
+- modaal  
+
+## 機能一覧
+- ユーザー登録/ログイン機能(Devise)
+- コード進行作成機能
+  - コード生成機能(自作ロジック javascript/jquery)
+  - コード判別機能(自作ロジック javascript/jquery)
+  - フリック入力UI(自作ロジック javascript/jquery)
+  - 音源機能(Tone.js)
+  - シーケンサー機能(Tone.js)
+- 投稿機能
+  - フレーズ/ブログ投稿
+  - 画像投稿(CarrireWave)
+- コメント機能
+- いいね機能
+- フォロー機能
