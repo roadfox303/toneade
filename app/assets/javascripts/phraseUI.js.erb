@@ -111,10 +111,10 @@ $(document).on('turbolinks:load', function() {
         slidesPerView: 2
       },
       960: {
-        slidesPerView: 3
+        slidesPerView: 2
       },
       1280: {
-        slidesPerView: 4
+        slidesPerView: 2
       },
     }
   });
@@ -566,7 +566,9 @@ $(document).on('turbolinks:load', function() {
         scale.map(array => array['number'] = key['number'] + array['interval']);
       }
       let track_num = 1;
+
       let last_measure = 4;
+      // let last_measure = $('edit_m:last-child').text();
 
       /* Editロード時、UIにトラック情報反映 */
       if( gon.page_name == "Edit Phrase"){
@@ -578,6 +580,11 @@ $(document).on('turbolinks:load', function() {
           let count = 0;
           for(let i = 1; i < loop; i++ ){
             addMeasure();
+          }
+          if ( bars < 4){
+            last_measure = 4;
+          }else{
+            last_measure = (Math.ceil(bars/4)*4);
           }
         }
         /* トラック生成 */
@@ -688,6 +695,9 @@ $(document).on('turbolinks:load', function() {
         // copy = $('.swiper-slide:last-child');
         // $('.swiper-slide:last-child').clone(true).appendTo('.tracks');
         addMeasure();
+        edit.slideTo(last_measure / 4);
+        // {'time': inputM + ':' + inputB + ':' + '0', "note": tone, 'dur': inputDur,'root':inputRoot,'type':inputType[2],'omit':[],'rotate':inputRotate};
+
       });
       function  addMeasure(){
         let last = last_measure;
@@ -706,8 +716,44 @@ $(document).on('turbolinks:load', function() {
         $('#edit_track_chord .swiper-slide:last-child .edit_m').each(function(index, element){
           $(element).text(last += 1);
         });
+
         last_measure = last;
+
       }
+      /* 小節削除 */
+      $('.remove_measure').on('click',function(){
+        if (last_measure > 4){
+          removeMeasure();
+          edit.slideTo(last_measure / 4);
+        }
+      });
+      function removeMeasure(){
+        let last = last_measure;
+
+        // フレーズのデータを削除
+        let target_index = [];
+        toneData.map(function(item,i) {
+          let position = Number(item.time.match(/[\d]+/g).join("").toString());
+          if(position >= Number((`${last - 4}00`).toString())){
+            target_index.push(i);
+          }
+        });
+        toneData.splice(target_index[0] ,target_index.length);
+        setForm_toneData(toneData);
+        //UIへの反映
+        let last_slide = Math.ceil(last / 4 - 1);
+        // let last_slide = last_measure / 4 - 1;
+        edit.removeSlide(last_slide);
+        last_measure = last_slide * 4;
+      }
+
+      /* 休符追加 (作成途中)*/
+      function rest(){
+        let restData = {'time': inputM + ':' + inputB + ':' + '0', "note": []};
+        toneData.push(restData);
+      }
+
+
       /* トラック削除確認 */
       $(document).on('click', '.tr_del', function (){
         let tr = tr_number($(this));
