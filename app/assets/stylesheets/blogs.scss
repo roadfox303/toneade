@@ -18,6 +18,7 @@ $thema-font: rgba(128, 196, 39, 1);
 $dark-font: rgba(55, 71, 65, 1);
 $sub-color: rgba(97, 112, 125, 1);
 $dark-color: rgba(44, 46, 40, 1);
+$point-color: #ff3381;
 
 $T_full: rgba(123, 230, 255, 1);
 $S_full: rgba(209, 255, 123, 1);
@@ -299,6 +300,23 @@ select{
 #view_blog{
   display: none;
   z-index: 1;
+}
+@media screen and (max-width:960px) {
+  #view_blog{
+    margin-top: 1rem;
+  }
+  #view_track{
+    margin-top: 0;
+  }
+}
+@media screen and (min-width:960px) {
+  #view_blog{
+
+    margin-top: 2rem;
+  }
+  #view_track{
+    margin-top: 2rem;
+  }
 }
 #view_blog.view_on{
   display: block;
@@ -706,6 +724,12 @@ select.UI,.track_block_row select{
     height: 30px;
     line-height: 30px;
     border-radius: 3px;
+    cursor: pointer;
+    transition:0.2s all ease 0s;
+    &:hover{
+      color: $point-color;
+      background: #555;
+    }
   }
 }
 #view_track .view_close{
@@ -764,6 +788,9 @@ select.UI,.track_block_row select{
   color: #ffffff;
   text-decoration: none;
   cursor: pointer;
+  &:hover{
+    color: $point-color;
+  }
 }
 #edit_btn_left{
   width: 32px;
@@ -789,6 +816,9 @@ select.UI,.track_block_row select{
   line-height: 32px;
   color:#fff;
   font-size: 1.4rem;
+  &:hover{
+    background: rgba(148, 227, 45,0.25);
+  }
 }
 .edit_b span{
   display: none;
@@ -963,6 +993,16 @@ select.UI,.track_block_row select{
   box-sizing: border-box;
   cursor: pointer;
   transition:0.3s all ease 0s;
+}
+@media screen and (min-width:960px) {
+  #list_diatonic li,#list_candidate li,#list_future li{
+    height: 40px;
+  }
+  #list_diatonic li a,#list_candidate li a,#list_future li a{
+    height: 40px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+  }
 }
 #list_diatonic li a:hover,#list_candidate li a:hover,#list_future li a:hover{
   background: rgba(255,255,255,0.4);
