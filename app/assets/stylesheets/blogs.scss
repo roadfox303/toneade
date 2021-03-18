@@ -285,6 +285,22 @@ $D_alpha: rgba(255, 159, 196, 0.2);
   .manual_menu h3{
     font-size: 1.8rem;
   }
+  #view_blog{
+    li{
+      height: 30px!important;
+    }
+    input,select{
+      height: 30px;
+      line-height: 30px;
+      padding: 0 6px!important;
+      box-sizing: border-box;
+    }
+    .modal_upload{
+      height: 30px;
+      line-height: 31px;
+      box-sizing: border-box;
+    }
+  }
 }
 
 
@@ -301,17 +317,24 @@ select{
   display: none;
   z-index: 1;
 }
-@media screen and (max-width:960px) {
+@media screen and (max-width:540px) {
   #view_blog{
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
   #view_track{
     margin-top: 0;
   }
 }
+@media screen and (min-width:540px) {
+  #view_blog{
+    margin-top: 1rem;
+  }
+  #view_track{
+    margin-top: 1rem;
+  }
+}
 @media screen and (min-width:960px) {
   #view_blog{
-
     margin-top: 2rem;
   }
   #view_track{
@@ -788,6 +811,7 @@ select.UI,.track_block_row select{
   color: #ffffff;
   text-decoration: none;
   cursor: pointer;
+  display: block;
   &:hover{
     color: $point-color;
   }
